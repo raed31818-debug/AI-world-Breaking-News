@@ -1,1697 +1,1011 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عاجل | Breaking AI News</title>
-    <!-- Google Fonts for multi-language elegance + BOLD variants -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:opsz,wght@14..32,400;14..32,600;14..32,800;14..32,900&family=Noto+Kufi+Arabic:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            transition: background-color 0.4s ease, color 0.3s ease, font-size 0.2s ease;
-        }
-
-        /* === CSS Variables for Theme Colors === */
-        :root {
-            --accent1: #ff4d6d;
-            --accent2: #00b4ff;
-            --accent3: #ffd966;
-            --accent4: #7b61ff;
-            --card-bg: rgba(15, 20, 33, 0.85);
-            --card-border: rgba(80, 130, 255, 0.25);
-            --text-primary: #ffffff;
-            --text-secondary: #d0dcff;
-            --text-muted: #8da6ff;
-            --glow-color: rgba(100, 180, 255, 0.5);
-            --bg-dark: #0b0f1a;
-        }
-
-        [data-theme="emerald"] {
-            --accent1: #00e5a0;
-            --accent2: #00d4ff;
-            --accent3: #d4ff00;
-            --accent4: #00b894;
-            --card-border: rgba(0, 230, 160, 0.3);
-            --text-muted: #7dffcc;
-            --glow-color: rgba(0, 230, 160, 0.5);
-        }
-
-        [data-theme="royal"] {
-            --accent1: #ff6b9d;
-            --accent2: #c44dff;
-            --accent3: #ffd93d;
-            --accent4: #7b61ff;
-            --card-border: rgba(196, 77, 255, 0.3);
-            --text-muted: #d4a6ff;
-            --glow-color: rgba(196, 77, 255, 0.5);
-        }
-
-        [data-theme="sunset"] {
-            --accent1: #ff6b35;
-            --accent2: #ffb800;
-            --accent3: #ff3d6e;
-            --accent4: #ff8c42;
-            --card-border: rgba(255, 107, 53, 0.35);
-            --text-muted: #ffc9a3;
-            --glow-color: rgba(255, 140, 66, 0.5);
-        }
-
-        [data-theme="midnight"] {
-            --accent1: #4a90ff;
-            --accent2: #00d4ff;
-            --accent3: #b366ff;
-            --accent4: #5b8cff;
-            --card-border: rgba(74, 144, 255, 0.3);
-            --text-muted: #a0b8ff;
-            --glow-color: rgba(74, 144, 255, 0.5);
-        }
-
-        body {
-            font-family: 'Inter', 'Noto Kufi Arabic', sans-serif;
-            font-weight: 600;
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* === Dynamic Animated Background === */
-        .bg-animated {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -3;
-            background: radial-gradient(circle at 20% 30%, #1a1f2e, #0a0c14);
-            transition: background 1.5s ease;
-            animation: bgPulse 8s infinite alternate;
-        }
-
-        @keyframes bgPulse {
-            0% { filter: brightness(1) saturate(1); }
-            100% { filter: brightness(1.15) saturate(1.3); }
-        }
-
-        .bg-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background-image:
-                linear-gradient(rgba(100, 150, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(100, 150, 255, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            animation: gridScroll 20s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes gridScroll {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(60px, 60px); }
-        }
-
-        .bg-blob {
-            position: fixed;
-            width: 90vmax;
-            height: 90vmax;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--glow-color) 0%, rgba(0,0,0,0) 70%);
-            top: -30vmax;
-            left: -30vmax;
-            animation: floatBlob 24s infinite alternate ease-in-out;
-            z-index: -1;
-            filter: blur(60px);
-            transition: background 2s ease;
-            opacity: 0.7;
-        }
-
-        .bg-blob2 {
-            position: fixed;
-            width: 75vmax;
-            height: 75vmax;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--accent4) 0%, rgba(0,0,0,0) 70%);
-            bottom: -25vmax;
-            right: -25vmax;
-            animation: floatBlob2 30s infinite alternate ease-in-out;
-            z-index: -1;
-            filter: blur(70px);
-            opacity: 0.4;
-        }
-
-        .bg-blob3 {
-            position: fixed;
-            width: 60vmax;
-            height: 60vmax;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--accent3) 0%, rgba(0,0,0,0) 70%);
-            top: 40%;
-            left: 30%;
-            animation: floatBlob3 36s infinite alternate ease-in-out;
-            z-index: -1;
-            filter: blur(80px);
-            opacity: 0.25;
-        }
-
-        @keyframes floatBlob {
-            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            100% { transform: translate(20%, 15%) scale(1.4) rotate(180deg); }
-        }
-        @keyframes floatBlob2 {
-            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            100% { transform: translate(-20%, -15%) scale(1.5) rotate(-180deg); }
-        }
-        @keyframes floatBlob3 {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(-10%, 10%) scale(1.3); }
-            100% { transform: translate(15%, -10%) scale(1.1); }
-        }
-
-        .particle {
-            position: fixed;
-            width: 3px;
-            height: 3px;
-            background: var(--accent2);
-            border-radius: 50%;
-            z-index: -1;
-            opacity: 0.5;
-            animation: particleFloat linear infinite;
-            box-shadow: 0 0 8px var(--accent2);
-        }
-
-        @keyframes particleFloat {
-            0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-            10% { opacity: 0.7; }
-            90% { opacity: 0.7; }
-            100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
-        }
-
-        body.lang-ar {
-            font-family: 'Tajawal', 'Noto Kufi Arabic', 'Amiri', sans-serif;
-            font-weight: 700;
-            background-color: #0a0e17;
-        }
-
-        /* === Main Layout === */
-        .app-container {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            padding: 1.2rem 2rem 2rem;
-            max-width: 1600px;
-            margin: 0 auto;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* === Header === */
-        .header {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0 1.5rem;
-            border-bottom: 2px solid var(--card-border);
-            margin-bottom: 1.8rem;
-            gap: 1.5rem;
-        }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-icon {
-            font-size: 2.6rem;
-            color: var(--accent1);
-            filter: drop-shadow(0 0 15px var(--accent1));
-            animation: pulseGlow 1.5s infinite alternate;
-        }
-
-        @keyframes pulseGlow {
-            0% { filter: drop-shadow(0 0 5px var(--accent1)); transform: scale(1); }
-            100% { filter: drop-shadow(0 0 25px var(--accent1)); transform: scale(1.08); }
-        }
-
-        .logo-text {
-            font-size: 2.1rem;
-            font-weight: 900;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #fff, var(--accent2), var(--accent3));
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradientShift 4s ease infinite;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        body.lang-ar .logo-text {
-            background: linear-gradient(135deg, var(--accent3), var(--accent1), var(--accent2));
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradientShift 4s ease infinite;
-        }
-
-        .lang-toggle {
-            display: flex;
-            background: rgba(20, 25, 40, 0.9);
-            border-radius: 50px;
-            padding: 5px;
-            border: 2px solid var(--card-border);
-            backdrop-filter: blur(8px);
-        }
-
-        .lang-btn {
-            padding: 0.7rem 1.8rem;
-            border: none;
-            background: transparent;
-            color: var(--text-muted);
-            font-weight: 800;
-            border-radius: 40px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.25s;
-            font-family: inherit;
-        }
-
-        .lang-btn.active {
-            background: linear-gradient(135deg, var(--accent2), var(--accent4));
-            color: #fff;
-            box-shadow: 0 4px 20px var(--glow-color);
-            transform: scale(1.05);
-        }
-
-        /* === Theme Switcher === */
-        .theme-switcher {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .theme-dot {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid rgba(255,255,255,0.3);
-            transition: all 0.25s;
-            position: relative;
-        }
-
-        .theme-dot:hover {
-            transform: scale(1.2);
-            border-color: #fff;
-        }
-
-        .theme-dot.active {
-            border-color: #fff;
-            box-shadow: 0 0 15px currentColor;
-            transform: scale(1.15);
-        }
-
-        .theme-dot[data-theme="default"] { background: linear-gradient(135deg, #ff4d6d, #00b4ff); color: #00b4ff; }
-        .theme-dot[data-theme="emerald"] { background: linear-gradient(135deg, #00e5a0, #00d4ff); color: #00e5a0; }
-        .theme-dot[data-theme="royal"] { background: linear-gradient(135deg, #c44dff, #ff6b9d); color: #c44dff; }
-        .theme-dot[data-theme="sunset"] { background: linear-gradient(135deg, #ff6b35, #ffb800); color: #ff6b35; }
-        .theme-dot[data-theme="midnight"] { background: linear-gradient(135deg, #4a90ff, #00d4ff); color: #4a90ff; }
-
-        /* === Info Bar === */
-        .info-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.2rem;
-            justify-content: space-between;
-            align-items: stretch;
-            margin-bottom: 2rem;
-        }
-
-        .datetime-card, .prayer-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(15px);
-            border: 2px solid var(--card-border);
-            border-radius: 28px;
-            padding: 1.4rem 2rem;
-            box-shadow: 0 15px 40px -12px rgba(0,0,0,0.8);
-            flex: 1 1 300px;
-            transition: transform 0.3s ease, box-shadow 0.3s, border-color 0.3s;
-        }
-
-        .datetime-card:hover, .prayer-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.9);
-            border-color: var(--accent2);
-        }
-
-        .date-gregorian {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--text-primary);
-        }
-
-        .date-hijri {
-            font-size: 1.15rem;
-            color: var(--accent3);
-            margin-top: 5px;
-            font-weight: 700;
-        }
-
-        .date-hijri-secondary {
-            font-size: 1rem;
-            color: var(--accent2);
-            margin-top: 3px;
-            font-weight: 700;
-            opacity: 0.9;
-        }
-
-        .time-display {
-            font-size: 2.8rem;
-            font-weight: 900;
-            line-height: 1.2;
-            font-family: 'Inter', monospace;
-            letter-spacing: 3px;
-            color: var(--text-primary);
-            text-shadow: 0 0 25px var(--glow-color);
-            background: linear-gradient(135deg, #fff, var(--accent2));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        body.lang-ar .time-display {
-            font-family: 'Tajawal', monospace;
-            background: linear-gradient(135deg, var(--accent3), var(--accent1));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .prayer-card {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .prayer-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .prayer-header i {
-            color: var(--accent3);
-            font-size: 1.8rem;
-            filter: drop-shadow(0 0 8px var(--accent3));
-        }
-
-        .prayer-times {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px 20px;
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--text-secondary);
-        }
-
-        .prayer-times span {
-            background: rgba(255,255,255,0.08);
-            padding: 6px 14px;
-            border-radius: 30px;
-            border-left: 4px solid var(--accent3);
-            transition: all 0.25s;
-        }
-
-        .prayer-times span:hover {
-            background: rgba(255,255,255,0.15);
-            transform: scale(1.05);
-        }
-
-        body.lang-ar .prayer-times span {
-            border-left: 4px solid var(--accent2);
-        }
-
-        select#calcMethod {
-            background: #1e2638;
-            color: #fff;
-            border: 2px solid var(--card-border);
-            border-radius: 30px;
-            padding: 8px 14px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            outline: none;
-            font-weight: 700;
-            font-family: inherit;
-            transition: all 0.25s;
-        }
-
-        select#calcMethod:hover, select#calcMethod:focus {
-            border-color: var(--accent2);
-            box-shadow: 0 0 15px var(--glow-color);
-        }
-
-        /* === Controls === */
-        .controls {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1.8rem;
-            background: rgba(0,0,0,0.35);
-            backdrop-filter: blur(15px);
-            padding: 1rem 2rem;
-            border-radius: 60px;
-            border: 2px solid var(--card-border);
-            gap: 18px;
-        }
-
-        .font-selector, .size-control, .ticker-control {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .font-selector label, .size-control label, .ticker-control label {
-            font-weight: 800;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        select#fontFamily, input#fontSize, input#tickerSpeed, input#tickerFontSize {
-            background: #121a2a;
-            border: 2px solid var(--card-border);
-            border-radius: 30px;
-            padding: 8px 16px;
-            color: #fff;
-            font-weight: 700;
-            outline: none;
-            cursor: pointer;
-            font-family: inherit;
-            transition: all 0.25s;
-        }
-
-        select#fontFamily:hover, select#fontFamily:focus,
-        input#fontSize:hover, input#fontSize:focus,
-        input#tickerSpeed:hover, input#tickerSpeed:focus,
-        input#tickerFontSize:hover, input#tickerFontSize:focus {
-            border-color: var(--accent2);
-            box-shadow: 0 0 15px var(--glow-color);
-        }
-
-        input#fontSize, input#tickerSpeed, input#tickerFontSize {
-            width: 100px;
-            cursor: pointer;
-            accent-color: var(--accent2);
-        }
-
-        .size-value, .ticker-value {
-            font-size: 0.95rem;
-            background: linear-gradient(135deg, var(--accent2), var(--accent4));
-            padding: 4px 14px;
-            border-radius: 20px;
-            color: #fff;
-            font-weight: 800;
-            min-width: 60px;
-            text-align: center;
-        }
-
-        /* === Breaking News Ticker === */
-        .ticker-wrap {
-            width: 100%;
-            overflow: hidden;
-            background: linear-gradient(90deg, var(--accent1), var(--accent4), var(--accent2));
-            background-size: 200% 100%;
-            animation: tickerGradient 3s ease infinite;
-            padding: 12px 0;
-            margin-bottom: 1.5rem;
-            border-radius: 50px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-            position: relative;
-        }
-
-        @keyframes tickerGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .ticker {
-            display: flex;
-            white-space: nowrap;
-            animation: tickerScroll 20s linear infinite;
-            font-weight: 900;
-            font-size: 1.1rem;
-            color: #fff;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .ticker span {
-            padding: 0 3rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .ticker span i {
-            color: #fff;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        @keyframes tickerScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* === Live Badge === */
-        .live-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: #ff0000;
-            color: #fff;
-            font-size: 0.7rem;
-            font-weight: 900;
-            padding: 4px 12px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            animation: livePulse 1.5s infinite;
-            box-shadow: 0 0 15px rgba(255,0,0,0.6);
-        }
-
-        .live-badge::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: #fff;
-            border-radius: 50%;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes livePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        /* === News Grid === */
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 1.8rem;
-            margin-top: 0.5rem;
-            flex: 1;
-        }
-
-        .news-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border-radius: 28px;
-            padding: 1.8rem 1.6rem;
-            border: 2px solid var(--card-border);
-            box-shadow: 0 15px 35px -15px rgba(0,0,0,0.9);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            animation: fadeInUp 0.6s ease backwards;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Source logo watermark */
-        .news-card::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            right: -20px;
-            width: 120px;
-            height: 120px;
-            opacity: 0.08;
-            font-size: 6rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-            z-index: 0;
-            transition: opacity 0.3s;
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-        }
-
-        .news-card:hover::after {
-            opacity: 0.18;
-        }
-
-        .news-card[data-source-icon="fa-globe"]::after { content: '\f0ac'; }
-        .news-card[data-source-icon="fa-tower-broadcast"]::after { content: '\f519'; }
-        .news-card[data-source-icon="fa-newspaper"]::after { content: '\f1ea'; }
-        .news-card[data-source-icon="fa-satellite-dish"]::after { content: '\f7c0'; }
-        .news-card[data-source-icon="fa-reuters"]::after { content: '\f1ea'; }
-        .news-card[data-source-icon="fa-ap"]::after { content: '\f1ea'; }
-        .news-card[data-source-icon="fa-france"]::after { content: '\f024'; }
-        .news-card[data-source-icon="fa-dw"]::after { content: '\f0ac'; }
-        .news-card[data-source-icon="fa-skyatlas"]::after { content: '\f0ac'; }
-        .news-card[data-source-icon="fa-rt"]::after { content: '\f0ac'; }
-
-        .news-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3), var(--accent1));
-            background-size: 300% 100%;
-            animation: borderSlide 3s linear infinite;
-            z-index: 1;
-        }
-
-        @keyframes borderSlide {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .news-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: var(--accent2);
-            box-shadow: 0 30px 50px -12px rgba(0,0,0,0.95), 0 0 30px var(--glow-color);
-        }
-
-        .news-card.expanded {
-            grid-column: 1 / -1;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .news-source {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.85rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--accent3);
-            position: relative;
-            z-index: 2;
-        }
-
-        .news-source-logo {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent1), var(--accent4));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            color: #fff;
-            box-shadow: 0 0 15px var(--glow-color);
-            flex-shrink: 0;
-        }
-
-        .news-source-text {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .news-source-name {
-            font-weight: 900;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            letter-spacing: 0.5px;
-        }
-
-        .news-source-sub {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-        }
-
-        .news-title {
-            font-size: 1.35rem;
-            font-weight: 900;
-            line-height: 1.5;
-            color: var(--text-primary);
-            margin: 0.2rem 0;
-            transition: color 0.2s;
-            position: relative;
-            z-index: 2;
-        }
-
-        .news-card:hover .news-title {
-            color: var(--accent2);
-        }
-
-        .news-desc {
-            font-size: 0.98rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            font-weight: 600;
-            position: relative;
-            z-index: 2;
-        }
-
-        .news-details {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease, opacity 0.4s ease, margin 0.4s ease;
-            opacity: 0;
-            margin-top: 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .news-card.expanded .news-details {
-            max-height: 500px;
-            opacity: 1;
-            margin-top: 10px;
-        }
-
-        .news-details-inner {
-            background: rgba(0,0,0,0.4);
-            border-radius: 18px;
-            padding: 1.2rem 1.4rem;
-            border-left: 4px solid var(--accent2);
-            font-size: 0.95rem;
-            line-height: 1.8;
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
-
-        .news-details-inner p {
-            margin-bottom: 10px;
-        }
-
-        .news-details-inner p:last-child {
-            margin-bottom: 0;
-        }
-
-        .news-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: auto;
-            padding-top: 12px;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            position: relative;
-            z-index: 2;
-        }
-
-        .news-time {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 700;
-            flex-wrap: wrap;
-        }
-
-        .news-time i {
-            color: var(--accent2);
-        }
-
-        .news-link {
-            font-size: 0.85rem;
-            font-weight: 800;
-            color: var(--accent2);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
-            border-radius: 30px;
-            background: rgba(0, 180, 255, 0.1);
-            border: 1.5px solid var(--accent2);
-            transition: all 0.25s;
-        }
-
-        .news-link:hover {
-            background: var(--accent2);
-            color: #fff;
-            transform: translateX(4px);
-            box-shadow: 0 0 20px var(--glow-color);
-        }
-
-        .expand-hint {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            opacity: 0.7;
-            transition: opacity 0.3s;
-            position: relative;
-            z-index: 2;
-        }
-
-        .news-card:hover .expand-hint {
-            opacity: 1;
-            color: var(--accent3);
-        }
-
-        /* === Archive Section === */
-        .archive-section {
-            margin-top: 3rem;
-            margin-bottom: 2rem;
-        }
-
-        .archive-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .archive-title {
-            font-size: 1.8rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--accent2), var(--accent3));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .archive-title i {
-            -webkit-text-fill-color: var(--accent1);
-            color: var(--accent1);
-            filter: drop-shadow(0 0 10px var(--accent1));
-        }
-
-        .archive-toggle {
-            background: var(--card-bg);
-            border: 2px solid var(--card-border);
-            color: var(--text-primary);
-            padding: 10px 22px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 800;
-            font-family: inherit;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.25s;
-        }
-
-        .archive-toggle:hover {
-            border-color: var(--accent2);
-            box-shadow: 0 0 20px var(--glow-color);
-            transform: scale(1.03);
-        }
-
-        .archive-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 1rem;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.6s ease, opacity 0.4s ease;
-            opacity: 0;
-        }
-
-        .archive-grid.open {
-            max-height: 2000px;
-            opacity: 1;
-        }
-
-        .archive-day {
-            background: var(--card-bg);
-            border: 2px solid var(--card-border);
-            border-radius: 20px;
-            padding: 1.2rem 1rem;
-            transition: all 0.25s;
-            cursor: pointer;
-        }
-
-        .archive-day:hover {
-            border-color: var(--accent2);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-        }
-
-        .archive-day-date {
-            font-size: 1.05rem;
-            font-weight: 900;
-            color: var(--text-primary);
-            margin-bottom: 6px;
-        }
-
-        .archive-day-hijri {
-            font-size: 0.85rem;
-            color: var(--accent3);
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .archive-day-count {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: 700;
-        }
-
-        .archive-day-count i {
-            color: var(--accent2);
-        }
-
-        /* === Loader / Shimmer === */
-        .shimmer {
-            background: linear-gradient(90deg, #1a1f2e 25%, #2a334b 50%, #1a1f2e 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 12px;
-            height: 20px;
-            margin: 8px 0;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        /* === Responsive === */
-        @media (max-width: 700px) {
-            .app-container { padding: 0.8rem 1rem; }
-            .header { flex-direction: column; align-items: flex-start; }
-            .info-bar { flex-direction: column; }
-            .time-display { font-size: 2.2rem; }
-            .controls { flex-direction: column; align-items: stretch; border-radius: 30px; }
-            .font-selector, .size-control, .ticker-control { justify-content: space-between; }
-            .news-grid { grid-template-columns: 1fr; }
-            .theme-switcher { align-self: flex-start; }
-        }
-
-        body.lang-ar .news-title { font-weight: 900; letter-spacing: 0.3px; }
-        body.lang-ar .news-desc { font-weight: 700; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عاجل | Breaking AI News</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Kufi+Arabic:wght@400;700;900&family=Tajawal:wght@400;700;900&family=Cairo:wght@400;700;900&family=Amiri:wght@400;700&family=Amiri+Quran&family=Aref+Ruqaa:wght@400;700&family=Readex+Pro:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;transition:background-color .4s,color .3s}
+:root{--accent1:#a855f7;--accent2:#c084fc;--accent3:#e9d5ff;--accent4:#7c3aed;--card-bg:rgba(30,15,50,.85);--card-border:rgba(168,85,247,.35);--text-primary:#fff;--text-secondary:#e9d5ff;--text-muted:#c4b5fd;--glow:rgba(168,85,247,.6);--bg-dark:#0f0518;--font-scale:1}
+[data-theme="emerald"]{--accent1:#00e5a0;--accent2:#00d4ff;--accent3:#d4ff00;--accent4:#00b894;--card-border:rgba(0,230,160,.3);--text-muted:#7dffcc;--glow:rgba(0,230,160,.5);--bg-dark:#021410}
+[data-theme="royal"]{--accent1:#ff6b9d;--accent2:#c44dff;--accent3:#ffd93d;--accent4:#7b61ff;--card-border:rgba(196,77,255,.3);--text-muted:#d4a6ff;--glow:rgba(196,77,255,.5);--bg-dark:#12041a}
+[data-theme="sunset"]{--accent1:#ff6b35;--accent2:#ffb800;--accent3:#ff3d6e;--accent4:#ff8c42;--card-border:rgba(255,107,53,.35);--text-muted:#ffc9a3;--glow:rgba(255,140,66,.5);--bg-dark:#1a0804}
+[data-theme="midnight"]{--accent1:#4a90ff;--accent2:#00d4ff;--accent3:#b366ff;--accent4:#5b8cff;--card-border:rgba(74,144,255,.3);--text-muted:#a0b8ff;--glow:rgba(74,144,255,.5);--bg-dark:#040a1a}
+[data-theme="rose"]{--accent1:#f43f5e;--accent2:#fb7185;--accent3:#fda4af;--accent4:#e11d48;--card-border:rgba(244,63,94,.35);--text-muted:#fecdd3;--glow:rgba(244,63,94,.5);--bg-dark:#1a0410}
+body{font-family:'Inter','Tajawal',sans-serif;font-weight:600;background:var(--bg-dark);color:var(--text-primary);min-height:100vh;overflow-x:hidden;position:relative;font-size:calc(1rem * var(--font-scale))}
+body.lang-ar{font-family:'Tajawal','Cairo',sans-serif;font-weight:700}
+.bg-layer{position:fixed;inset:0;z-index:-4;background:var(--bg-dark);transition:background 1s}
+.bg-animated{position:fixed;inset:0;z-index:-3;transition:opacity .8s}
+.bg-grid{position:fixed;inset:0;z-index:-2;background-image:linear-gradient(rgba(168,85,247,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(168,85,247,.04) 1px,transparent 1px);background-size:60px 60px;animation:gridScroll 25s linear infinite;opacity:.6}
+@keyframes gridScroll{to{transform:translate(60px,60px)}}
+.bg-blob{position:fixed;width:90vmax;height:90vmax;border-radius:50%;background:radial-gradient(circle,var(--glow),transparent 70%);top:-30vmax;left:-30vmax;animation:float1 24s infinite alternate;z-index:-1;filter:blur(70px);opacity:.6;pointer-events:none}
+@keyframes float1{to{transform:translate(20%,15%) scale(1.4)}}
+.bg-blob2{position:fixed;width:70vmax;height:70vmax;border-radius:50%;background:radial-gradient(circle,var(--accent4),transparent 70%);bottom:-25vmax;right:-25vmax;animation:float2 32s infinite alternate;z-index:-1;filter:blur(80px);opacity:.35;pointer-events:none}
+@keyframes float2{to{transform:translate(-20%,-15%) scale(1.5)}}
+body[data-bg="aurora"] .bg-animated{background:linear-gradient(125deg,#0f0518,#1e0b3a,#0a1a3a,#0f0518);background-size:400% 400%;animation:auroraMove 15s ease infinite}
+@keyframes auroraMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+body[data-bg="waves"] .bg-animated{background:repeating-linear-gradient(45deg,rgba(168,85,247,.08) 0,rgba(168,85,247,.08) 2px,transparent 2px,transparent 40px),radial-gradient(circle at 30% 60%,#1a0f2e,#0a0414)}
+body[data-bg="sunset"] .bg-animated{background:linear-gradient(180deg,#2a0a1a 0%,#4a1535 40%,#1a0530 100%)}
+body[data-bg="matrix"] .bg-animated{background:radial-gradient(circle at 50% 50%,#0a0a0a,#000);opacity:.9}
+body[data-bg="matrix"] .bg-grid{background-image:linear-gradient(rgba(0,255,120,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,120,.08) 1px,transparent 1px);background-size:30px 30px;animation:gridScroll 4s linear infinite}
+body[data-bg="nebula"] .bg-animated{background:radial-gradient(ellipse at 20% 30%,rgba(168,85,247,.3),transparent 50%),radial-gradient(ellipse at 80% 70%,rgba(0,212,255,.25),transparent 50%),radial-gradient(ellipse at 50% 50%,rgba(255,107,157,.15),transparent 50%),#05010a}
+body[data-bg="geometric"] .bg-animated{background:conic-gradient(from 45deg at 50% 50%,#1a0f2e,#2a1a4a,#1a0f2e,#2a1a4a,#1a0f2e);opacity:.9}
+body[data-bg="mesh"] .bg-animated{background:radial-gradient(at 40% 20%,#2a1a4a 0px,transparent 50%),radial-gradient(at 80% 0%,#1a0f2e 0px,transparent 50%),radial-gradient(at 0% 50%,#3a1a5a 0px,transparent 50%),radial-gradient(at 80% 50%,#1a0f2e 0px,transparent 50%),radial-gradient(at 0% 100%,#2a1a4a 0px,transparent 50%),radial-gradient(at 80% 100%,#1a0f2e 0px,transparent 50%),#0a0414}
+.particle{position:fixed;border-radius:50%;background:var(--accent2);pointer-events:none;z-index:-1;opacity:.5;box-shadow:0 0 10px var(--accent2);animation:particleFloat linear infinite}
+@keyframes particleFloat{0%{transform:translateY(100vh)}100%{transform:translateY(-10vh)}}
+.app{display:flex;flex-direction:column;min-height:100vh;padding:1.2rem 2rem;max-width:1600px;margin:0 auto;width:100%;position:relative;z-index:1}
+.header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;padding:1rem 0 1.5rem;border-bottom:2px solid var(--card-border);margin-bottom:1.5rem;gap:1rem}
+.logo{display:flex;align-items:center;gap:12px;font-size:calc(2rem * var(--font-scale));font-weight:900}
+.logo i{color:var(--accent1);filter:drop-shadow(0 0 15px var(--accent1));animation:pulse 1.5s infinite alternate}
+@keyframes pulse{to{filter:drop-shadow(0 0 25px var(--accent1))}}
+.logo-text{background:linear-gradient(135deg,#fff,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.lang-toggle{display:flex;background:rgba(20,25,40,.9);border-radius:50px;padding:5px;border:2px solid var(--card-border)}
+.lang-btn{padding:.6rem 1.5rem;border:none;background:transparent;color:var(--text-muted);font-weight:800;border-radius:40px;cursor:pointer;font-family:inherit;font-size:calc(1rem * var(--font-scale))}
+.lang-btn.active{background:linear-gradient(135deg,var(--accent2),var(--accent4));color:#fff}
+.ticker-wrap{overflow:hidden;background:linear-gradient(90deg,var(--accent1),var(--accent4),var(--accent2));background-size:200%;animation:tickerGrad 3s infinite;padding:10px 0;margin-bottom:1.5rem;border-radius:40px}
+@keyframes tickerGrad{50%{background-position:100% 50%}}
+.ticker{display:flex;white-space:nowrap;animation:tickerScroll 25s linear infinite;font-weight:900;font-size:calc(1rem * var(--font-scale));color:#fff}
+.ticker span{padding:0 2.5rem;display:flex;align-items:center;gap:8px}
+@keyframes tickerScroll{to{transform:translateX(-50%)}}
+/* === RADIO SECTION === */
+.radio-section{background:var(--card-bg);backdrop-filter:blur(15px);border:2px solid var(--card-border);border-radius:24px;padding:1.2rem 1.5rem;margin-bottom:1.5rem}
+.radio-title{font-size:calc(1.05rem * var(--font-scale));font-weight:900;color:var(--accent3);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+.radio-title i{color:var(--accent2)}
+.radio-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.radio-card{display:flex;align-items:center;gap:12px;background:rgba(0,0,0,.3);border:2px solid var(--card-border);border-radius:18px;padding:12px 14px;cursor:pointer;transition:all .25s;text-align:start;color:var(--text-primary);font-family:inherit;width:100%}
+.radio-card:hover{border-color:var(--accent2);transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.4)}
+.radio-card.active{border-color:var(--accent1);background:rgba(168,85,247,.15);box-shadow:0 0 15px var(--glow)}
+.radio-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;flex-shrink:0}
+.radio-info{flex:1;min-width:0}
+.radio-name{font-size:calc(.88rem * var(--font-scale));font-weight:800;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.radio-desc{font-size:calc(.72rem * var(--font-scale));color:var(--text-muted);font-weight:600;margin-top:2px}
+.radio-play{color:var(--accent2);font-size:1rem;flex-shrink:0}
+.radio-controls{display:none;justify-content:space-between;align-items:center;margin-top:1rem;padding:10px 15px;background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(0,212,255,.1));border-radius:16px;border:1px solid var(--accent2)}
+.radio-controls.show{display:flex}
+.radio-now-playing{display:flex;align-items:center;gap:10px;font-weight:800;font-size:calc(.9rem * var(--font-scale));color:var(--text-primary)}
+.radio-buttons{display:flex;gap:8px}
+.radio-ctrl-btn{width:40px;height:40px;border-radius:50%;background:var(--accent2);color:#fff;border:none;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.radio-ctrl-btn:hover{transform:scale(1.1);box-shadow:0 0 15px var(--glow)}
+/* === SEARCH BAR === */
+.search-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:1rem;background:var(--card-bg);backdrop-filter:blur(15px);border:2px solid var(--card-border);border-radius:24px;padding:1rem 1.5rem;align-items:center}
+.search-bar input,.search-bar select{background:rgba(0,0,0,.4);border:2px solid var(--card-border);border-radius:20px;padding:10px 16px;color:#fff;font-weight:700;font-family:inherit;outline:none;font-size:calc(.95rem * var(--font-scale))}
+.search-bar input{flex:1;min-width:200px}
+.search-bar input:focus,.search-bar select:focus{border-color:var(--accent2);box-shadow:0 0 15px var(--glow)}
+.search-bar input::placeholder{color:var(--text-muted);opacity:.7}
+.search-bar button{background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border:none;border-radius:20px;padding:10px 20px;font-weight:800;cursor:pointer;font-family:inherit;font-size:calc(.9rem * var(--font-scale));display:flex;align-items:center;gap:6px}
+.search-bar button:hover{transform:scale(1.05);box-shadow:0 5px 20px var(--glow)}
+.search-results-info{width:100%;font-size:calc(.85rem * var(--font-scale));color:var(--text-muted);font-weight:700;margin-top:5px;display:none}
+.search-results-info.show{display:block}
+/* === INFO BAR === */
+.info-bar{display:flex;flex-wrap:wrap;gap:1.2rem;margin-bottom:1.5rem}
+.card{background:var(--card-bg);backdrop-filter:blur(15px);border:2px solid var(--card-border);border-radius:24px;padding:1.4rem 1.8rem;flex:1 1 300px}
+.date-g{font-size:calc(1.4rem * var(--font-scale));font-weight:900}
+.date-h{font-size:calc(1.1rem * var(--font-scale));color:var(--accent3);margin-top:4px;font-weight:700}
+.date-he{font-size:calc(.95rem * var(--font-scale));color:var(--accent2);margin-top:2px;font-weight:700}
+.time{font-size:calc(2.5rem * var(--font-scale));font-weight:900;font-family:'Inter',monospace;background:linear-gradient(135deg,#fff,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:2px}
+/* === PRAYER BUTTON === */
+.prayer-btn{background:var(--card-bg);border:2px solid var(--card-border);border-radius:24px;padding:1.4rem 1.8rem;flex:1 1 300px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:all .25s;text-align:start;color:var(--text-primary);font-family:inherit}
+.prayer-btn:hover{border-color:var(--accent2);box-shadow:0 8px 25px var(--glow);transform:translateY(-3px)}
+.prayer-btn-content{display:flex;flex-direction:column;gap:4px}
+.prayer-btn-title{font-size:calc(1.1rem * var(--font-scale));font-weight:900;color:var(--accent3);display:flex;align-items:center;gap:8px}
+.prayer-btn-sub{font-size:calc(.85rem * var(--font-scale));color:var(--text-muted);font-weight:700}
+.prayer-btn-icon{font-size:1.8rem;color:var(--accent2)}
+/* === MODAL === */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);z-index:1000;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal-content{background:var(--card-bg);border:2px solid var(--accent2);border-radius:24px;padding:1.5rem;max-width:500px;width:100%;box-shadow:0 25px 60px rgba(0,0,0,.9);animation:modalIn .3s ease;max-height:90vh;overflow-y:auto}
+@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--card-border)}
+.modal-title{font-size:calc(1.2rem * var(--font-scale));font-weight:900;color:var(--accent3);display:flex;align-items:center;gap:8px}
+.modal-close{background:transparent;border:none;color:var(--text-muted);font-size:1.4rem;cursor:pointer;padding:5px}
+.modal-close:hover{color:#ff4d6d}
+.modal-body{display:flex;flex-direction:column;gap:1rem}
+.modal-field{display:flex;flex-direction:column;gap:6px}
+.modal-field label{font-size:calc(.85rem * var(--font-scale));font-weight:800;color:var(--text-muted)}
+.modal-field select{background:#121a2a;border:2px solid var(--card-border);border-radius:16px;padding:10px 14px;color:#fff;font-weight:700;font-family:inherit;font-size:calc(.9rem * var(--font-scale));outline:none}
+.modal-field select:focus{border-color:var(--accent2)}
+.modal-prayer-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.modal-prayer-item{background:rgba(0,0,0,.3);border-radius:12px;padding:10px;display:flex;justify-content:space-between;align-items:center;font-size:calc(.9rem * var(--font-scale));font-weight:800}
+.modal-prayer-item .name{color:var(--accent3)}
+.modal-prayer-item .time{color:#fff;font-family:'Inter',monospace}
+.modal-loading{text-align:center;padding:1rem;color:var(--text-muted);font-weight:700}
+/* === CONTROLS === */
+.controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:1.5rem;background:rgba(0,0,0,.3);padding:.8rem 1.5rem;border-radius:50px;border:2px solid var(--card-border);gap:15px}
+.controls label{font-weight:800;color:var(--text-muted);font-size:calc(.85rem * var(--font-scale));display:flex;align-items:center;gap:6px}
+select,input[type=range]{background:#121a2a;border:2px solid var(--card-border);border-radius:20px;padding:6px 12px;color:#fff;font-weight:700;font-family:inherit;cursor:pointer;font-size:calc(.9rem * var(--font-scale))}
+input[type=range]{accent-color:var(--accent2);width:100px}
+.control-group{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.dots{display:flex;gap:6px;flex-wrap:wrap}
+.dot{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,.3);transition:all .25s}
+.dot:hover{transform:scale(1.2);border-color:#fff}
+.dot.active{border-color:#fff;box-shadow:0 0 12px currentColor;transform:scale(1.15)}
+.dot[data-theme="default"]{background:linear-gradient(135deg,#a855f7,#c084fc);color:#a855f7}
+.dot[data-theme="emerald"]{background:linear-gradient(135deg,#00e5a0,#00d4ff);color:#00e5a0}
+.dot[data-theme="royal"]{background:linear-gradient(135deg,#c44dff,#ff6b9d);color:#c44dff}
+.dot[data-theme="sunset"]{background:linear-gradient(135deg,#ff6b35,#ffb800);color:#ff6b35}
+.dot[data-theme="midnight"]{background:linear-gradient(135deg,#4a90ff,#00d4ff);color:#4a90ff}
+.dot[data-theme="rose"]{background:linear-gradient(135deg,#f43f5e,#fb7185);color:#f43f5e}
+.dot[data-bg="aurora"]{background:linear-gradient(135deg,#1e0b3a,#0a1a3a)}
+.dot[data-bg="waves"]{background:linear-gradient(135deg,#2a1a4a,#0a0414)}
+.dot[data-bg="sunset"]{background:linear-gradient(135deg,#4a1535,#ff6b35)}
+.dot[data-bg="matrix"]{background:linear-gradient(135deg,#000,#00ff78)}
+.dot[data-bg="nebula"]{background:linear-gradient(135deg,#a855f7,#00d4ff)}
+.dot[data-bg="geometric"]{background:conic-gradient(#1a0f2e,#2a1a4a,#1a0f2e)}
+.dot[data-bg="mesh"]{background:linear-gradient(135deg,#2a1a4a,#3a1a5a,#1a0f2e)}
+/* === TABS === */
+.tabs{display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap}
+.tab{background:var(--card-bg);border:2px solid var(--card-border);color:var(--text-muted);padding:10px 20px;border-radius:50px;cursor:pointer;font-weight:800;font-family:inherit;font-size:calc(.9rem * var(--font-scale));display:flex;align-items:center;gap:8px}
+.tab.active{background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border-color:transparent;box-shadow:0 5px 20px var(--glow)}
+/* === NEWS GRID === */
+.news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1.5rem}
+.news-card{background:var(--card-bg);backdrop-filter:blur(12px);border-radius:24px;padding:1.5rem;border:2px solid var(--card-border);display:flex;flex-direction:column;gap:.8rem;position:relative;overflow:hidden;animation:fadeInUp .5s ease backwards;cursor:pointer;transition:transform .35s cubic-bezier(.4,0,.2,1),border-color .35s,box-shadow .35s}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}}
+.news-card:hover{transform:translateY(-5px);border-color:var(--accent2);box-shadow:0 20px 40px -12px rgba(0,0,0,.9),0 0 25px var(--glow)}
+.news-card.expanded{grid-column:1/-1;background:linear-gradient(135deg,rgba(168,85,247,.25),rgba(0,212,255,.15)),var(--card-bg);border-color:var(--accent2);box-shadow:0 25px 60px -15px rgba(0,0,0,.95),0 0 50px var(--glow);animation:expandPulse 0.6s ease}
+@keyframes expandPulse{0%{transform:scale(.98)}50%{transform:scale(1.01)}100%{transform:scale(1)}}
+.news-card::before{content:'\f0e7';font-family:'Font Awesome 6 Free';font-weight:900;position:absolute;bottom:-30px;right:-20px;font-size:9rem;opacity:.045;color:var(--accent2);pointer-events:none;z-index:0;transition:opacity .4s,transform .4s}
+.news-card:hover::before{opacity:.09;transform:rotate(-10deg) scale(1.1)}
+.news-card.expanded::before{opacity:.06;font-size:12rem;bottom:-50px;right:-40px}
+.news-source{display:flex;align-items:center;gap:8px;font-size:calc(.85rem * var(--font-scale));font-weight:800;text-transform:uppercase;color:var(--accent3);position:relative;z-index:1}
+.source-logo{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;flex-shrink:0;box-shadow:0 0 12px var(--glow);background:linear-gradient(135deg,var(--accent1),var(--accent4))}
+/* Source colors */
+.news-card[data-source*="الجزيرة"] .source-logo{background:linear-gradient(135deg,#d4a017,#f4c430)}
+.news-card[data-source*="BBC"] .source-logo{background:linear-gradient(135deg,#bb1919,#e31e24)}
+.news-card[data-source*="العربية"] .source-logo{background:linear-gradient(135deg,#0066b3,#0088e0)}
+.news-card[data-source*="RT"] .source-logo{background:linear-gradient(135deg,#00a651,#00c060)}
+.news-card[data-source*="الحرة"] .source-logo{background:linear-gradient(135deg,#1a237e,#3949ab)}
+.news-card[data-source*="سكاي"] .source-logo{background:linear-gradient(135deg,#d32f2f,#f44336)}
+.news-card[data-source*="الغد"] .source-logo{background:linear-gradient(135deg,#00695c,#00897b)}
+.news-card[data-source*="الدستور"] .source-logo{background:linear-gradient(135deg,#4a148c,#7b1fa2)}
+.news-card[data-source*="الرأي"] .source-logo{background:linear-gradient(135deg,#b71c1c,#e53935)}
+.news-card[data-source*="السوسنة"] .source-logo{background:linear-gradient(135deg,#e65100,#ff9800)}
+.news-card[data-source*="الحقيقة"] .source-logo{background:linear-gradient(135deg,#0d47a1,#1976d2)}
+.news-card[data-source*="عمون"] .source-logo{background:linear-gradient(135deg,#6a1b9a,#8e24aa)}
+.news-card[data-source*="سبق"] .source-logo{background:linear-gradient(135deg,#2e7d32,#43a047)}
+.news-card[data-source*="عكاظ"] .source-logo{background:linear-gradient(135deg,#c62828,#e53935)}
+.news-card[data-source*="الوطن"] .source-logo{background:linear-gradient(135deg,#00838f,#00acc1)}
+.news-card[data-source*="الرياض"] .source-logo{background:linear-gradient(135deg,#1565c0,#1976d2)}
+.news-card[data-source*="الإمارات"] .source-logo{background:linear-gradient(135deg,#f57c00,#fb8c00)}
+.news-card[data-source*="البيان"] .source-logo{background:linear-gradient(135deg,#00897b,#26a69a)}
+.news-card[data-source*="اليوم السابع"] .source-logo{background:linear-gradient(135deg,#d81b60,#e91e63)}
+.news-card[data-source*="الشروق"] .source-logo{background:linear-gradient(135deg,#5e35b1,#7e57c2)}
+.news-card[data-source*="المصري"] .source-logo{background:linear-gradient(135deg,#3949ab,#5c6bc0)}
+.news-card[data-source*="النهار"] .source-logo{background:linear-gradient(135deg,#00838f,#0097a7)}
+.news-card[data-source*="الأخبار"] .source-logo{background:linear-gradient(135deg,#455a64,#607d8b)}
+.news-card[data-source*="Jerusalem"] .source-logo{background:linear-gradient(135deg,#1b5e20,#388e3c)}
+.news-card[data-source*="Times"] .source-logo{background:linear-gradient(135deg,#0d47a1,#42a5f5)}
+.news-card[data-source*="Israel"] .source-logo{background:linear-gradient(135deg,#1565c0,#42a5f5)}
+.news-card[data-source*="France"] .source-logo{background:linear-gradient(135deg,#0d47a1,#1e88e5)}
+.news-card[data-source*="DW"] .source-logo{background:linear-gradient(135deg,#1a237e,#283593)}
+.news-card[data-source*="AP"] .source-logo{background:linear-gradient(135deg,#b71c1c,#d32f2f)}
+.news-card[data-source*="Reuters"] .source-logo{background:linear-gradient(135deg,#e65100,#f57c00)}
+.news-card[data-source*="Press"] .source-logo{background:linear-gradient(135deg,#4a148c,#6a1b9a)}
+.news-card[data-source*="Mayadeen"] .source-logo{background:linear-gradient(135deg,#1b5e20,#2e7d32)}
+.news-card[data-source*="Middle East"] .source-logo{background:linear-gradient(135deg,#6d4c41,#8d6e63)}
+.news-card[data-source*="Al-Monitor"] .source-logo{background:linear-gradient(135deg,#0277bd,#0288d1)}
+.news-card[data-source*="Media Line"] .source-logo{background:linear-gradient(135deg,#37474f,#546e7a)}
+.news-card[data-source*="Jordan"] .source-logo{background:linear-gradient(135deg,#00695c,#00897b)}
+.news-title{font-size:calc(1.25rem * var(--font-scale));font-weight:900;line-height:1.45;color:var(--text-primary);position:relative;z-index:1}
+.news-desc{font-size:calc(.95rem * var(--font-scale));color:var(--text-secondary);line-height:1.7;position:relative;z-index:1}
+.news-details{max-height:0;overflow:hidden;transition:max-height .6s cubic-bezier(.4,0,.2,1),opacity .4s,margin .4s;opacity:0;position:relative;z-index:1}
+.news-card.expanded .news-details{max-height:800px;opacity:1;margin-top:.8rem}
+.news-details-inner{background:linear-gradient(135deg,rgba(0,0,0,.5),rgba(168,85,247,.15));border-radius:16px;padding:1.2rem;border-left:4px solid var(--accent2);font-size:calc(.95rem * var(--font-scale));line-height:1.8;color:var(--text-secondary)}
+.close-btn{display:none;background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border:none;border-radius:20px;padding:8px 18px;font-weight:800;cursor:pointer;font-family:inherit;font-size:calc(.85rem * var(--font-scale));align-items:center;gap:6px;margin-top:10px;align-self:flex-start;position:relative;z-index:2}
+.news-card.expanded .close-btn{display:inline-flex}
+.close-btn:hover{transform:scale(1.05);box-shadow:0 5px 20px var(--glow)}
+.news-footer{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:10px;border-top:1px solid rgba(255,255,255,.08);position:relative;z-index:1}
+.news-time{font-size:calc(.75rem * var(--font-scale));color:var(--text-muted);display:flex;align-items:center;gap:6px;font-weight:700}
+.news-time i{color:var(--accent2)}
+.news-link{font-size:calc(.85rem * var(--font-scale));font-weight:800;color:var(--accent2);text-decoration:none;display:flex;align-items:center;gap:5px;padding:6px 14px;border-radius:20px;background:rgba(192,132,252,.1);border:1.5px solid var(--accent2)}
+.news-link:hover{background:var(--accent2);color:#fff;transform:translateX(4px)}
+.expand-hint{font-size:calc(.75rem * var(--font-scale));color:var(--text-muted);display:flex;align-items:center;gap:5px;opacity:.7;position:relative;z-index:1}
+.news-card.expanded .expand-hint{display:none}
+.loading{text-align:center;padding:3rem;color:var(--text-muted);font-weight:700;grid-column:1/-1}
+.loading i{font-size:2.5rem;color:var(--accent1);margin-bottom:1rem;display:block;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.archive-section{display:none;margin-top:1.5rem}
+.archive-section.active{display:block}
+.archive-day{background:var(--card-bg);border:2px solid var(--card-border);border-radius:20px;padding:1.2rem 1.5rem;margin-bottom:1rem;cursor:pointer;transition:all .3s}
+.archive-day:hover{border-color:var(--accent2);transform:translateX(5px)}
+.archive-day-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.archive-day-date{font-size:calc(1.1rem * var(--font-scale));font-weight:900;color:var(--text-primary)}
+.archive-day-hijri{font-size:calc(.9rem * var(--font-scale));color:var(--accent3);font-weight:700}
+.archive-day-count{font-size:calc(.85rem * var(--font-scale));color:var(--text-muted);font-weight:700;display:flex;align-items:center;gap:6px;background:rgba(168,85,247,.15);padding:5px 12px;border-radius:20px;border:1px solid var(--card-border)}
+.archive-day-count i{color:var(--accent2)}
+.archive-articles{display:none;margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.1)}
+.archive-day.open .archive-articles{display:block}
+.archive-article{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:calc(.9rem * var(--font-scale))}
+.archive-article:last-child{border-bottom:none}
+.archive-article a{color:var(--accent2);text-decoration:none;font-weight:800}
+.archive-article a:hover{text-decoration:underline}
+.archive-article .arc-meta{font-size:calc(.75rem * var(--font-scale));color:var(--text-muted);margin-top:3px}
+.status{position:fixed;bottom:1.5rem;left:1.5rem;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);padding:8px 14px;border-radius:30px;font-size:calc(.75rem * var(--font-scale));font-weight:700;color:var(--text-muted);border:1px solid var(--card-border);z-index:100;max-width:60vw}
+.refresh-btn{position:fixed;bottom:1.5rem;right:1.5rem;width:55px;height:55px;border-radius:50%;background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border:none;font-size:1.3rem;cursor:pointer;box-shadow:0 8px 25px var(--glow);z-index:100}
+.refresh-btn:hover{transform:scale(1.1) rotate(180deg)}
+.refresh-btn.spinning i{animation:spin 1s linear infinite}
+@media(max-width:700px){.app{padding:.8rem 1rem}.header{flex-direction:column;align-items:flex-start}.info-bar{flex-direction:column}.news-grid{grid-template-columns:1fr}.controls{border-radius:24px}.dot{width:22px;height:22px}.radio-grid{grid-template-columns:1fr}.modal-prayer-list{grid-template-columns:1fr}}
+</style>
 </head>
-<body class="lang-en" data-theme="default">
-    <div class="bg-animated" id="bgAnimated"></div>
-    <div class="bg-grid"></div>
-    <div class="bg-blob" id="bgBlob1"></div>
-    <div class="bg-blob2" id="bgBlob2"></div>
-    <div class="bg-blob3" id="bgBlob3"></div>
+<body class="lang-en" data-theme="default" data-bg="aurora">
+<div class="bg-layer"></div>
+<div class="bg-animated"></div>
+<div class="bg-grid"></div>
+<div class="bg-blob"></div>
+<div class="bg-blob2"></div>
 
-    <div class="app-container">
-        <!-- Header -->
-        <header class="header">
-            <div class="logo-area">
-                <i class="fas fa-bolt logo-icon"></i>
-                <span class="logo-text" id="logoText">Breaking AI</span>
-            </div>
-            <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
-                <div class="theme-switcher" id="themeSwitcher">
-                    <div class="theme-dot active" data-theme="default" title="Default"></div>
-                    <div class="theme-dot" data-theme="emerald" title="Emerald"></div>
-                    <div class="theme-dot" data-theme="royal" title="Royal"></div>
-                    <div class="theme-dot" data-theme="sunset" title="Sunset"></div>
-                    <div class="theme-dot" data-theme="midnight" title="Midnight"></div>
-                </div>
-                <div class="lang-toggle">
-                    <button class="lang-btn active" id="langEn" data-lang="en">EN</button>
-                    <button class="lang-btn" id="langAr" data-lang="ar">العربية</button>
-                </div>
-            </div>
-        </header>
-
-        <!-- Breaking News Ticker -->
-        <div class="ticker-wrap">
-            <div class="ticker" id="ticker">
-                <span><i class="fas fa-circle"></i> LIVE: Global markets rally on AI breakthroughs</span>
-                <span><i class="fas fa-circle"></i> عاجل: قمة الذكاء الاصطناعي تختتم أعمالها باتفاقيات تاريخية</span>
-                <span><i class="fas fa-circle"></i> BREAKING: Ceasefire talks show progress in Cairo</span>
-                <span><i class="fas fa-circle"></i> عاجل: ارتفاع أسعار النفط وسط توترات الإمدادات</span>
-                <span><i class="fas fa-circle"></i> LIVE: Global markets rally on AI breakthroughs</span>
-                <span><i class="fas fa-circle"></i> عاجل: قمة الذكاء الاصطناعي تختتم أعمالها باتفاقيات تاريخية</span>
-                <span><i class="fas fa-circle"></i> BREAKING: Ceasefire talks show progress in Cairo</span>
-                <span><i class="fas fa-circle"></i> عاجل: ارتفاع أسعار النفط وسط توترات الإمدادات</span>
-            </div>
-        </div>
-
-        <!-- Info & Prayer -->
-        <div class="info-bar">
-            <div class="datetime-card">
-                <div class="date-gregorian" id="gregorianDate">Monday, 14 April 2025</div>
-                <div class="date-hijri" id="hijriDate">15 Shawwal 1446 AH</div>
-                <div class="date-hijri-secondary" id="hijriDateEn">15 Shawwal 1446 AH</div>
-                <div class="time-display" id="currentTime">14:32:10</div>
-            </div>
-            <div class="prayer-card">
-                <div class="prayer-header">
-                    <i class="fas fa-mosque"></i>
-                    <select id="calcMethod" aria-label="Calculation method">
-                        <option value="MWL">Muslim World League</option>
-                        <option value="ISNA">ISNA (North America)</option>
-                        <option value="EGY">Egyptian General Authority</option>
-                        <option value="UmmAlQura">Umm al-Qura, Makkah</option>
-                        <option value="Karachi">University of Islamic Sciences, Karachi</option>
-                        <option value="Tehran">Institute of Geophysics, Tehran</option>
-                        <option value="Dubai">Dubai (UAE)</option>
-                        <option value="Kuwait">Kuwait</option>
-                        <option value="Qatar">Qatar</option>
-                        <option value="Turkey">Turkey (Diyanet)</option>
-                    </select>
-                </div>
-                <div class="prayer-times" id="prayerTimes">
-                    <span>Fajr 04:48</span>
-                    <span>Dhuhr 12:15</span>
-                    <span>Asr 15:38</span>
-                    <span>Maghrib 18:52</span>
-                    <span>Isha 20:12</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Font & Size Controls -->
-        <div class="controls">
-            <div class="font-selector">
-                <label><i class="fas fa-font"></i> <span id="fontLabel">Font</span></label>
-                <select id="fontFamily">
-                    <option value="'Inter', 'Noto Kufi Arabic', sans-serif">Inter / Noto Kufi (Bold)</option>
-                    <option value="'Playfair Display', 'Amiri', serif">Playfair / Amiri (Elegant)</option>
-                    <option value="'Amiri', 'Tajawal', serif">Amiri (Arabic Serif)</option>
-                    <option value="'Tajawal', 'Noto Kufi Arabic', sans-serif">Tajawal (Modern Arabic)</option>
-                    <option value="'Segoe UI', 'Roboto', sans-serif">Segoe UI (Clean)</option>
-                </select>
-            </div>
-            <div class="size-control">
-                <label><i class="fas fa-text-height"></i> <span id="sizeLabel">Size</span></label>
-                <input type="range" id="fontSize" min="12" max="24" value="16" step="1">
-                <span class="size-value" id="sizeValue">16px</span>
-            </div>
-            <div class="ticker-control">
-                <label><i class="fas fa-running"></i> <span id="tickerLabel">Ticker Speed</span></label>
-                <input type="range" id="tickerSpeed" min="5" max="60" value="20" step="1">
-                <span class="ticker-value" id="tickerSpeedValue">20s</span>
-            </div>
-            <div class="ticker-control">
-                <label><i class="fas fa-text-width"></i> <span id="tickerFontLabel">Ticker Font</span></label>
-                <input type="range" id="tickerFontSize" min="12" max="28" value="18" step="1">
-                <span class="ticker-value" id="tickerFontSizeValue">18px</span>
-            </div>
-        </div>
-
-        <!-- News Grid -->
-        <div class="news-grid" id="newsGrid">
-            <div class="news-card"><div class="shimmer" style="width:40%"></div><div class="shimmer" style="width:80%"></div><div class="shimmer" style="width:60%"></div></div>
-            <div class="news-card"><div class="shimmer" style="width:40%"></div><div class="shimmer" style="width:80%"></div><div class="shimmer" style="width:60%"></div></div>
-            <div class="news-card"><div class="shimmer" style="width:40%"></div><div class="shimmer" style="width:80%"></div><div class="shimmer" style="width:60%"></div></div>
-            <div class="news-card"><div class="shimmer" style="width:40%"></div><div class="shimmer" style="width:80%"></div><div class="shimmer" style="width:60%"></div></div>
-        </div>
-
-        <!-- Archive Section -->
-        <div class="archive-section">
-            <div class="archive-header">
-                <div class="archive-title">
-                    <i class="fas fa-archive"></i>
-                    <span id="archiveTitle">News Archive — Last 15 Days</span>
-                </div>
-                <button class="archive-toggle" id="archiveToggle">
-                    <i class="fas fa-chevron-down"></i>
-                    <span id="archiveToggleText">Show Archive</span>
-                </button>
-            </div>
-            <div class="archive-grid" id="archiveGrid">
-                <!-- Archive days will be populated by JavaScript -->
-            </div>
-        </div>
+<div class="app">
+  <header class="header">
+    <div class="logo"><i class="fas fa-bolt"></i><span class="logo-text" id="logoText">Breaking AI</span></div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="langEn" data-lang="en">EN</button>
+      <button class="lang-btn" id="langAr" data-lang="ar">العربية</button>
     </div>
+  </header>
 
-    <script>
-        (function() {
-            // --- Configuration & State ---
-            let currentLang = 'en';
-            let currentFontSize = 16;
-            let currentFontFamily = "'Inter', 'Noto Kufi Arabic', sans-serif";
-            let currentTheme = 'default';
-            let tickerSpeed = 20;
-            let tickerFontSize = 18;
-            let newsUpdateCounter = 0;
-            let newsHistory = []; // Archive storage
+  <div class="ticker-wrap">
+    <div class="ticker" id="ticker">
+      <span><i class="fas fa-circle"></i> Connecting to live news...</span>
+      <span><i class="fas fa-circle"></i> جارٍ الاتصال بالأخبار المباشرة...</span>
+      <span><i class="fas fa-circle"></i> Connecting to live news...</span>
+      <span><i class="fas fa-circle"></i> جارٍ الاتصال بالأخبار المباشرة...</span>
+    </div>
+  </div>
 
-            // --- DOM Elements ---
-            const body = document.body;
-            const langEnBtn = document.getElementById('langEn');
-            const langArBtn = document.getElementById('langAr');
-            const logoText = document.getElementById('logoText');
-            const gregorianDateEl = document.getElementById('gregorianDate');
-            const hijriDateEl = document.getElementById('hijriDate');
-            const hijriDateEnEl = document.getElementById('hijriDateEn');
-            const currentTimeEl = document.getElementById('currentTime');
-            const prayerTimesEl = document.getElementById('prayerTimes');
-            const calcMethodSelect = document.getElementById('calcMethod');
-            const fontFamilySelect = document.getElementById('fontFamily');
-            const fontSizeInput = document.getElementById('fontSize');
-            const sizeValueSpan = document.getElementById('sizeValue');
-            const newsGrid = document.getElementById('newsGrid');
-            const fontLabel = document.getElementById('fontLabel');
-            const sizeLabel = document.getElementById('sizeLabel');
-            const bgAnimated = document.getElementById('bgAnimated');
-            const ticker = document.getElementById('ticker');
-            const tickerSpeedInput = document.getElementById('tickerSpeed');
-            const tickerSpeedValue = document.getElementById('tickerSpeedValue');
-            const tickerFontSizeInput = document.getElementById('tickerFontSize');
-            const tickerFontSizeValue = document.getElementById('tickerFontSizeValue');
-            const tickerLabel = document.getElementById('tickerLabel');
-            const tickerFontLabel = document.getElementById('tickerFontLabel');
-            const archiveGrid = document.getElementById('archiveGrid');
-            const archiveToggle = document.getElementById('archiveToggle');
-            const archiveToggleText = document.getElementById('archiveToggleText');
-            const archiveTitle = document.getElementById('archiveTitle');
+  <!-- === LIVE RADIO === -->
+  <div class="radio-section">
+    <h3 class="radio-title"><i class="fas fa-broadcast-tower"></i> <span id="radioTitle">البث المباشر — القرآن والأخبار</span></h3>
+    <div class="radio-grid">
+      <button class="radio-card" data-radio="https://stream.radiojar.com/0tpy1h0kxtzuv" data-name="إذاعة القرآن الكريم - السعودية">
+        <div class="radio-icon" style="background:linear-gradient(135deg,#1a5c2a,#2e7d32)"><i class="fas fa-quran"></i></div>
+        <div class="radio-info"><div class="radio-name">إذاعة القرآن الكريم - السعودية</div><div class="radio-desc">مكة المكرمة</div></div>
+        <i class="fas fa-play radio-play"></i>
+      </button>
+      <button class="radio-card" data-radio="https://stream.radiojar.com/8s5u5tpdtwzuv" data-name="إذاعة القرآن الكريم - الأردن">
+        <div class="radio-icon" style="background:linear-gradient(135deg,#1a3a5c,#2e5d7d)"><i class="fas fa-quran"></i></div>
+        <div class="radio-info"><div class="radio-name">إذاعة القرآن الكريم - الأردن</div><div class="radio-desc">عمان</div></div>
+        <i class="fas fa-play radio-play"></i>
+      </button>
+      <button class="radio-card" data-radio="https://qurango.net/radio/mohammed_siddiq_alminshawi" data-name="الشيخ محمد صديق المنشاوي">
+        <div class="radio-icon" style="background:linear-gradient(135deg,#5c1a3a,#7d2e5d)"><i class="fas fa-microphone"></i></div>
+        <div class="radio-info"><div class="radio-name">الشيخ محمد صديق المنشاوي</div><div class="radio-desc">ترتيل</div></div>
+        <i class="fas fa-play radio-play"></i>
+      </button>
+      <button class="radio-card" data-radio="https://qurango.net/radio/abdulbasit_abdulsamad" data-name="الشيخ عبد الباسط عبد الصمد">
+        <div class="radio-icon" style="background:linear-gradient(135deg,#5c2a1a,#7d4a2e)"><i class="fas fa-microphone"></i></div>
+        <div class="radio-info"><div class="radio-name">الشيخ عبد الباسط عبد الصمد</div><div class="radio-desc">المرتل</div></div>
+        <i class="fas fa-play radio-play"></i>
+      </button>
+      <button class="radio-card" data-radio="https://qurango.net/radio/maher_almuaiqly" data-name="الشيخ ماهر المعيقلي">
+        <div class="radio-icon" style="background:linear-gradient(135deg,#5c4a1a,#7d6b2e)"><i class="fas fa-microphone"></i></div>
+        <div class="radio-info"><div class="radio-name">الشيخ ماهر المعيقلي</div><div class="radio-desc">إمام الحرم المكي</div></div>
+        <i class="fas fa-play radio-play"></i>
+      </button>
+      <button class="radio-card" data-radio="https://qurango.net/radio/abdulrahman_alsudaes" data-name="الشيخ عبد الرحمن السديس">
+        <div class="radio-icon" style="background:linear-gradient(135deg,#1a1a5c,#2e2e7d)"><i class="fas fa-microphone"></i></div>
+        <div class="radio-info"><div class="radio-name">الشيخ عبد الرحمن السديس</div><div class="radio-desc">إمام الحرم المكي</div></div>
+        <i class="fas fa-play radio-play"></i>
+      </button>
+      <button class="radio-card" data-radio="https://live-hls-audio-web-aja.getaj.net/VOICE-AJA/index.m3u8" data-name="الجزيرة - عربي">
+        <div class="radio-icon" style="background:linear-gradient(135deg,#d4a017,#f4c430)"><i class="fas fa-globe"></i></div>
+        <div class="radio-info"><div class="radio-name">الجزيرة - عربي</div><div class="radio-desc">إذاعة إخبارية</div></div>
+        <i class="fas fa-play radio-play"></i>
+      </button>
+      <button class="radio-card" data-radio="https://live-hls-audio-web-aje.getaj.net/VOICE-AJE/index.m3u8" data-name="Al Jazeera English">
+        <div class="radio-icon" style="background:linear-gradient(135deg,#c8102e,#e31e24)"><i class="fas fa-globe"></i></div>
+        <div class="radio-info"><div class="radio-name">Al Jazeera English</div><div class="radio-desc">News Radio</div></div>
+        <i class="fas fa-play radio-play"></i>
+      </button>
+      <button class="radio-card" data-radio="https://av.almanhal.net/alarabiya/alarabiya.m3u8" data-name="العربية - إذاعة">
+        <div class="radio-icon" style="background:linear-gradient(135deg,#0066b3,#0088e0)"><i class="fas fa-globe"></i></div>
+        <div class="radio-info"><div class="radio-name">العربية - إذاعة</div><div class="radio-desc">إذاعة إخبارية</div></div>
+        <i class="fas fa-play radio-play"></i>
+      </button>
+      <button class="radio-card" data-radio="https://rt-arb.rttv.com/live/rtarab/playlist.m3u8" data-name="RT عربي">
+        <div class="radio-icon" style="background:linear-gradient(135deg,#00a651,#00c060)"><i class="fas fa-globe"></i></div>
+        <div class="radio-info"><div class="radio-name">RT عربي</div><div class="radio-desc">إذاعة إخبارية</div></div>
+        <i class="fas fa-play radio-play"></i>
+      </button>
+      <button class="radio-card" data-radio="https://montecarlodoualiya.ice.infomaniak.ch/mc-doualiya.aac" data-name="مونت كارلو الدولية">
+        <div class="radio-icon" style="background:linear-gradient(135deg,#0d47a1,#1976d2)"><i class="fas fa-globe"></i></div>
+        <div class="radio-info"><div class="radio-name">مونت كارلو الدولية</div><div class="radio-desc">إذاعة إخبارية</div></div>
+        <i class="fas fa-play radio-play"></i>
+      </button>
+      <button class="radio-card" data-radio="https://stream.live.vc.bbcmedia.co.uk/bbc_world_service" data-name="BBC World Service">
+        <div class="radio-icon" style="background:linear-gradient(135deg,#bb1919,#e31e24)"><i class="fas fa-globe"></i></div>
+        <div class="radio-info"><div class="radio-name">BBC World Service</div><div class="radio-desc">إخبارية عالمية</div></div>
+        <i class="fas fa-play radio-play"></i>
+      </button>
+    </div>
+    <audio id="radioPlayer" style="display:none"></audio>
+    <div class="radio-controls" id="radioControls">
+      <div class="radio-now-playing"><i class="fas fa-volume-up" style="color:var(--accent2)"></i><span id="nowPlaying">--</span></div>
+      <div class="radio-buttons">
+        <button onclick="toggleRadio()" class="radio-ctrl-btn"><i class="fas fa-pause" id="radioToggleIcon"></i></button>
+        <button onclick="stopRadio()" class="radio-ctrl-btn"><i class="fas fa-stop"></i></button>
+      </div>
+    </div>
+  </div>
 
-            // --- Helper: Create particles ---
-            function createParticles() {
-                for (let i = 0; i < 20; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    particle.style.left = Math.random() * 100 + '%';
-                    particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
-                    particle.style.animationDelay = (Math.random() * 15) + 's';
-                    particle.style.width = particle.style.height = (Math.random() * 3 + 1) + 'px';
-                    particle.style.opacity = Math.random() * 0.5 + 0.2;
-                    document.body.appendChild(particle);
-                }
+  <div class="search-bar">
+    <i class="fas fa-search" style="color:var(--accent2);font-size:1.2rem"></i>
+    <input type="text" id="searchInput" placeholder="Search news... / ابحث في الأخبار...">
+    <select id="sourceFilter"><option value="">All Sources / كل المصادر</option></select>
+    <button id="clearSearch"><i class="fas fa-times"></i> <span id="clearLabel">Clear</span></button>
+    <div class="search-results-info" id="searchInfo"></div>
+  </div>
+
+  <div class="info-bar">
+    <div class="card">
+      <div class="date-g" id="gregorianDate">Loading...</div>
+      <div class="date-h" id="hijriDate">...</div>
+      <div class="date-he" id="hijriDateEn">...</div>
+      <div class="time" id="currentTime">--:--:--</div>
+    </div>
+    <button class="prayer-btn" onclick="openPrayerModal()">
+      <div class="prayer-btn-content">
+        <div class="prayer-btn-title"><i class="fas fa-mosque"></i> <span id="prayerBtnTitle">Prayer Times</span></div>
+        <div class="prayer-btn-sub" id="prayerBtnSub">Tap to select city</div>
+      </div>
+      <i class="fas fa-chevron-left prayer-btn-icon"></i>
+    </button>
+  </div>
+
+  <!-- === PRAYER MODAL === -->
+  <div class="modal-overlay" id="prayerModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title"><i class="fas fa-mosque"></i> <span id="modalTitle">Prayer Times</span></div>
+        <button class="modal-close" onclick="closePrayerModal()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-field">
+          <label id="labelCountry">Country</label>
+          <select id="modalCountry"><option value="">Select Country</option></select>
+        </div>
+        <div class="modal-field">
+          <label id="labelCity">City</label>
+          <select id="modalCity"><option value="">Select City</option></select>
+        </div>
+        <div class="modal-field">
+          <label id="labelMethod">Calculation Method</label>
+          <select id="modalMethod">
+            <option value="MWL">Muslim World League</option>
+            <option value="ISNA">ISNA (North America)</option>
+            <option value="EGY">Egyptian General</option>
+            <option value="UmmAlQura">Umm Al-Qura, Makkah</option>
+            <option value="Dubai">Dubai (UAE)</option>
+            <option value="Turkey">Turkey (Diyanet)</option>
+          </select>
+        </div>
+        <div class="modal-field">
+          <label id="labelDate">Date</label>
+          <div style="background:rgba(0,0,0,.3);border-radius:12px;padding:10px;font-weight:700;color:var(--accent3)" id="modalDateDisplay">--</div>
+        </div>
+        <div class="modal-prayer-list" id="modalPrayerList">
+          <div class="modal-loading"><i class="fas fa-circle-notch" style="animation:spin 1s linear infinite"></i> Loading...</div>
+        </div>
+        <button onclick="savePrayerSettings()" style="background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border:none;border-radius:16px;padding:12px;font-weight:800;cursor:pointer;font-family:inherit;margin-top:8px;font-size:calc(1rem * var(--font-scale))" id="saveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="control-group">
+      <label><i class="fas fa-palette"></i> <span id="themeLabel">Theme</span></label>
+      <div class="dots">
+        <div class="dot active" data-theme="default"></div>
+        <div class="dot" data-theme="emerald"></div>
+        <div class="dot" data-theme="royal"></div>
+        <div class="dot" data-theme="sunset"></div>
+        <div class="dot" data-theme="midnight"></div>
+        <div class="dot" data-theme="rose"></div>
+      </div>
+    </div>
+    <div class="control-group">
+      <label><i class="fas fa-image"></i> <span id="bgLabel">Background</span></label>
+      <div class="dots">
+        <div class="dot active" data-bg="aurora"></div>
+        <div class="dot" data-bg="waves"></div>
+        <div class="dot" data-bg="sunset"></div>
+        <div class="dot" data-bg="matrix"></div>
+        <div class="dot" data-bg="nebula"></div>
+        <div class="dot" data-bg="geometric"></div>
+        <div class="dot" data-bg="mesh"></div>
+      </div>
+    </div>
+    <div class="control-group">
+      <label><i class="fas fa-font"></i> <span id="fontLabel">Font</span></label>
+      <select id="fontFamily">
+        <option value="'Inter','Tajawal',sans-serif">Inter</option>
+        <option value="'Tajawal','Cairo',sans-serif">Tajawal</option>
+        <option value="'Cairo','Tajawal',sans-serif">Cairo</option>
+        <option value="'Readex Pro','Tajawal',sans-serif">Readex Pro</option>
+        <option value="'Amiri','Playfair Display',serif">Amiri (Naskh)</option>
+        <option value="'Amiri Quran','Amiri',serif">Amiri Quran</option>
+        <option value="'Aref Ruqaa','Amiri',serif">Aref Ruqaa</option>
+        <option value="'Noto Naskh Arabic','Amiri',serif">Noto Naskh</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label><i class="fas fa-text-height"></i> <span id="sizeLabel">Size</span></label>
+      <input type="range" id="fontSize" min="12" max="32" value="16">
+      <span id="sizeValue" style="font-size:calc(.85rem * var(--font-scale));background:linear-gradient(135deg,var(--accent2),var(--accent4));padding:3px 10px;border-radius:15px;font-weight:800;color:#fff">16px</span>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="live"><i class="fas fa-bolt"></i> <span id="tabLive">Live News</span></button>
+    <button class="tab" data-tab="archive"><i class="fas fa-archive"></i> <span id="tabArchive">Archive (15 days)</span></button>
+  </div>
+
+  <div class="news-grid" id="newsGrid">
+    <div class="loading"><i class="fas fa-circle-notch"></i><p>Fetching live news...</p></div>
+  </div>
+  <div class="archive-section" id="archiveSection"></div>
+</div>
+
+<button class="refresh-btn" id="refreshBtn" title="Refresh"><i class="fas fa-sync-alt"></i></button>
+<div class="status" id="apiStatus">⏳ Connecting...</div>
+
+<script>
+const WORKER_URL = 'https://withered-moon-2845.raed31818.workers.dev';
+const SETTINGS_KEY = 'news_hub_settings_v6';
+const ARCHIVE_KEY = 'news_archive_v6';
+const ARCHIVE_DAYS = 15;
+const FETCH_INTERVAL = 5 * 60 * 1000;
+
+let currentLang = 'en';
+let lastFetch = 0;
+let allArticles = [];
+let filteredArticles = [];
+let currentTab = 'live';
+let currentPrayerTimes = null;
+let currentRadioUrl = '';
+let radioPlaying = false;
+let currentHlsInstance = null;
+
+const $ = id => document.getElementById(id);
+
+const COUNTRIES = {
+  'Saudi Arabia': ['Riyadh', 'Jeddah', 'Makkah', 'Madinah', 'Dammam'],
+  'UAE': ['Dubai', 'Abu Dhabi', 'Sharjah', 'Ajman'],
+  'Egypt': ['Cairo', 'Alexandria', 'Giza', 'Luxor', 'Aswan'],
+  'Jordan': ['Amman', 'Zarqa', 'Irbid', 'Aqaba'],
+  'Kuwait': ['Kuwait City', 'Hawalli', 'Salmiya'],
+  'Qatar': ['Doha', 'Al Rayyan', 'Al Wakrah'],
+  'Bahrain': ['Manama', 'Riffa', 'Muharraq'],
+  'Oman': ['Muscat', 'Salalah', 'Sohar'],
+  'Lebanon': ['Beirut', 'Tripoli', 'Sidon'],
+  'Syria': ['Damascus', 'Aleppo', 'Homs'],
+  'Iraq': ['Baghdad', 'Erbil', 'Basra', 'Mosul'],
+  'Palestine': ['Gaza', 'Ramallah', 'Nablus', 'Hebron'],
+  'Yemen': ['Sanaa', 'Aden', 'Taiz'],
+  'Morocco': ['Casablanca', 'Rabat', 'Marrakesh', 'Fes'],
+  'Algeria': ['Algiers', 'Oran', 'Constantine'],
+  'Tunisia': ['Tunis', 'Sfax', 'Sousse'],
+  'Libya': ['Tripoli', 'Benghazi', 'Misrata'],
+  'Sudan': ['Khartoum', 'Omdurman', 'Port Sudan'],
+  'Turkey': ['Istanbul', 'Ankara', 'Izmir', 'Antalya'],
+  'Iran': ['Tehran', 'Mashhad', 'Isfahan'],
+  'Pakistan': ['Karachi', 'Lahore', 'Islamabad'],
+  'India': ['Delhi', 'Mumbai', 'Kolkata'],
+  'United Kingdom': ['London', 'Manchester', 'Birmingham'],
+  'United States': ['New York', 'Los Angeles', 'Chicago', 'Houston'],
+  'France': ['Paris', 'Marseille', 'Lyon'],
+  'Germany': ['Berlin', 'Munich', 'Hamburg'],
+  'Malaysia': ['Kuala Lumpur', 'Penang', 'Johor Bahru'],
+  'Indonesia': ['Jakarta', 'Surabaya', 'Bandung']
+};
+
+const METHOD_MAP = { MWL: 3, ISNA: 2, EGY: 5, UmmAlQura: 4, Dubai: 15, Turkey: 13 };
+
+const DUAAS = [
+  'اللهم أنت السلام ومنك السلام تباركت يا ذا الجلال والإكرام',
+  'أستغفر الله، أستغفر الله، أستغفر الله',
+  'لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير',
+  'سبحان الله، والحمد لله، والله أكبر (33 مرة)',
+  'اللهم أجرني من النار (7 مرات بعد الفجر والمغرب)'
+];
+
+// ============================================================
+// SETTINGS
+// ============================================================
+function saveSettings() {
+  try {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify({
+      lang: currentLang,
+      theme: document.body.getAttribute('data-theme'),
+      bg: document.body.getAttribute('data-bg'),
+      font: $('fontFamily').value,
+      fontSize: $('fontSize').value,
+      country: $('modalCountry').value,
+      city: $('modalCity').value,
+      calcMethod: $('modalMethod').value
+    }));
+  } catch (e) {}
+}
+function restoreSettings() {
+  try {
+    const raw = localStorage.getItem(SETTINGS_KEY);
+    if (!raw) return null;
+    const s = JSON.parse(raw);
+    if (s.theme) { document.body.setAttribute('data-theme', s.theme); document.querySelectorAll('.dot[data-theme]').forEach(d => d.classList.toggle('active', d.dataset.theme === s.theme)); }
+    if (s.bg) { document.body.setAttribute('data-bg', s.bg); document.querySelectorAll('.dot[data-bg]').forEach(d => d.classList.toggle('active', d.dataset.bg === s.bg)); }
+    if (s.font) { $('fontFamily').value = s.font; document.body.style.fontFamily = s.font; }
+    if (s.fontSize) { $('fontSize').value = s.fontSize; updateFontSize(s.fontSize); }
+    if (s.calcMethod) $('modalMethod').value = s.calcMethod;
+    if (s.country) { $('modalCountry').value = s.country; populateModalCities(s.country); if (s.city) { $('modalCity').value = s.city; $('prayerBtnSub').textContent = `${s.city}, ${s.country}`; } }
+    if (s.lang) currentLang = s.lang;
+    return s;
+  } catch (e) { return null; }
+}
+
+// === FONT SIZE (FIXED) ===
+function updateFontSize(size) {
+  const scale = size / 16;
+  document.documentElement.style.setProperty('--font-scale', scale);
+  $('sizeValue').textContent = size + 'px';
+}
+
+// ============================================================
+// UI LABELS
+// ============================================================
+function updateUILabels() {
+  const isAr = currentLang === 'ar';
+  document.body.className = isAr ? 'lang-ar' : 'lang-en';
+  $('logoText').textContent = isAr ? 'عاجل | أخبار مباشرة' : 'Breaking AI';
+  $('fontLabel').textContent = isAr ? 'الخط' : 'Font';
+  $('sizeLabel').textContent = isAr ? 'الحجم' : 'Size';
+  $('themeLabel').textContent = isAr ? 'الثيم' : 'Theme';
+  $('bgLabel').textContent = isAr ? 'الخلفية' : 'Background';
+  $('tabLive').textContent = isAr ? 'الأخبار المباشرة' : 'Live News';
+  $('tabArchive').textContent = isAr ? 'الأرشيف (15 يوم)' : 'Archive (15 days)';
+  $('clearLabel').textContent = isAr ? 'مسح' : 'Clear';
+  $('searchInput').placeholder = isAr ? 'ابحث في الأخبار...' : 'Search news...';
+  $('radioTitle').textContent = isAr ? 'البث المباشر — القرآن والأخبار' : 'Live Radio — Quran & News';
+  $('prayerBtnTitle').textContent = isAr ? 'مواقيت الصلاة' : 'Prayer Times';
+  $('modalTitle').textContent = isAr ? 'مواقيت الصلاة' : 'Prayer Times';
+  $('labelCountry').textContent = isAr ? 'الدولة' : 'Country';
+  $('labelCity').textContent = isAr ? 'المدينة' : 'City';
+  $('labelMethod').textContent = isAr ? 'طريقة الحساب' : 'Calculation Method';
+  $('labelDate').textContent = isAr ? 'التاريخ' : 'Date';
+  $('saveBtn').textContent = isAr ? 'حفظ' : 'Save';
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
+}
+
+// ============================================================
+// CLOCK
+// ============================================================
+function updateClock() {
+  const now = new Date();
+  $('gregorianDate').textContent = now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  try { $('hijriDate').textContent = now.toLocaleDateString(currentLang==='ar'?'ar-SA-u-ca-islamic-umalqura':'en-US-u-ca-islamic-umalqura',{calendar:'islamic-umalqura',year:'numeric',month:'long',day:'numeric'}); } catch(e){}
+  try { $('hijriDateEn').textContent = now.toLocaleDateString('en-US-u-ca-islamic-umalqura',{calendar:'islamic-umalqura',year:'numeric',month:'long',day:'numeric'}); } catch(e){}
+  $('currentTime').textContent = now.toLocaleTimeString('en-US',{hour12:false, hour:'2-digit', minute:'2-digit', second:'2-digit'});
+}
+setInterval(updateClock,1000); updateClock();
+
+// ============================================================
+// PRAYER MODAL
+// ============================================================
+function populateModalCountries() {
+  const sel = $('modalCountry');
+  sel.innerHTML = '<option value="">' + (currentLang==='ar'?'اختر الدولة':'Select Country') + '</option>' +
+    Object.keys(COUNTRIES).sort().map(c => `<option value="${c}">${c}</option>`).join('');
+}
+function populateModalCities(country) {
+  const sel = $('modalCity');
+  if (!country || !COUNTRIES[country]) {
+    sel.innerHTML = '<option value="">' + (currentLang==='ar'?'اختر المدينة':'Select City') + '</option>';
+    return;
+  }
+  sel.innerHTML = '<option value="">' + (currentLang==='ar'?'اختر المدينة':'Select City') + '</option>' +
+    COUNTRIES[country].map(c => `<option value="${c}">${c}</option>`).join('');
+}
+function openPrayerModal() {
+  $('prayerModal').classList.add('open');
+  fetchModalPrayerTimes();
+}
+function closePrayerModal() { $('prayerModal').classList.remove('open'); }
+
+async function fetchModalPrayerTimes() {
+  const country = $('modalCountry').value;
+  const city = $('modalCity').value;
+  const method = METHOD_MAP[$('modalMethod').value] || 3;
+  const url = country && city
+    ? `https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(city)}&country=${encodeURIComponent(country)}&method=${method}`
+    : `https://api.aladhan.com/v1/timingsByCity?city=Amman&country=Jordan&method=3`;
+  $('modalPrayerList').innerHTML = '<div class="modal-loading"><i class="fas fa-circle-notch" style="animation:spin 1s linear infinite"></i> Loading...</div>';
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    currentPrayerTimes = data.data.timings;
+    const t = data.data.timings;
+    const date = new Date();
+    $('modalDateDisplay').textContent = date.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    const labels = currentLang === 'ar'
+      ? { Fajr:'الفجر', Dhuhr:'الظهر', Asr:'العصر', Maghrib:'المغرب', Isha:'العشاء' }
+      : { Fajr:'Fajr', Dhuhr:'Dhuhr', Asr:'Asr', Maghrib:'Maghrib', Isha:'Isha' };
+    $('modalPrayerList').innerHTML = ['Fajr','Dhuhr','Asr','Maghrib','Isha'].map(p =>
+      `<div class="modal-prayer-item"><span class="name">${labels[p]}</span><span class="time">${t[p]}</span></div>`
+    ).join('');
+  } catch(e) {
+    $('modalPrayerList').innerHTML = '<div class="modal-loading">Failed to load prayer times</div>';
+  }
+}
+function savePrayerSettings() {
+  const country = $('modalCountry').value;
+  const city = $('modalCity').value;
+  if (country && city) {
+    $('prayerBtnSub').textContent = `${city}, ${country}`;
+    saveSettings();
+    closePrayerModal();
+  } else {
+    alert(currentLang === 'ar' ? 'الرجاء اختيار الدولة والمدينة' : 'Please select country and city');
+  }
+}
+$('modalCountry').addEventListener('change', e => { populateModalCities(e.target.value); fetchModalPrayerTimes(); });
+$('modalCity').addEventListener('change', fetchModalPrayerTimes);
+$('modalMethod').addEventListener('change', fetchModalPrayerTimes);
+
+// ============================================================
+// LANGUAGE
+// ============================================================
+function setLang(lang) {
+  currentLang = lang;
+  updateUILabels();
+  populateModalCountries();
+  const sc = $('modalCountry').value;
+  if (sc) populateModalCities(sc);
+  lastFetch = 0;
+  fetchNews(true);
+  saveSettings();
+}
+$('langEn').onclick = () => setLang('en');
+$('langAr').onclick = () => setLang('ar');
+
+// ============================================================
+// EVENT LISTENERS
+// ============================================================
+document.querySelectorAll('.dot[data-theme]').forEach(dot => {
+  dot.addEventListener('click', () => {
+    document.body.setAttribute('data-theme', dot.dataset.theme);
+    document.querySelectorAll('.dot[data-theme]').forEach(d => d.classList.remove('active'));
+    dot.classList.add('active');
+    saveSettings();
+  });
+});
+document.querySelectorAll('.dot[data-bg]').forEach(dot => {
+  dot.addEventListener('click', () => {
+    document.body.setAttribute('data-bg', dot.dataset.bg);
+    document.querySelectorAll('.dot[data-bg]').forEach(d => d.classList.remove('active'));
+    dot.classList.add('active');
+    saveSettings();
+  });
+});
+$('fontFamily').addEventListener('change', e => {
+  document.body.style.fontFamily = e.target.value;
+  saveSettings();
+});
+$('fontSize').addEventListener('input', e => {
+  updateFontSize(e.target.value);
+  saveSettings();
+});
+
+// ============================================================
+// RADIO PLAYER (with HLS support)
+// ============================================================
+function loadHlsScript(callback) {
+  if (window.Hls) { callback(); return; }
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/hls.js@1.5.15/dist/hls.min.js';
+  script.onload = callback;
+  document.head.appendChild(script);
+}
+
+document.querySelectorAll('.radio-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const url = card.dataset.radio;
+    const name = card.dataset.name;
+    if (currentRadioUrl === url && radioPlaying) { stopRadio(); return; }
+    
+    const player = $('radioPlayer');
+    
+    // Cleanup previous HLS instance
+    if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
+    player.src = '';
+    
+    // Check if it's HLS (.m3u8)
+    if (url.includes('.m3u8')) {
+      loadHlsScript(() => {
+        if (window.Hls && window.Hls.isSupported()) {
+          const hls = new window.Hls();
+          currentHlsInstance = hls;
+          hls.loadSource(url);
+          hls.attachMedia(player);
+          hls.on(window.Hls.Events.MANIFEST_PARSED, () => {
+            player.play().then(() => {
+              setRadioPlaying(name, url, card);
+            }).catch(e => console.warn('HLS play failed', e));
+          });
+          hls.on(window.Hls.Events.ERROR, (evt, data) => {
+            if (data.fatal) {
+              console.warn('HLS error', data);
+              alert(currentLang === 'ar' ? 'تعذر تشغيل هذه الإذاعة في متصفحك' : 'Cannot play this radio in your browser');
             }
+          });
+        } else if (player.canPlayType('application/vnd.apple.mpegurl')) {
+          // Safari native HLS
+          player.src = url;
+          player.play().then(() => setRadioPlaying(name, url, card)).catch(e => console.warn(e));
+        } else {
+          alert(currentLang === 'ar' ? 'متصفحك لا يدعم البث المباشر HLS' : 'Your browser does not support HLS');
+        }
+      });
+    } else {
+      // Regular stream
+      player.src = url;
+      player.load();
+      player.play().then(() => {
+        setRadioPlaying(name, url, card);
+      }).catch(e => {
+        console.warn('Radio failed:', e);
+        alert(currentLang === 'ar' ? 'تعذر تشغيل الراديو. حاول مرة أخرى.' : 'Radio failed. Try again.');
+      });
+    }
+  });
+});
 
-            // --- Helper: Update dynamic background ---
-            function updateDynamicBackground() {
-                const now = new Date();
-                const seconds = now.getSeconds();
-                const hue = (seconds * 3) % 360;
-                if (currentLang === 'ar') {
-                    bgAnimated.style.background = `radial-gradient(circle at 80% 20%, hsl(${hue}, 40%, 15%), #0a0814)`;
-                } else {
-                    bgAnimated.style.background = `radial-gradient(circle at 20% 30%, hsl(${hue}, 45%, 15%), #0a0c14)`;
-                }
-            }
+function setRadioPlaying(name, url, card) {
+  radioPlaying = true;
+  currentRadioUrl = url;
+  $('radioControls').classList.add('show');
+  $('nowPlaying').textContent = name;
+  $('radioToggleIcon').className = 'fas fa-pause';
+  document.querySelectorAll('.radio-card').forEach(c => c.classList.remove('active'));
+  card.classList.add('active');
+}
 
-            // --- Theme Switcher ---
-            function setTheme(theme) {
-                currentTheme = theme;
-                document.body.setAttribute('data-theme', theme);
-                document.querySelectorAll('.theme-dot').forEach(dot => {
-                    dot.classList.toggle('active', dot.dataset.theme === theme);
-                });
-            }
+function toggleRadio() {
+  const player = $('radioPlayer');
+  if (radioPlaying) { player.pause(); radioPlaying = false; $('radioToggleIcon').className = 'fas fa-play'; }
+  else if (currentRadioUrl) { player.play(); radioPlaying = true; $('radioToggleIcon').className = 'fas fa-pause'; }
+}
+function stopRadio() {
+  const player = $('radioPlayer');
+  player.pause(); player.src = '';
+  if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
+  radioPlaying = false; currentRadioUrl = '';
+  $('radioControls').classList.remove('show');
+  document.querySelectorAll('.radio-card').forEach(c => c.classList.remove('active'));
+}
 
-            // --- Language Toggle ---
-            function setLanguage(lang) {
-                currentLang = lang;
-                body.className = lang === 'ar' ? 'lang-ar' : 'lang-en';
-                body.setAttribute('data-theme', currentTheme);
-                if (lang === 'ar') {
-                    langArBtn.classList.add('active');
-                    langEnBtn.classList.remove('active');
-                    logoText.textContent = 'عاجل | الذكاء الاصطناعي';
-                    fontLabel.textContent = 'نوع الخط';
-                    sizeLabel.textContent = 'حجم الخط';
-                    tickerLabel.textContent = 'سرعة الشريط';
-                    tickerFontLabel.textContent = 'حجم خط الشريط';
-                    archiveTitle.textContent = 'أرشيف الأخبار — آخر 15 يوماً';
-                    archiveToggleText.textContent = 'عرض الأرشيف';
-                    if (fontFamilySelect.value.includes('Inter')) {
-                        fontFamilySelect.value = "'Tajawal', 'Noto Kufi Arabic', sans-serif";
-                    }
-                } else {
-                    langEnBtn.classList.add('active');
-                    langArBtn.classList.remove('active');
-                    logoText.textContent = 'Breaking AI';
-                    fontLabel.textContent = 'Font';
-                    sizeLabel.textContent = 'Size';
-                    tickerLabel.textContent = 'Ticker Speed';
-                    tickerFontLabel.textContent = 'Ticker Font';
-                    archiveTitle.textContent = 'News Archive — Last 15 Days';
-                    archiveToggleText.textContent = 'Show Archive';
-                    if (fontFamilySelect.value.includes('Tajawal')) {
-                        fontFamilySelect.value = "'Inter', 'Noto Kufi Arabic', sans-serif";
-                    }
-                }
-                renderNews();
-                renderArchive();
-                updateDynamicBackground();
-                updateTicker();
-            }
+// ============================================================
+// PARTICLES
+// ============================================================
+function spawnParticles() {
+  for (let i = 0; i < 15; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.width = p.style.height = (Math.random() * 2 + 1) + 'px';
+    p.style.animationDuration = (Math.random() * 15 + 12) + 's';
+    p.style.animationDelay = (Math.random() * 15) + 's';
+    p.style.opacity = Math.random() * 0.4 + 0.2;
+    document.body.appendChild(p);
+  }
+}
+spawnParticles();
 
-            // --- Font & Size Handlers ---
-            function applyFontFamily() {
-                const font = fontFamilySelect.value;
-                currentFontFamily = font;
-                body.style.fontFamily = font;
-                document.querySelectorAll('.news-title, .news-desc, .logo-text, .datetime-card, .prayer-card, .controls, .news-details-inner, .archive-day, .archive-title, .news-source-name')
-                    .forEach(el => el.style.fontFamily = font);
-            }
+// ============================================================
+// TABS
+// ============================================================
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentTab = tab.dataset.tab;
+    if (currentTab === 'live') {
+      $('newsGrid').style.display = 'grid';
+      $('archiveSection').classList.remove('active');
+    } else {
+      $('newsGrid').style.display = 'none';
+      $('archiveSection').classList.add('active');
+      renderArchive();
+    }
+  });
+});
 
-            function applyFontSize(size) {
-                currentFontSize = parseInt(size, 10);
-                sizeValueSpan.textContent = size + 'px';
-                body.style.fontSize = size + 'px';
-                const scale = size / 16;
-                document.querySelectorAll('.news-title').forEach(el => {
-                    el.style.fontSize = (1.35 * scale) + 'rem';
-                });
-                document.querySelectorAll('.news-desc').forEach(el => {
-                    el.style.fontSize = (0.98 * scale) + 'rem';
-                });
-                document.querySelectorAll('.time-display').forEach(el => {
-                    el.style.fontSize = (2.8 * scale) + 'rem';
-                });
-                document.querySelectorAll('.news-details-inner').forEach(el => {
-                    el.style.fontSize = (0.95 * scale) + 'rem';
-                });
-            }
+// ============================================================
+// ARCHIVE
+// ============================================================
+function getArchive() { try { return JSON.parse(localStorage.getItem(ARCHIVE_KEY) || '{}'); } catch(e) { return {}; } }
+function saveArchive(a) {
+  const cutoff = Date.now() - (ARCHIVE_DAYS * 24 * 60 * 60 * 1000);
+  Object.keys(a).forEach(k => { if (new Date(k).getTime() < cutoff) delete a[k]; });
+  try { localStorage.setItem(ARCHIVE_KEY, JSON.stringify(a)); } catch(e) {}
+}
+function addToArchive(articles) {
+  const archive = getArchive();
+  const today = new Date().toISOString().split('T')[0];
+  if (!archive[today]) archive[today] = [];
+  const seen = new Set(archive[today].map(a => a.title));
+  articles.forEach(a => {
+    if (!seen.has(a.title)) {
+      archive[today].push({ title:a.title, link:a.link, source:a.source, description:a.description, pubDate:a.pubDate });
+      seen.add(a.title);
+    }
+  });
+  saveArchive(archive);
+}
+function renderArchive() {
+  const archive = getArchive();
+  const days = Object.keys(archive).sort((a,b) => new Date(b) - new Date(a));
+  if (days.length === 0) {
+    $('archiveSection').innerHTML = `<div class="loading"><i class="fas fa-inbox"></i><p>${currentLang==='ar'?'لا يوجد أرشيف بعد':'No archive yet'}</p></div>`;
+    return;
+  }
+  $('archiveSection').innerHTML = days.map(day => {
+    const d = new Date(day);
+    const greg = d.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    let hijri = '';
+    try { hijri = d.toLocaleDateString(currentLang==='ar'?'ar-SA-u-ca-islamic-umalqura':'en-US-u-ca-islamic-umalqura',{calendar:'islamic-umalqura',year:'numeric',month:'long',day:'numeric'}); } catch(e){}
+    const items = archive[day];
+    return `<div class="archive-day" onclick="this.classList.toggle('open')">
+      <div class="archive-day-header">
+        <div><div class="archive-day-date">${greg}</div><div class="archive-day-hijri">${hijri}</div></div>
+        <div class="archive-day-count"><i class="fas fa-newspaper"></i> ${items.length} ${currentLang==='ar'?'خبر':'articles'}</div>
+      </div>
+      <div class="archive-articles">${items.map(a => `<div class="archive-article"><a href="${a.link}" target="_blank" rel="noopener">${a.title}</a><div class="arc-meta">${a.source}</div></div>`).join('')}</div>
+    </div>`;
+  }).join('');
+}
 
-            // --- Ticker Controls ---
-            function applyTickerSpeed(speed) {
-                tickerSpeed = parseInt(speed, 10);
-                tickerSpeedValue.textContent = speed + 's';
-                ticker.style.animationDuration = speed + 's';
-            }
+// ============================================================
+// SEARCH
+// ============================================================
+let searchQuery = '';
+let sourceQuery = '';
+$('searchInput').addEventListener('input', e => { searchQuery = e.target.value.toLowerCase().trim(); applyFilters(); });
+$('sourceFilter').addEventListener('change', e => { sourceQuery = e.target.value; applyFilters(); });
+$('clearSearch').addEventListener('click', () => {
+  $('searchInput').value = ''; $('sourceFilter').value = '';
+  searchQuery = ''; sourceQuery = '';
+  applyFilters();
+});
+function applyFilters() {
+  let result = [...allArticles];
+  if (searchQuery) result = result.filter(a =>
+    (a.title || '').toLowerCase().includes(searchQuery) ||
+    (a.description || '').toLowerCase().includes(searchQuery)
+  );
+  if (sourceQuery) result = result.filter(a => a.source === sourceQuery);
+  filteredArticles = result;
+  const info = $('searchInfo');
+  if (searchQuery || sourceQuery) {
+    info.textContent = `${result.length} ${currentLang==='ar'?'نتيجة':'results'}`;
+    info.classList.add('show');
+  } else info.classList.remove('show');
+  if (currentTab === 'live') renderArticles(result);
+}
+function populateSourceFilter(articles) {
+  const sources = [...new Set(articles.map(a => a.source).filter(Boolean))].sort();
+  const sel = $('sourceFilter');
+  sel.innerHTML = `<option value="">${currentLang==='ar'?'كل المصادر':'All Sources'}</option>` +
+    sources.map(s => `<option value="${s}">${s}</option>`).join('');
+}
 
-            function applyTickerFontSize(size) {
-                tickerFontSize = parseInt(size, 10);
-                tickerFontSizeValue.textContent = size + 'px';
-                ticker.style.fontSize = size + 'px';
-            }
+// ============================================================
+// FETCH NEWS
+// ============================================================
+async function fetchNews(force) {
+  if (!force && Date.now() - lastFetch < FETCH_INTERVAL) return;
+  $('newsGrid').innerHTML = `<div class="loading"><i class="fas fa-circle-notch"></i><p>${currentLang==='ar'?'جاري جلب الأخبار...':'Fetching live news...'}</p></div>`;
+  $('apiStatus').textContent = currentLang==='ar'?'⏳ جاري الجلب...':'⏳ Fetching...';
+  $('apiStatus').style.color = 'var(--text-muted)';
+  try {
+    const base = WORKER_URL.replace(/\/$/, '');
+    const res = await fetch(`${base}/?lang=${currentLang}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (!data.articles || data.articles.length === 0) throw new Error('No articles');
+    allArticles = data.articles;
+    filteredArticles = [...allArticles];
+    populateSourceFilter(allArticles);
+    addToArchive(allArticles);
+    renderArticles(allArticles);
+    updateTicker(allArticles);
+    lastFetch = Date.now();
+    $('apiStatus').textContent = `✅ ${currentLang==='ar'?'مباشر':'Live'} · ${new Date().toLocaleTimeString()}`;
+    $('apiStatus').style.color = '#7dffcc';
+  } catch(e) {
+    console.error(e);
+    $('newsGrid').innerHTML = `<div class="loading"><i class="fas fa-exclamation-triangle" style="color:#ff4d6d"></i><p>${currentLang==='ar'?'فشل التحميل':'Failed'}: ${e.message}</p></div>`;
+    $('apiStatus').textContent = '❌ ' + e.message;
+    $('apiStatus').style.color = '#ff4d6d';
+  }
+}
 
-            // --- Date & Time (with dual Hijri display) ---
-            function updateDateTime() {
-                const now = new Date();
+// ============================================================
+// RENDER ARTICLES
+// ============================================================
+function renderArticles(articles) {
+  $('newsGrid').innerHTML = '';
+  if (articles.length === 0) {
+    $('newsGrid').innerHTML = `<div class="loading"><i class="fas fa-search"></i><p>${currentLang==='ar'?'لا توجد نتائج':'No results found'}</p></div>`;
+    return;
+  }
+  articles.forEach((a, i) => {
+    const card = document.createElement('div');
+    card.className = 'news-card';
+    card.style.animationDelay = (i * 0.03) + 's';
+    const src = a.source || 'News';
+    const url = a.link || '#';
+    const title = a.title || '';
+    const desc = a.description || '';
+    const dt = new Date(a.pubDate);
+    const dateStr = isNaN(dt.getTime()) ? '' : dt.toLocaleString('en-US');
+    const diffMin = isNaN(dt.getTime()) ? 0 : Math.floor((Date.now() - dt.getTime()) / 60000);
+    let timeAgo = '';
+    if (diffMin < 1) timeAgo = currentLang==='ar'?'الآن':'just now';
+    else if (diffMin < 60) timeAgo = currentLang==='ar'?`منذ ${diffMin} دقيقة`:`${diffMin}m ago`;
+    else if (diffMin < 1440) timeAgo = currentLang==='ar'?`منذ ${Math.floor(diffMin/60)} ساعة`:`${Math.floor(diffMin/60)}h ago`;
+    else timeAgo = currentLang==='ar'?`منذ ${Math.floor(diffMin/1440)} يوم`:`${Math.floor(diffMin/1440)}d ago`;
+    const readMore = currentLang==='ar'?'اقرأ الخبر':'Read Story';
+    const expandHint = currentLang==='ar'?'اضغط للتفاصيل':'Click for details';
+    const closeLabel = currentLang==='ar'?'إغلاق':'Close';
+    card.setAttribute('data-source', src);
+    card.innerHTML = `
+      <div class="news-source"><div class="source-logo"><i class="fas fa-newspaper"></i></div><span>${src}</span></div>
+      <div class="news-title">${title}</div>
+      <div class="news-desc">${desc.substring(0,150)}${desc.length>150?'...':''}</div>
+      <div class="news-details"><div class="news-details-inner"><p><strong>${currentLang==='ar'?'الوصف الكامل':'Full description'}:</strong></p><p>${desc || (currentLang==='ar'?'لا يوجد وصف متاح':'No description available')}</p></div></div>
+      <div class="news-footer">
+        <div class="news-time"><i class="far fa-clock"></i> ${timeAgo} · ${dateStr}</div>
+        <a href="${url}" target="_blank" rel="noopener" class="news-link" onclick="event.stopPropagation()"><i class="fas fa-external-link-alt"></i> ${readMore}</a>
+      </div>
+      <button class="close-btn" onclick="event.stopPropagation(); this.closest('.news-card').classList.remove('expanded');"><i class="fas fa-arrow-left"></i> ${closeLabel}</button>
+      <div class="expand-hint"><i class="fas fa-chevron-down"></i> ${expandHint}</div>
+    `;
+    card.onclick = e => {
+      if (e.target.closest('.news-link') || e.target.closest('.close-btn')) return;
+      card.classList.toggle('expanded');
+    };
+    $('newsGrid').appendChild(card);
+  });
+}
 
-                // Gregorian
-                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                const gregorianStr = now.toLocaleDateString('en-US', options);
-                gregorianDateEl.textContent = gregorianStr;
+function updateTicker(articles) {
+  const top = articles.slice(0, 6);
+  const items = top.map(a => `<span><i class="fas fa-circle"></i> ${a.title}</span>`).join('');
+  $('ticker').innerHTML = items + items;
+}
 
-                // Hijri in current language
-                try {
-                    const hijriOptions = { calendar: 'islamic-umalqura', year: 'numeric', month: 'long', day: 'numeric' };
-                    const hijriStr = now.toLocaleDateString(currentLang === 'ar' ? 'ar-SA-u-ca-islamic-umalqura' : 'en-US-u-ca-islamic-umalqura', hijriOptions);
-                    hijriDateEl.textContent = hijriStr;
-                } catch (e) {
-                    hijriDateEl.textContent = '15 Shawwal 1446 AH';
-                }
+// ============================================================
+// REFRESH & INIT
+// ============================================================
+$('refreshBtn').onclick = () => {
+  $('refreshBtn').classList.add('spinning');
+  lastFetch = 0;
+  fetchNews(true).finally(() => setTimeout(() => $('refreshBtn').classList.remove('spinning'), 800));
+};
 
-                // Always show English Hijri as secondary
-                try {
-                    const hijriEnOptions = { calendar: 'islamic-umalqura', year: 'numeric', month: 'long', day: 'numeric' };
-                    const hijriEnStr = now.toLocaleDateString('en-US-u-ca-islamic-umalqura', hijriEnOptions);
-                    hijriDateEnEl.textContent = hijriEnStr;
-                } catch (e) {
-                    hijriDateEnEl.textContent = '15 Shawwal 1446 AH';
-                }
-
-                // Time
-                const timeStr = now.toLocaleTimeString(currentLang === 'ar' ? 'ar-SA' : 'en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                currentTimeEl.textContent = timeStr;
-
-                updateDynamicBackground();
-            }
-
-            // --- Prayer Times ---
-            function updatePrayerTimes() {
-                const method = calcMethodSelect.value;
-                const methods = {
-                    MWL: { fajr: '04:48', dhuhr: '12:15', asr: '15:38', maghrib: '18:52', isha: '20:12' },
-                    ISNA: { fajr: '05:02', dhuhr: '12:20', asr: '15:45', maghrib: '18:58', isha: '20:20' },
-                    EGY: { fajr: '04:35', dhuhr: '12:05', asr: '15:28', maghrib: '18:45', isha: '20:05' },
-                    UmmAlQura: { fajr: '04:55', dhuhr: '12:22', asr: '15:50', maghrib: '19:05', isha: '20:25' },
-                    Karachi: { fajr: '04:40', dhuhr: '12:10', asr: '15:30', maghrib: '18:48', isha: '20:08' },
-                    Tehran: { fajr: '04:30', dhuhr: '12:00', asr: '15:20', maghrib: '18:40', isha: '20:00' },
-                    Dubai: { fajr: '04:50', dhuhr: '12:18', asr: '15:42', maghrib: '18:58', isha: '20:18' },
-                    Kuwait: { fajr: '04:45', dhuhr: '12:12', asr: '15:35', maghrib: '18:50', isha: '20:10' },
-                    Qatar: { fajr: '04:47', dhuhr: '12:16', asr: '15:40', maghrib: '18:54', isha: '20:14' },
-                    Turkey: { fajr: '04:55', dhuhr: '12:25', asr: '15:48', maghrib: '19:02', isha: '20:22' }
-                };
-                const times = methods[method] || methods.MWL;
-                const labels = currentLang === 'ar' ?
-                    { fajr: 'الفجر', dhuhr: 'الظهر', asr: 'العصر', maghrib: 'المغرب', isha: 'العشاء' } :
-                    { fajr: 'Fajr', dhuhr: 'Dhuhr', asr: 'Asr', maghrib: 'Maghrib', isha: 'Isha' };
-                prayerTimesEl.innerHTML = `
-                    <span>${labels.fajr} ${times.fajr}</span>
-                    <span>${labels.dhuhr} ${times.dhuhr}</span>
-                    <span>${labels.asr} ${times.asr}</span>
-                    <span>${labels.maghrib} ${times.maghrib}</span>
-                    <span>${labels.isha} ${times.isha}</span>
-                `;
-            }
-
-            // --- Update Ticker ---
-            function updateTicker() {
-                // Ticker content based on current language
-                const tickerEn = [
-                    'LIVE: Global markets rally on AI breakthroughs',
-                    'BREAKING: Ceasefire talks show progress in Cairo',
-                    'URGENT: Oil prices surge amid supply concerns',
-                    'LIVE: AI Summit in Riyadh draws global leaders',
-                    'BREAKING: Quantum computing breakthrough announced'
-                ];
-                const tickerAr = [
-                    'عاجل: قمة الذكاء الاصطناعي تختتم أعمالها باتفاقيات تاريخية',
-                    'عاجل: ارتفاع أسعار النفط وسط توترات الإمدادات',
-                    'عاجل: استئناف محادثات وقف إطلاق النار في القاهرة',
-                    'عاجل: اختراق في الحوسبة الكمومية',
-                    'عاجل: دبي تكشف عن شبكة تاكسي طائر'
-                ];
-                const items = currentLang === 'ar' ? tickerAr : tickerEn;
-                let html = '';
-                // Duplicate for seamless loop
-                [...items, ...items].forEach(item => {
-                    html += `<span><i class="fas fa-circle"></i> ${item}</span>`;
-                });
-                ticker.innerHTML = html;
-            }
-
-            // --- News Data ---
-            const newsSourcesEn = [
-                { name: 'BBC World', icon: 'fa-globe', url: 'https://www.bbc.com/news' },
-                { name: 'Al Jazeera', icon: 'fa-tower-broadcast', url: 'https://www.aljazeera.com' },
-                { name: 'CNN', icon: 'fa-newspaper', url: 'https://www.cnn.com' },
-                { name: 'Al Arabiya', icon: 'fa-satellite-dish', url: 'https://www.alarabiya.net' },
-                { name: 'Reuters', icon: 'fa-reuters', url: 'https://www.reuters.com' },
-                { name: 'AP', icon: 'fa-ap', url: 'https://apnews.com' },
-                { name: 'France24', icon: 'fa-france', url: 'https://www.france24.com' },
-                { name: 'DW', icon: 'fa-dw', url: 'https://www.dw.com' },
-                { name: 'Sky News Arabia', icon: 'fa-skyatlas', url: 'https://www.skynewsarabia.com' },
-                { name: 'RT Arabic', icon: 'fa-rt', url: 'https://arabic.rt.com' }
-            ];
-            const newsSourcesAr = [
-                { name: 'بي بي سي عربي', icon: 'fa-globe', url: 'https://www.bbc.com/arabic' },
-                { name: 'الجزيرة', icon: 'fa-tower-broadcast', url: 'https://www.aljazeera.net' },
-                { name: 'سي إن إن', icon: 'fa-newspaper', url: 'https://arabic.cnn.com' },
-                { name: 'العربية', icon: 'fa-satellite-dish', url: 'https://www.alarabiya.net' },
-                { name: 'رويترز', icon: 'fa-reuters', url: 'https://www.reuters.com/ar' },
-                { name: 'أسوشيتد برس', icon: 'fa-ap', url: 'https://apnews.com' },
-                { name: 'فرانس 24', icon: 'fa-france', url: 'https://www.france24.com/ar' },
-                { name: 'DW', icon: 'fa-dw', url: 'https://www.dw.com/ar' },
-                { name: 'سكاي نيوز عربية', icon: 'fa-skyatlas', url: 'https://www.skynewsarabia.com' },
-                { name: 'RT عربي', icon: 'fa-rt', url: 'https://arabic.rt.com' }
-            ];
-
-            const headlinesEn = [
-                { title: 'AI Summit in Riyadh draws global leaders', desc: 'Major agreements on ethical AI frameworks signed by 40 nations.', details: 'The two-day summit concluded with the Riyadh Declaration, a comprehensive framework for responsible AI development. Signatory nations committed to establishing shared safety standards and transparency protocols. A $10 billion fund was announced to support AI research in developing countries. The next summit will be held in Geneva in 2026.', sourceIdx: 0 },
-                { title: 'Ceasefire talks resume in Cairo', desc: 'Mediators optimistic as both sides return to negotiation table.', details: 'Egyptian and Qatari mediators expressed cautious optimism after both delegations agreed to a 72-hour humanitarian pause. The talks focus on prisoner exchanges and humanitarian corridors. International observers will monitor compliance. A follow-up meeting is scheduled for tomorrow morning.', sourceIdx: 1 },
-                { title: 'Oil prices surge amid supply concerns', desc: 'Brent crude reaches $95 as OPEC+ considers production cuts.', details: 'Brent crude futures rose 4.2% to $95.30 per barrel, the highest in six months. OPEC+ members are reportedly considering a 1 million barrel per day reduction. Analysts warn of potential impact on global inflation. The cartel meets next week in Vienna to finalize the decision.', sourceIdx: 4 },
-                { title: 'Breakthrough in quantum computing', desc: 'New chip promises 100x speed for AI training models.', details: 'Researchers at MIT and Google Quantum AI unveiled a 1,000-qubit processor that maintains coherence for record time. This breakthrough could reduce AI training time from weeks to hours. Commercial applications are expected within three years. The team published their findings in Nature today.', sourceIdx: 2 },
-                { title: 'Dubai unveils flying taxi network', desc: 'First commercial routes expected by late 2026.', details: 'The Dubai Roads and Transport Authority signed agreements with three eVTOL manufacturers. Initial routes will connect the airport to Palm Jumeirah and Downtown. Each taxi will carry four passengers at speeds up to 300 km/h. Ticket prices are expected to be competitive with premium ride-hailing services.', sourceIdx: 3 },
-                { title: 'UN warns of humanitarian crisis', desc: 'Aid agencies seek $2.5B for conflict-affected regions.', details: 'The United Nations Office for the Coordination of Humanitarian Affairs reported that 12 million people require urgent assistance. Food insecurity has reached critical levels in three provinces. Aid convoys have been delayed by security concerns. A donor conference will be held in Geneva next month.', sourceIdx: 5 },
-                { title: 'Mars mission returns first samples', desc: 'NASA and ESA collaborate on historic retrieval.', details: 'The Mars Sample Return mission successfully launched from Jezero Crater with 30 rock and soil samples. The capsule will rendezvous with an orbiter in 2027 before returning to Earth in 2028. Scientists hope to find evidence of ancient microbial life. The samples will be quarantined for study at a specialized facility.', sourceIdx: 6 },
-                { title: 'Global markets rally on tech earnings', desc: 'Nasdaq hits record high as AI stocks soar.', details: 'The Nasdaq Composite closed at an all-time high of 22,450 points, driven by strong earnings from major tech companies. AI-related stocks gained an average of 8%. Investors remain optimistic about the sector despite regulatory concerns. The Dow Jones also rose 1.2% to 42,100.', sourceIdx: 7 },
-                { title: 'Water crisis talks in Amman', desc: 'Regional leaders discuss desalination and sharing agreements.', details: 'Jordan, Israel, and the Palestinian Authority held trilateral talks on water sharing. A proposed desalination plant in Aqaba would serve all three parties. The World Bank pledged $500 million in financing. An agreement is expected to be signed within six months.', sourceIdx: 8 },
-                { title: 'Cultural festival opens in Sharjah', desc: 'Celebrating Arabic calligraphy and digital art.', details: 'The 12th Sharjah Calligraphy Biennial opened with 450 artists from 35 countries. This year\'s theme is "Digital Souls," blending traditional calligraphy with AI-generated art. Workshops and exhibitions will run for three weeks. Entry is free to the public.', sourceIdx: 9 }
-            ];
-
-            const headlinesAr = [
-                { title: 'قمة الذكاء الاصطناعي في الرياض تجمع قادة العالم', desc: 'توقيع اتفاقيات كبرى حول أطر أخلاقيات الذكاء الاصطناعي من 40 دولة.', details: 'اختتمت القمة التي استمرت يومين بإعلان الرياض، وهو إطار شامل لتطوير الذكاء الاصطناعي المسؤول. التزمت الدول الموقعة بوضع معايير سلامة مشتركة وبروتوكولات شفافية. تم الإعلان عن صندوق بقيمة 10 مليارات دولار لدعم أبحاث الذكاء الاصطناعي في الدول النامية. ستعقد القمة المقبلة في جنيف عام 2026.', sourceIdx: 0 },
-                { title: 'استئناف محادثات وقف إطلاق النار في القاهرة', desc: 'وسطاء متفائلون مع عودة الطرفين إلى طاولة المفاوضات.', details: 'أعرب الوسطاء المصريون والقطريون عن تفاؤل حذر بعد موافقة الوفدين على هدنة إنسانية لمدة 72 ساعة. تركز المحادثات على تبادل الأسرى والممرات الإنسانية. سيراقب مراقبون دوليون عملية الالتزام. ومن المقرر عقد اجتماع متابعة صباح الغد.', sourceIdx: 1 },
-                { title: 'ارتفاع أسعار النفط وسط مخاوف الإمدادات', desc: 'خام برنت يصل إلى 95 دولاراً مع تفكير أوبك+ في خفض الإنتاج.', details: 'ارتفعت العقود الآجلة لخام برنت بنسبة 4.2% لتصل إلى 95.30 دولاراً للبرميل، وهو أعلى مستوى في ستة أشهر. يُقال إن أعضاء أوبك+ يفكرون في خفض الإنتاج بمليون برميل يومياً. يحذر المحللون من تأثير محتمل على التضخم العالمي. يجتمع الكارتل الأسبوع المقبل في فيينا لاتخاذ القرار النهائي.', sourceIdx: 4 },
-                { title: 'اختراق في الحوسبة الكمومية', desc: 'شريحة جديدة تعد بسرعة 100 ضعف لتدريب نماذج الذكاء الاصطناعي.', details: 'كشف باحثون في معهد ماساتشوستس للتكنولوجيا وجوجل كوانتم إيه آي عن معالج بـ 1000 كيوبت يحافظ على التماسك لفترة قياسية. قد يقلل هذا الاختراق وقت تدريب الذكاء الاصطناعي من أسابيع إلى ساعات. من المتوقع تطبيقات تجارية خلال ثلاث سنوات. نشر الفريق نتائجه في مجلة نيتشر اليوم.', sourceIdx: 2 },
-                { title: 'دبي تكشف عن شبكة تاكسي طائر', desc: 'من المتوقع تشغيل أولى الرحلات التجارية بحلول أواخر 2026.', details: 'وقعت هيئة الطرق والمواصلات في دبي اتفاقيات مع ثلاث شركات مصنعة للطائرات الكهربائية. ستربط الرحلات الأولية المطار بنخلة جميرا ووسط المدينة. ستتسع كل سيارة أجرة لأربعة ركاب بسرعات تصل إلى 300 كم/ساعة. من المتوقع أن تكون أسعار التذاكر منافسة لخدمات النقل الفاخرة.', sourceIdx: 3 },
-                { title: 'الأمم المتحدة تحذر من أزمة إنسانية', desc: 'وكالات الإغاثة تسعى لجمع 2.5 مليار دولار للمناطق المتضررة.', details: 'أفاد مكتب الأمم المتحدة لتنسيق الشؤون الإنسانية أن 12 مليون شخص يحتاجون إلى مساعدة عاجلة. وصل انعدام الأمن الغذائي إلى مستويات حرجة في ثلاث محافظات. تأخرت قوافل المساعدات بسبب مخاوف أمنية. سيعقد مؤتمر للمانحين في جنيف الشهر المقبل.', sourceIdx: 5 },
-                { title: 'مهمة المريخ تعيد أولى العينات', desc: 'ناسا ووكالة الفضاء الأوروبية تتعاونان في عملية استرجاع تاريخية.', details: 'انطلقت مهمة إعادة عينات المريخ بنجاح من فوهة جيزيرو حاملة 30 عينة من الصخور والتربة. ستلتقي الكبسولة بمدار في 2027 قبل العودة إلى الأرض في 2028. يأمل العلماء في العثور على أدلة على حياة ميكروبية قديمة. سيتم وضع العينات في حجر صحي لدراستها في منشأة متخصصة.', sourceIdx: 6 },
-                { title: 'الأسواق العالمية ترتفع بفضل أرباح التكنولوجيا', desc: 'ناسداك يسجل رقماً قياسياً مع ارتفاع أسهم الذكاء الاصطناعي.', details: 'أغلق مؤشر ناسداك المركب عند أعلى مستوى له على الإطلاق عند 22,450 نقطة، مدفوعاً بأرباح قوية من شركات التكنولوجيا الكبرى. ارتفعت أسهم الذكاء الاصطناعي بمتوسط 8%. لا يزال المستثمرون متفائلين بشأن القطاع رغم المخاوف التنظيمية. كما ارتفع مؤشر داو جونز بنسبة 1.2% إلى 42,100.', sourceIdx: 7 },
-                { title: 'محادثات أزمة المياه في عمّان', desc: 'قادة المنطقة يناقشون تحلية المياه واتفاقيات تقاسم المياه.', details: 'عقدت الأردن وإسرائيل والسلطة الفلسطينية محادثات ثلاثية حول تقاسم المياه. ستحدمحطة تحلية مقترحة في العقبة جميع الأطراف الثلاثة. تعهد البنك الدولي بتمويل بقيمة 500 مليون دولار. من المتوقع توقيع اتفاقية خلال ستة أشهر.', sourceIdx: 8 },
-                { title: 'مهرجان ثقافي يفتتح في الشارقة', desc: 'احتفاء بالخط العربي والفن الرقمي.', details: 'افتتحت الدورة الثانية عشرة لبينالي الشارقة للخط العربي بمشاركة 450 فناناً من 35 دولة. موضوع هذا العام هو "أرواح رقمية"، وهو مزيج بين الخط التقليدي والفن المولّد بالذكاء الاصطناعي. ستستمر ورش العمل والمعارض لمدة ثلاثة أسابيع. الدخول مجاني للجمهور.', sourceIdx: 9 }
-            ];
-
-            // --- Archive: Store news history by day ---
-            function addToArchive() {
-                const today = new Date();
-                const dateKey = today.toISOString().split('T')[0];
-                const headlines = currentLang === 'ar' ? headlinesAr : headlinesEn;
-                const sources = currentLang === 'ar' ? newsSourcesAr : newsSourcesEn;
-
-                // Check if today's entry exists
-                let todayEntry = newsHistory.find(entry => entry.dateKey === dateKey && entry.lang === currentLang);
-                if (!todayEntry) {
-                    todayEntry = {
-                        dateKey: dateKey,
-                        lang: currentLang,
-                        date: today.toLocaleDateString(currentLang === 'ar' ? 'ar-SA' : 'en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
-                        hijri: today.toLocaleDateString(currentLang === 'ar' ? 'ar-SA-u-ca-islamic-umalqura' : 'en-US-u-ca-islamic-umalqura', { calendar: 'islamic-umalqura', year: 'numeric', month: 'long', day: 'numeric' }),
-                        articles: []
-                    };
-                    newsHistory.push(todayEntry);
-                }
-
-                // Add current articles to today's archive (avoid duplicates by title)
-                headlines.forEach(item => {
-                    const exists = todayEntry.articles.some(a => a.title === item.title);
-                    if (!exists) {
-                        todayEntry.articles.push({
-                            title: item.title,
-                            desc: item.desc,
-                            details: item.details,
-                            sourceIdx: item.sourceIdx,
-                            timestamp: new Date().toISOString()
-                        });
-                    }
-                });
-
-                // Keep only last 15 days
-                const cutoff = new Date();
-                cutoff.setDate(cutoff.getDate() - 15);
-                newsHistory = newsHistory.filter(entry => new Date(entry.dateKey) >= cutoff);
-            }
-
-            // --- Render Archive ---
-            function renderArchive() {
-                // Filter archive by current language
-                const filtered = newsHistory.filter(entry => entry.lang === currentLang);
-                // Sort newest first
-                filtered.sort((a, b) => new Date(b.dateKey) - new Date(a.dateKey));
-
-                archiveGrid.innerHTML = '';
-
-                if (filtered.length === 0) {
-                    archiveGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:2rem; color:var(--text-muted); font-weight:700;">
-                        ${currentLang === 'ar' ? 'لا توجد أخبار محفوظة بعد' : 'No archived news yet'}
-                    </div>`;
-                    return;
-                }
-
-                filtered.forEach(entry => {
-                    const dayDiv = document.createElement('div');
-                    dayDiv.className = 'archive-day';
-                    const articleCount = entry.articles.length;
-                    const countLabel = currentLang === 'ar' ? `${articleCount} خبر` : `${articleCount} articles`;
-                    dayDiv.innerHTML = `
-                        <div class="archive-day-date">${entry.date}</div>
-                        <div class="archive-day-hijri">${entry.hijri}</div>
-                        <div class="archive-day-count"><i class="fas fa-newspaper"></i> ${countLabel}</div>
-                    `;
-                    dayDiv.addEventListener('click', () => {
-                        // Show a summary alert (could be expanded to full view)
-                        const titles = entry.articles.map(a => '• ' + a.title).join('\n');
-                        alert(`${entry.date}\n${entry.hijri}\n\n${titles}`);
-                    });
-                    archiveGrid.appendChild(dayDiv);
-                });
-            }
-
-            // --- Render News (newest on top) ---
-            function renderNews() {
-                const headlines = currentLang === 'ar' ? headlinesAr : headlinesEn;
-                const sources = currentLang === 'ar' ? newsSourcesAr : newsSourcesEn;
-
-                newsUpdateCounter++;
-                const shuffled = [...headlines].sort(() => Math.random() - 0.5);
-
-                newsGrid.innerHTML = '';
-
-                shuffled.forEach((item, idx) => {
-                    const source = sources[item.sourceIdx % sources.length];
-                    const card = document.createElement('div');
-                    card.className = 'news-card';
-                    card.style.animationDelay = (idx * 0.08) + 's';
-                    card.setAttribute('data-source-icon', source.icon);
-
-                    const now = new Date();
-                    const newsTime = new Date(now.getTime() - Math.random() * 3600000);
-                    const timeStr = newsTime.toLocaleTimeString(currentLang === 'ar' ? 'ar-SA' : 'en-US', {
-                        hour: '2-digit', minute: '2-digit', hour12: true
-                    });
-                    const dateStr = newsTime.toLocaleDateString(currentLang === 'ar' ? 'ar-SA' : 'en-US', {
-                        month: 'short', day: 'numeric', year: 'numeric'
-                    });
-
-                    const timeAgo = currentLang === 'ar' ? 'منذ لحظات' : 'moments ago';
-                    const expandHint = currentLang === 'ar' ? 'اضغط لعرض التفاصيل' : 'Click for details';
-                    const sourceLink = currentLang === 'ar' ? 'المصدر' : 'Source';
-                    const liveText = currentLang === 'ar' ? 'مباشر' : 'LIVE';
-
-                    // Get source name for display
-                    const sourceName = source.name;
-                    const sourceSub = currentLang === 'ar' ? 'مصدر موثوق' : 'Verified Source';
-
-                    card.innerHTML = `
-                        <div class="news-source">
-                            <div class="news-source-logo"><i class="fas ${source.icon}"></i></div>
-                            <div class="news-source-text">
-                                <span class="news-source-name">${sourceName}</span>
-                                <span class="news-source-sub">${sourceSub}</span>
-                            </div>
-                            <span class="live-badge" style="margin-left:auto;">${liveText}</span>
-                        </div>
-                        <div class="news-title">${item.title}</div>
-                        <div class="news-desc">${item.desc}</div>
-                        <div class="news-details">
-                            <div class="news-details-inner">
-                                <p><strong>${currentLang === 'ar' ? 'التفاصيل' : 'Details'}:</strong> ${item.details}</p>
-                            </div>
-                        </div>
-                        <div class="news-footer">
-                            <div class="news-time">
-                                <i class="far fa-clock"></i> ${dateStr} · ${timeStr} <span style="color:var(--accent3);font-weight:800;margin-left:4px;">${timeAgo}</span>
-                            </div>
-                            <a href="${source.url}" target="_blank" rel="noopener" class="news-link" onclick="event.stopPropagation();">
-                                <i class="fas fa-external-link-alt"></i> ${sourceLink}
-                            </a>
-                        </div>
-                        <div class="expand-hint"><i class="fas fa-chevron-down"></i> ${expandHint}</div>
-                    `;
-
-                    card.addEventListener('click', (e) => {
-                        if (e.target.closest('.news-link')) return;
-                        card.classList.toggle('expanded');
-                    });
-
-                    newsGrid.appendChild(card);
-                });
-
-                applyFontSize(currentFontSize);
-                applyFontFamily();
-
-                // Add to archive on each render
-                addToArchive();
-                renderArchive();
-            }
-
-            // --- Initialization ---
-            function init() {
-                createParticles();
-
-                // Set default language
-                setLanguage('en');
-
-                // Theme switcher
-                document.querySelectorAll('.theme-dot').forEach(dot => {
-                    dot.addEventListener('click', () => {
-                        setTheme(dot.dataset.theme);
-                    });
-                });
-
-                // Archive toggle
-                archiveToggle.addEventListener('click', () => {
-                    archiveGrid.classList.toggle('open');
-                    const isOpen = archiveGrid.classList.contains('open');
-                    archiveToggle.querySelector('i').className = isOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
-                    archiveToggleText.textContent = isOpen ?
-                        (currentLang === 'ar' ? 'إخفاء الأرشيف' : 'Hide Archive') :
-                        (currentLang === 'ar' ? 'عرض الأرشيف' : 'Show Archive');
-                });
-
-                // Initialize datetime updater
-                updateDateTime();
-                setInterval(updateDateTime, 1000);
-
-                // Prayer times
-                updatePrayerTimes();
-                calcMethodSelect.addEventListener('change', updatePrayerTimes);
-
-                // Font family
-                fontFamilySelect.addEventListener('change', applyFontFamily);
-                // Font size
-                fontSizeInput.addEventListener('input', (e) => {
-                    sizeValueSpan.textContent = e.target.value + 'px';
-                    applyFontSize(e.target.value);
-                });
-
-                // Ticker controls
-                tickerSpeedInput.addEventListener('input', (e) => {
-                    tickerSpeedValue.textContent = e.target.value + 's';
-                    applyTickerSpeed(e.target.value);
-                });
-                tickerFontSizeInput.addEventListener('input', (e) => {
-                    tickerFontSizeValue.textContent = e.target.value + 'px';
-                    applyTickerFontSize(e.target.value);
-                });
-
-                // Language buttons
-                langEnBtn.addEventListener('click', () => setLanguage('en'));
-                langArBtn.addEventListener('click', () => setLanguage('ar'));
-
-                // Apply initial font
-                applyFontFamily();
-                applyFontSize(16);
-                applyTickerSpeed(20);
-                applyTickerFontSize(18);
-
-                // Update background periodically
-                setInterval(updateDynamicBackground, 4000);
-
-                // Render news initially
-                renderNews();
-
-                // === NEWS AUTO-REFRESH EVERY 20 SECONDS ===
-                setInterval(() => {
-                    renderNews();
-                    updateTicker();
-                }, 20000);
-
-                // Ticker restart
-                setInterval(() => {
-                    ticker.style.animation = 'none';
-                    ticker.offsetHeight;
-                    ticker.style.animation = `tickerScroll ${tickerSpeed}s linear infinite`;
-                }, 40000);
-            }
-
-            init();
-        })();
-    </script>
+(function init() {
+  const restored = restoreSettings();
+  updateUILabels();
+  populateModalCountries();
+  if (restored && restored.country) {
+    populateModalCities(restored.country);
+    if (restored.city) {
+      $('modalCity').value = restored.city;
+      $('prayerBtnSub').textContent = `${restored.city}, ${restored.country}`;
+    }
+  }
+  fetchNews(true);
+  setInterval(() => fetchNews(false), 60000);
+})();
+</script>
 </body>
 </html>
