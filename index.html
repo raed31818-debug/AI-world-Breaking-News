@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>عاجل | Breaking AI News</title>
+<title>World Breaking News Aggregator | مجمع الأخبار العاجلة العالمية</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Kufi+Arabic:wght@400;700;900&family=Tajawal:wght@400;700;900&family=Cairo:wght@400;700;900&family=Amiri:wght@400;700&family=Amiri+Quran&family=Aref+Ruqaa:wght@400;700&family=Readex+Pro:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
@@ -37,10 +37,11 @@ body[data-bg="mesh"] .bg-animated{background:radial-gradient(at 40% 20%,#2a1a4a 
 @keyframes particleFloat{0%{transform:translateY(100vh)}100%{transform:translateY(-10vh)}}
 .app{display:flex;flex-direction:column;min-height:100vh;padding:1.2rem 2rem;max-width:1600px;margin:0 auto;width:100%;position:relative;z-index:1}
 .header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;padding:1rem 0 1.5rem;border-bottom:2px solid var(--card-border);margin-bottom:1.5rem;gap:1rem}
-.logo{display:flex;align-items:center;gap:12px;font-size:calc(2rem * var(--font-scale));font-weight:900}
+.logo{display:flex;align-items:center;gap:12px;font-size:calc(1.5rem * var(--font-scale));font-weight:900}
 .logo i{color:var(--accent1);filter:drop-shadow(0 0 15px var(--accent1));animation:pulse 1.5s infinite alternate}
 @keyframes pulse{to{filter:drop-shadow(0 0 25px var(--accent1))}}
-.logo-text{background:linear-gradient(135deg,#fff,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo-text{background:linear-gradient(135deg,#fff,var(--accent2),var(--accent3));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradShift 4s ease infinite;line-height:1.2}
+@keyframes gradShift{50%{background-position:100% 50%}}
 .lang-toggle{display:flex;background:rgba(20,25,40,.9);border-radius:50px;padding:5px;border:2px solid var(--card-border)}
 .lang-btn{padding:.6rem 1.5rem;border:none;background:transparent;color:var(--text-muted);font-weight:800;border-radius:40px;cursor:pointer;font-family:inherit;font-size:calc(1rem * var(--font-scale))}
 .lang-btn.active{background:linear-gradient(135deg,var(--accent2),var(--accent4));color:#fff}
@@ -49,8 +50,77 @@ body[data-bg="mesh"] .bg-animated{background:radial-gradient(at 40% 20%,#2a1a4a 
 .ticker{display:flex;white-space:nowrap;animation:tickerScroll 25s linear infinite;font-weight:900;font-size:calc(1rem * var(--font-scale));color:#fff}
 .ticker span{padding:0 2.5rem;display:flex;align-items:center;gap:8px}
 @keyframes tickerScroll{to{transform:translateX(-50%)}}
-/* === RADIO SECTION (Collapsible) === */
-.radio-section{background:var(--card-bg);backdrop-filter:blur(15px);border:2px solid var(--card-border);border-radius:24px;padding:1rem 1.2rem;margin-bottom:1.5rem}
+.info-bar{display:flex;flex-wrap:wrap;gap:.8rem;margin-bottom:1.2rem;align-items:stretch}
+.info-card{background:var(--card-bg);backdrop-filter:blur(15px);border:2px solid var(--card-border);border-radius:22px;padding:1rem 1.5rem;flex:1 1 280px;display:flex;align-items:center;justify-content:space-between;gap:1rem;position:relative;overflow:hidden}
+.info-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent3),var(--accent1));background-size:300% 100%;animation:infoGlow 4s linear infinite}
+@keyframes infoGlow{0%{background-position:0% 0}100%{background-position:300% 0}}
+.date-time-wrap{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
+.date-g{font-size:calc(.85rem * var(--font-scale));font-weight:800;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.95}
+.date-h{font-size:calc(.75rem * var(--font-scale));color:var(--accent3);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.date-he{font-size:calc(.7rem * var(--font-scale));color:var(--accent2);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.85}
+.time-centered{text-align:center;padding:6px 22px;border-radius:18px;background:linear-gradient(135deg,rgba(168,85,247,.25),rgba(0,212,255,.15));border:1.5px solid var(--accent2);box-shadow:0 0 25px rgba(168,85,247,.35),inset 0 0 20px rgba(168,85,247,.1);flex-shrink:0;min-width:140px}
+.time-value{font-size:calc(1.7rem * var(--font-scale));font-weight:900;font-family:'Inter',monospace;letter-spacing:1px;color:#fff;text-shadow:0 0 15px var(--glow),0 0 30px var(--glow);line-height:1.1;background:linear-gradient(135deg,#fff,var(--accent2),var(--accent3));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradShift 4s ease infinite}
+.time-ampm{font-size:calc(.85rem * var(--font-scale));font-weight:900;color:var(--accent3);letter-spacing:2px;margin-top:2px;text-shadow:0 0 10px var(--glow)}
+.prayer-btn{background:var(--card-bg);border:2px solid var(--card-border);border-radius:22px;padding:1rem 1.5rem;flex:1 1 240px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:all .25s;text-align:start;color:var(--text-primary);font-family:inherit;gap:10px;position:relative;overflow:hidden}
+.prayer-btn::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent3),var(--accent1),var(--accent2),var(--accent3));background-size:300% 100%;animation:infoGlow 5s linear infinite}
+.prayer-btn:hover{border-color:var(--accent2);box-shadow:0 6px 25px var(--glow);transform:translateY(-2px)}
+.prayer-btn-content{display:flex;flex-direction:column;gap:3px;min-width:0}
+.prayer-btn-title{font-size:calc(.9rem * var(--font-scale));font-weight:900;color:var(--accent3);display:flex;align-items:center;gap:6px}
+.prayer-btn-sub{font-size:calc(.72rem * var(--font-scale));color:var(--text-muted);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prayer-btn-icon{font-size:1.3rem;color:var(--accent2);flex-shrink:0}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);z-index:1000;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal-content{background:var(--card-bg);border:2px solid var(--accent2);border-radius:20px;padding:1.1rem;max-width:420px;width:100%;box-shadow:0 25px 60px rgba(0,0,0,.9);animation:modalIn .3s ease;max-height:85vh;overflow-y:auto}
+@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;padding-bottom:.8rem;border-bottom:1px solid var(--card-border)}
+.modal-title{font-size:calc(1rem * var(--font-scale));font-weight:900;color:var(--accent3);display:flex;align-items:center;gap:8px}
+.modal-close{background:transparent;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;padding:4px}
+.modal-close:hover{color:#ff4d6d}
+.modal-body{display:flex;flex-direction:column;gap:.7rem}
+.modal-field{display:flex;flex-direction:column;gap:4px}
+.modal-field label{font-size:calc(.78rem * var(--font-scale));font-weight:800;color:var(--text-muted)}
+.modal-field select{background:#121a2a;border:2px solid var(--card-border);border-radius:14px;padding:8px 12px;color:#fff;font-weight:700;font-family:inherit;font-size:calc(.85rem * var(--font-scale));outline:none}
+.modal-field select:focus{border-color:var(--accent2)}
+.modal-prayer-list{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
+.modal-prayer-item{background:rgba(0,0,0,.3);border-radius:10px;padding:8px 10px;display:flex;justify-content:space-between;align-items:center;font-size:calc(.82rem * var(--font-scale));font-weight:800}
+.modal-prayer-item .name{color:var(--accent3)}
+.modal-prayer-item .time{color:#fff;font-family:'Inter',monospace}
+.modal-loading{text-align:center;padding:1rem;color:var(--text-muted);font-weight:700;grid-column:1/-1}
+.modal-date-small{background:rgba(0,0,0,.3);border-radius:10px;padding:8px 10px;font-weight:700;color:var(--accent3);font-size:calc(.8rem * var(--font-scale))}
+.source-selector{background:var(--card-bg);backdrop-filter:blur(15px);border:2px solid var(--card-border);border-radius:20px;margin-bottom:1rem;overflow:hidden}
+.source-selector-header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;cursor:pointer;background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(0,212,255,.05));transition:all .25s;user-select:none}
+.source-selector-header:hover{background:linear-gradient(135deg,rgba(168,85,247,.3),rgba(0,212,255,.1))}
+.source-selector-left{display:flex;align-items:center;gap:12px}
+.source-selector-icon{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,var(--accent1),var(--accent4));display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;flex-shrink:0;box-shadow:0 0 15px var(--glow)}
+.source-selector-title{font-size:calc(.9rem * var(--font-scale));font-weight:900;color:var(--text-primary)}
+.source-selector-count{font-size:calc(.72rem * var(--font-scale));color:var(--text-muted);font-weight:600;margin-top:2px}
+.source-selector-header .chevron{color:var(--accent2);font-size:1rem;transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.source-selector.open .chevron{transform:rotate(180deg)}
+.source-selector-body{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.4,0,.2,1)}
+.source-selector.open .source-selector-body{max-height:3000px}
+.source-selector-actions{display:flex;gap:8px;padding:10px 18px 8px;flex-wrap:wrap;border-bottom:1px solid rgba(255,255,255,.08)}
+.source-action-btn{background:rgba(168,85,247,.15);border:1.5px solid var(--accent2);color:var(--accent2);padding:6px 14px;border-radius:20px;cursor:pointer;font-weight:800;font-family:inherit;font-size:calc(.75rem * var(--font-scale));display:flex;align-items:center;gap:6px;transition:all .2s}
+.source-action-btn:hover{background:var(--accent2);color:#fff;transform:scale(1.05)}
+.source-checkboxes{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;padding:12px 18px}
+.source-checkbox{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.25);border:1.5px solid var(--card-border);border-radius:12px;padding:8px 10px;cursor:pointer;transition:all .2s;user-select:none}
+.source-checkbox:hover{border-color:var(--accent2);background:rgba(168,85,247,.1)}
+.source-checkbox.checked{border-color:var(--accent1);background:rgba(168,85,247,.2);box-shadow:0 0 10px rgba(168,85,247,.25)}
+.source-checkbox input{display:none}
+.source-checkbox-mark{width:20px;height:20px;border-radius:6px;border:2px solid var(--card-border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;background:rgba(0,0,0,.3)}
+.source-checkbox.checked .source-checkbox-mark{background:linear-gradient(135deg,var(--accent1),var(--accent4));border-color:transparent}
+.source-checkbox-mark i{color:#fff;font-size:.7rem;opacity:0;transition:opacity .2s}
+.source-checkbox.checked .source-checkbox-mark i{opacity:1}
+.source-checkbox-name{font-size:calc(.78rem * var(--font-scale));font-weight:700;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.search-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:1rem;background:var(--card-bg);backdrop-filter:blur(15px);border:2px solid var(--card-border);border-radius:24px;padding:.8rem 1.2rem;align-items:center}
+.search-bar input,.search-bar select{background:rgba(0,0,0,.4);border:2px solid var(--card-border);border-radius:20px;padding:8px 14px;color:#fff;font-weight:700;font-family:inherit;outline:none;font-size:calc(.9rem * var(--font-scale))}
+.search-bar input{flex:1;min-width:180px}
+.search-bar input:focus,.search-bar select:focus{border-color:var(--accent2);box-shadow:0 0 15px var(--glow)}
+.search-bar input::placeholder{color:var(--text-muted);opacity:.7}
+.search-bar button{background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border:none;border-radius:20px;padding:8px 16px;font-weight:800;cursor:pointer;font-family:inherit;font-size:calc(.85rem * var(--font-scale));display:flex;align-items:center;gap:6px}
+.search-bar button:hover{transform:scale(1.05);box-shadow:0 5px 20px var(--glow)}
+.search-results-info{width:100%;font-size:calc(.8rem * var(--font-scale));color:var(--text-muted);font-weight:700;margin-top:5px;display:none}
+.search-results-info.show{display:block}
+.radio-section{background:var(--card-bg);backdrop-filter:blur(15px);border:2px solid var(--card-border);border-radius:24px;padding:1rem 1.2rem;margin-bottom:1rem}
 .radio-main-title{font-size:calc(1rem * var(--font-scale));font-weight:900;color:var(--accent3);margin-bottom:.8rem;display:flex;align-items:center;gap:8px}
 .radio-main-title i{color:var(--accent2)}
 .radio-category{margin-bottom:8px;border-radius:18px;overflow:hidden;background:rgba(0,0,0,.25);border:2px solid var(--card-border)}
@@ -82,56 +152,13 @@ body[data-bg="mesh"] .bg-animated{background:radial-gradient(at 40% 20%,#2a1a4a 
 .radio-buttons{display:flex;gap:6px}
 .radio-ctrl-btn{width:36px;height:36px;border-radius:50%;background:var(--accent2);color:#fff;border:none;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .radio-ctrl-btn:hover{transform:scale(1.1);box-shadow:0 0 12px var(--glow)}
-/* === SEARCH BAR === */
-.search-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:1rem;background:var(--card-bg);backdrop-filter:blur(15px);border:2px solid var(--card-border);border-radius:24px;padding:.8rem 1.2rem;align-items:center}
-.search-bar input,.search-bar select{background:rgba(0,0,0,.4);border:2px solid var(--card-border);border-radius:20px;padding:8px 14px;color:#fff;font-weight:700;font-family:inherit;outline:none;font-size:calc(.9rem * var(--font-scale))}
-.search-bar input{flex:1;min-width:180px}
-.search-bar input:focus,.search-bar select:focus{border-color:var(--accent2);box-shadow:0 0 15px var(--glow)}
-.search-bar input::placeholder{color:var(--text-muted);opacity:.7}
-.search-bar button{background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border:none;border-radius:20px;padding:8px 16px;font-weight:800;cursor:pointer;font-family:inherit;font-size:calc(.85rem * var(--font-scale));display:flex;align-items:center;gap:6px}
-.search-bar button:hover{transform:scale(1.05);box-shadow:0 5px 20px var(--glow)}
-.search-results-info{width:100%;font-size:calc(.8rem * var(--font-scale));color:var(--text-muted);font-weight:700;margin-top:5px;display:none}
-.search-results-info.show{display:block}
-/* === INFO BAR — Compact & Responsive === */
-.info-bar{display:flex;flex-wrap:wrap;gap:.8rem;margin-bottom:1.2rem}
-.info-card{background:var(--card-bg);backdrop-filter:blur(15px);border:2px solid var(--card-border);border-radius:20px;padding:.8rem 1.2rem;flex:1 1 260px;display:flex;align-items:center;gap:1rem}
-.date-time-wrap{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}
-.date-g{font-size:calc(.9rem * var(--font-scale));font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.date-h{font-size:calc(.78rem * var(--font-scale));color:var(--accent3);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.date-he{font-size:calc(.72rem * var(--font-scale));color:var(--accent2);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.time-compact{font-size:calc(1.5rem * var(--font-scale));font-weight:900;font-family:'Inter',monospace;background:linear-gradient(135deg,#fff,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:1px;flex-shrink:0}
-/* === PRAYER BUTTON (Compact) === */
-.prayer-btn{background:var(--card-bg);border:2px solid var(--card-border);border-radius:20px;padding:.8rem 1.2rem;flex:1 1 220px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:all .25s;text-align:start;color:var(--text-primary);font-family:inherit;gap:10px}
-.prayer-btn:hover{border-color:var(--accent2);box-shadow:0 6px 20px var(--glow);transform:translateY(-2px)}
-.prayer-btn-content{display:flex;flex-direction:column;gap:2px;min-width:0}
-.prayer-btn-title{font-size:calc(.9rem * var(--font-scale));font-weight:900;color:var(--accent3);display:flex;align-items:center;gap:6px}
-.prayer-btn-sub{font-size:calc(.72rem * var(--font-scale));color:var(--text-muted);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.prayer-btn-icon{font-size:1.3rem;color:var(--accent2);flex-shrink:0}
-/* === MODAL (Compact) === */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);z-index:1000;align-items:center;justify-content:center;padding:1rem}
-.modal-overlay.open{display:flex}
-.modal-content{background:var(--card-bg);border:2px solid var(--accent2);border-radius:20px;padding:1.1rem;max-width:420px;width:100%;box-shadow:0 25px 60px rgba(0,0,0,.9);animation:modalIn .3s ease;max-height:85vh;overflow-y:auto}
-@keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
-.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;padding-bottom:.8rem;border-bottom:1px solid var(--card-border)}
-.modal-title{font-size:calc(1rem * var(--font-scale));font-weight:900;color:var(--accent3);display:flex;align-items:center;gap:8px}
-.modal-close{background:transparent;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;padding:4px}
-.modal-close:hover{color:#ff4d6d}
-.modal-body{display:flex;flex-direction:column;gap:.7rem}
-.modal-field{display:flex;flex-direction:column;gap:4px}
-.modal-field label{font-size:calc(.78rem * var(--font-scale));font-weight:800;color:var(--text-muted)}
-.modal-field select{background:#121a2a;border:2px solid var(--card-border);border-radius:14px;padding:8px 12px;color:#fff;font-weight:700;font-family:inherit;font-size:calc(.85rem * var(--font-scale));outline:none}
-.modal-field select:focus{border-color:var(--accent2)}
-.modal-prayer-list{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
-.modal-prayer-item{background:rgba(0,0,0,.3);border-radius:10px;padding:8px 10px;display:flex;justify-content:space-between;align-items:center;font-size:calc(.82rem * var(--font-scale));font-weight:800}
-.modal-prayer-item .name{color:var(--accent3)}
-.modal-prayer-item .time{color:#fff;font-family:'Inter',monospace}
-.modal-loading{text-align:center;padding:1rem;color:var(--text-muted);font-weight:700;grid-column:1/-1}
-.modal-date-small{background:rgba(0,0,0,.3);border-radius:10px;padding:8px 10px;font-weight:700;color:var(--accent3);font-size:calc(.8rem * var(--font-scale))}
-/* === CONTROLS === */
 .controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:1.2rem;background:rgba(0,0,0,.3);padding:.7rem 1.2rem;border-radius:50px;border:2px solid var(--card-border);gap:12px}
 .controls label{font-weight:800;color:var(--text-muted);font-size:calc(.8rem * var(--font-scale));display:flex;align-items:center;gap:6px}
-select,input[type=range]{background:#121a2a;border:2px solid var(--card-border);border-radius:20px;padding:6px 12px;color:#fff;font-weight:700;font-family:inherit;cursor:pointer;font-size:calc(.85rem * var(--font-scale))}
+select,input[type=range],input[type=number]{background:#121a2a;border:2px solid var(--card-border);border-radius:20px;padding:6px 12px;color:#fff;font-weight:700;font-family:inherit;cursor:pointer;font-size:calc(.85rem * var(--font-scale))}
 input[type=range]{accent-color:var(--accent2);width:90px}
+input[type=number]{width:60px;text-align:center;cursor:text;-moz-appearance:textfield}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+input[type=number]:focus{border-color:var(--accent2);outline:none;box-shadow:0 0 10px var(--glow)}
 .control-group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .dots{display:flex;gap:5px;flex-wrap:wrap}
 .dot{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,.3);transition:all .25s}
@@ -150,11 +177,9 @@ input[type=range]{accent-color:var(--accent2);width:90px}
 .dot[data-bg="nebula"]{background:linear-gradient(135deg,#a855f7,#00d4ff)}
 .dot[data-bg="geometric"]{background:conic-gradient(#1a0f2e,#2a1a4a,#1a0f2e)}
 .dot[data-bg="mesh"]{background:linear-gradient(135deg,#2a1a4a,#3a1a5a,#1a0f2e)}
-/* === TABS === */
 .tabs{display:flex;gap:8px;margin-bottom:1.2rem;flex-wrap:wrap}
 .tab{background:var(--card-bg);border:2px solid var(--card-border);color:var(--text-muted);padding:8px 18px;border-radius:50px;cursor:pointer;font-weight:800;font-family:inherit;font-size:calc(.85rem * var(--font-scale));display:flex;align-items:center;gap:8px}
 .tab.active{background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border-color:transparent;box-shadow:0 5px 20px var(--glow)}
-/* === NEWS GRID === */
 .news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1.5rem}
 .news-card{background:var(--card-bg);backdrop-filter:blur(12px);border-radius:24px;padding:1.5rem;border:2px solid var(--card-border);display:flex;flex-direction:column;gap:.8rem;position:relative;overflow:hidden;animation:fadeInUp .5s ease backwards;cursor:pointer;transition:transform .35s cubic-bezier(.4,0,.2,1),border-color .35s,box-shadow .35s}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}}
@@ -166,7 +191,6 @@ input[type=range]{accent-color:var(--accent2);width:90px}
 .news-card.expanded::before{opacity:.06;font-size:12rem;bottom:-50px;right:-40px}
 .news-source{display:flex;align-items:center;gap:8px;font-size:calc(.85rem * var(--font-scale));font-weight:800;text-transform:uppercase;color:var(--accent3);position:relative;z-index:1}
 .source-logo{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;flex-shrink:0;box-shadow:0 0 12px var(--glow);background:linear-gradient(135deg,var(--accent1),var(--accent4))}
-/* Source colors */
 .news-card[data-source*="الجزيرة"] .source-logo{background:linear-gradient(135deg,#d4a017,#f4c430)}
 .news-card[data-source*="BBC"] .source-logo{background:linear-gradient(135deg,#bb1919,#e31e24)}
 .news-card[data-source*="العربية"] .source-logo{background:linear-gradient(135deg,#0066b3,#0088e0)}
@@ -241,15 +265,35 @@ input[type=range]{accent-color:var(--accent2);width:90px}
 .refresh-btn{position:fixed;bottom:1.2rem;right:1.2rem;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border:none;font-size:1.2rem;cursor:pointer;box-shadow:0 8px 25px var(--glow);z-index:100}
 .refresh-btn:hover{transform:scale(1.1) rotate(180deg)}
 .refresh-btn.spinning i{animation:spin 1s linear infinite}
-/* === MOBILE — Slim Layout === */
 @media(max-width:700px){
   .app{padding:.7rem .8rem}
-  .header{padding:.6rem 0 .9rem;margin-bottom:.8rem;gap:.6rem}
-  .logo{font-size:calc(1.5rem * var(--font-scale))}
-  .logo i{font-size:1.4rem}
+  .header{padding:.6rem 0 .9rem;margin-bottom:.8rem;gap:.6rem;flex-direction:column;align-items:flex-start}
+  .logo{font-size:calc(1.15rem * var(--font-scale))}
+  .logo i{font-size:1.1rem}
   .lang-btn{padding:.4rem 1rem;font-size:calc(.85rem * var(--font-scale))}
   .ticker{padding:8px 0;font-size:calc(.85rem * var(--font-scale))}
   .ticker-wrap{margin-bottom:.8rem;padding:6px 0}
+  .info-bar{flex-direction:column;gap:.5rem;margin-bottom:.8rem}
+  .info-card{padding:.7rem 1rem;border-radius:16px;flex:1 1 auto;gap:.6rem}
+  .date-g{font-size:calc(.72rem * var(--font-scale))}
+  .date-h{font-size:calc(.65rem * var(--font-scale))}
+  .date-he{font-size:calc(.6rem * var(--font-scale))}
+  .time-centered{padding:4px 14px;min-width:100px;border-radius:14px}
+  .time-value{font-size:calc(1.2rem * var(--font-scale))}
+  .time-ampm{font-size:calc(.7rem * var(--font-scale))}
+  .prayer-btn{padding:.7rem 1rem;border-radius:16px;flex:1 1 auto}
+  .prayer-btn-title{font-size:calc(.82rem * var(--font-scale))}
+  .prayer-btn-sub{font-size:calc(.65rem * var(--font-scale))}
+  .prayer-btn-icon{font-size:1.1rem}
+  .source-selector-header{padding:10px 12px}
+  .source-selector-icon{width:32px;height:32px;font-size:.9rem}
+  .source-selector-title{font-size:calc(.82rem * var(--font-scale))}
+  .source-checkboxes{grid-template-columns:1fr;padding:10px 12px}
+  .source-selector-actions{padding:8px 12px 6px}
+  .source-action-btn{padding:5px 10px;font-size:calc(.7rem * var(--font-scale))}
+  .search-bar{padding:.6rem .9rem;margin-bottom:.8rem;gap:6px}
+  .search-bar input,.search-bar select{padding:7px 12px;font-size:calc(.8rem * var(--font-scale))}
+  .search-bar button{padding:7px 12px;font-size:calc(.78rem * var(--font-scale))}
   .radio-section{padding:.7rem .8rem;margin-bottom:.8rem}
   .radio-main-title{font-size:calc(.9rem * var(--font-scale));margin-bottom:.5rem}
   .radio-category-header{padding:10px 12px}
@@ -261,23 +305,11 @@ input[type=range]{accent-color:var(--accent2);width:90px}
   .radio-icon{width:30px;height:30px;font-size:.85rem}
   .radio-name{font-size:calc(.75rem * var(--font-scale))}
   .radio-desc{font-size:calc(.62rem * var(--font-scale))}
-  .search-bar{padding:.6rem .9rem;margin-bottom:.8rem;gap:6px}
-  .search-bar input,.search-bar select{padding:7px 12px;font-size:calc(.8rem * var(--font-scale))}
-  .search-bar button{padding:7px 12px;font-size:calc(.78rem * var(--font-scale))}
-  .info-bar{flex-direction:column;gap:.5rem;margin-bottom:.8rem}
-  .info-card{padding:.6rem .9rem;border-radius:16px;flex:1 1 auto}
-  .date-g{font-size:calc(.82rem * var(--font-scale))}
-  .date-h{font-size:calc(.7rem * var(--font-scale))}
-  .date-he{font-size:calc(.65rem * var(--font-scale))}
-  .time-compact{font-size:calc(1.3rem * var(--font-scale))}
-  .prayer-btn{padding:.6rem .9rem;border-radius:16px;flex:1 1 auto}
-  .prayer-btn-title{font-size:calc(.82rem * var(--font-scale))}
-  .prayer-btn-sub{font-size:calc(.65rem * var(--font-scale))}
-  .prayer-btn-icon{font-size:1.1rem}
   .controls{border-radius:24px;padding:.6rem .9rem;gap:8px;margin-bottom:.8rem}
   .controls label{font-size:calc(.72rem * var(--font-scale))}
-  select,input[type=range]{padding:5px 10px;font-size:calc(.78rem * var(--font-scale))}
+  select,input[type=range],input[type=number]{padding:5px 10px;font-size:calc(.78rem * var(--font-scale))}
   input[type=range]{width:70px}
+  input[type=number]{width:50px}
   .dot{width:20px;height:20px}
   .tab{padding:7px 14px;font-size:calc(.78rem * var(--font-scale))}
   .tabs{margin-bottom:.8rem;gap:6px}
@@ -287,14 +319,11 @@ input[type=range]{accent-color:var(--accent2);width:90px}
   .news-desc{font-size:calc(.85rem * var(--font-scale))}
   .news-source{font-size:calc(.75rem * var(--font-scale))}
   .source-logo{width:30px;height:30px;font-size:.85rem}
-  .news-time,.news-link,.expand-hint{font-size:calc(.68rem * var(--font-scale))}
-  .news-link{padding:5px 10px}
   .modal-content{padding:.9rem;border-radius:16px;max-width:95vw}
   .modal-title{font-size:calc(.9rem * var(--font-scale))}
   .modal-field label{font-size:calc(.7rem * var(--font-scale))}
   .modal-field select{padding:7px 10px;font-size:calc(.8rem * var(--font-scale))}
   .modal-prayer-item{padding:6px 8px;font-size:calc(.75rem * var(--font-scale))}
-  .modal-prayer-list{gap:5px}
   .status{bottom:.8rem;left:.8rem;padding:5px 10px;font-size:calc(.65rem * var(--font-scale))}
   .refresh-btn{width:44px;height:44px;font-size:1rem;bottom:.8rem;right:.8rem}
 }
@@ -309,7 +338,7 @@ input[type=range]{accent-color:var(--accent2);width:90px}
 
 <div class="app">
   <header class="header">
-    <div class="logo"><i class="fas fa-bolt"></i><span class="logo-text" id="logoText">Breaking AI</span></div>
+    <div class="logo"><i class="fas fa-bolt"></i><span class="logo-text" id="logoText">World Breaking News Aggregator</span></div>
     <div class="lang-toggle">
       <button class="lang-btn active" id="langEn" data-lang="en">EN</button>
       <button class="lang-btn" id="langAr" data-lang="ar">العربية</button>
@@ -325,17 +354,94 @@ input[type=range]{accent-color:var(--accent2);width:90px}
     </div>
   </div>
 
-  <!-- === LIVE RADIO (Collapsible Categories) === -->
-  <div class="radio-section">
-    <h3 class="radio-main-title"><i class="fas fa-broadcast-tower"></i> <span id="radioTitle">البث المباشر</span></h3>
+  <div class="info-bar">
+    <div class="info-card">
+      <div class="date-time-wrap">
+        <div class="date-g" id="gregorianDate">Loading...</div>
+        <div class="date-h" id="hijriDate">...</div>
+        <div class="date-he" id="hijriDateEn">...</div>
+      </div>
+      <div class="time-centered">
+        <div class="time-value" id="currentTime">--:--</div>
+        <div class="time-ampm" id="currentAmPm">--</div>
+      </div>
+    </div>
+    <button class="prayer-btn" onclick="openPrayerModal()">
+      <div class="prayer-btn-content">
+        <div class="prayer-btn-title"><i class="fas fa-mosque"></i> <span id="prayerBtnTitle">Prayer Times</span></div>
+        <div class="prayer-btn-sub" id="prayerBtnSub">Tap to select city</div>
+      </div>
+      <i class="fas fa-chevron-left prayer-btn-icon"></i>
+    </button>
+  </div>
 
-    <!-- Quran Category -->
+  <div class="source-selector" id="sourceSelector">
+    <div class="source-selector-header" onclick="toggleSourceSelector()">
+      <div class="source-selector-left">
+        <div class="source-selector-icon"><i class="fas fa-filter"></i></div>
+        <div>
+          <div class="source-selector-title" id="sourceSelectorTitle">News Sources Filter</div>
+          <div class="source-selector-count" id="sourceSelectorCount">All sources shown</div>
+        </div>
+      </div>
+      <i class="fas fa-chevron-down chevron"></i>
+    </div>
+    <div class="source-selector-body">
+      <div class="source-selector-actions">
+        <button class="source-action-btn" onclick="selectAllSources()"><i class="fas fa-check-double"></i> <span id="selectAllLabel">Select All</span></button>
+        <button class="source-action-btn" onclick="clearAllSources()"><i class="fas fa-times"></i> <span id="clearAllLabel">Clear All</span></button>
+      </div>
+      <div class="source-checkboxes" id="sourceCheckboxes"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="prayerModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title"><i class="fas fa-mosque"></i> <span id="modalTitle">Prayer Times</span></div>
+        <button class="modal-close" onclick="closePrayerModal()"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-field">
+          <label id="labelCountry">Country</label>
+          <select id="modalCountry"><option value="">Select Country</option></select>
+        </div>
+        <div class="modal-field">
+          <label id="labelCity">City</label>
+          <select id="modalCity"><option value="">Select City</option></select>
+        </div>
+        <div class="modal-field">
+          <label id="labelMethod">Calculation Method</label>
+          <select id="modalMethod">
+            <option value="MWL">Muslim World League</option>
+            <option value="ISNA">ISNA (North America)</option>
+            <option value="EGY">Egyptian General</option>
+            <option value="UmmAlQura">Umm Al-Qura, Makkah</option>
+            <option value="Dubai">Dubai (UAE)</option>
+            <option value="Turkey">Turkey (Diyanet)</option>
+          </select>
+        </div>
+        <div class="modal-field">
+          <label id="labelDate">Date</label>
+          <div class="modal-date-small" id="modalDateDisplay">--</div>
+        </div>
+        <div class="modal-prayer-list" id="modalPrayerList">
+          <div class="modal-loading"><i class="fas fa-circle-notch" style="animation:spin 1s linear infinite"></i> Loading...</div>
+        </div>
+        <button onclick="savePrayerSettings()" style="background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border:none;border-radius:14px;padding:10px;font-weight:800;cursor:pointer;font-family:inherit;margin-top:6px;font-size:calc(.9rem * var(--font-scale))" id="saveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="radio-section">
+    <h3 class="radio-main-title"><i class="fas fa-broadcast-tower"></i> <span id="radioTitle">Live Radio</span></h3>
+
     <div class="radio-category open" id="catQuran">
       <div class="radio-category-header" onclick="toggleCategory('catQuran')">
         <div class="radio-category-header-left">
           <div class="radio-cat-icon" style="background:linear-gradient(135deg,#1a5c2a,#2e7d32)"><i class="fas fa-quran"></i></div>
           <div class="radio-cat-info">
-            <div class="radio-cat-title" id="catQuranTitle">إذاعات القرآن الكريم</div>
+            <div class="radio-cat-title" id="catQuranTitle">Quran Radio</div>
             <div class="radio-cat-count"><span id="catQuranCount">6 stations</span></div>
           </div>
         </div>
@@ -377,13 +483,12 @@ input[type=range]{accent-color:var(--accent2);width:90px}
       </div>
     </div>
 
-    <!-- News Category -->
     <div class="radio-category" id="catNews">
       <div class="radio-category-header" onclick="toggleCategory('catNews')">
         <div class="radio-category-header-left">
           <div class="radio-cat-icon" style="background:linear-gradient(135deg,#0066b3,#0088e0)"><i class="fas fa-globe"></i></div>
           <div class="radio-cat-info">
-            <div class="radio-cat-title" id="catNewsTitle">إذاعات الأخبار</div>
+            <div class="radio-cat-title" id="catNewsTitle">News Radio</div>
             <div class="radio-cat-count"><span id="catNewsCount">5 stations</span></div>
           </div>
         </div>
@@ -438,64 +543,6 @@ input[type=range]{accent-color:var(--accent2);width:90px}
     <div class="search-results-info" id="searchInfo"></div>
   </div>
 
-  <!-- === COMPACT INFO BAR === -->
-  <div class="info-bar">
-    <div class="info-card">
-      <div class="date-time-wrap">
-        <div class="date-g" id="gregorianDate">Loading...</div>
-        <div class="date-h" id="hijriDate">...</div>
-        <div class="date-he" id="hijriDateEn">...</div>
-      </div>
-      <div class="time-compact" id="currentTime">--:--</div>
-    </div>
-    <button class="prayer-btn" onclick="openPrayerModal()">
-      <div class="prayer-btn-content">
-        <div class="prayer-btn-title"><i class="fas fa-mosque"></i> <span id="prayerBtnTitle">Prayer Times</span></div>
-        <div class="prayer-btn-sub" id="prayerBtnSub">Tap to select city</div>
-      </div>
-      <i class="fas fa-chevron-left prayer-btn-icon"></i>
-    </button>
-  </div>
-
-  <!-- === PRAYER MODAL (Compact) === -->
-  <div class="modal-overlay" id="prayerModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title"><i class="fas fa-mosque"></i> <span id="modalTitle">Prayer Times</span></div>
-        <button class="modal-close" onclick="closePrayerModal()"><i class="fas fa-times"></i></button>
-      </div>
-      <div class="modal-body">
-        <div class="modal-field">
-          <label id="labelCountry">Country</label>
-          <select id="modalCountry"><option value="">Select Country</option></select>
-        </div>
-        <div class="modal-field">
-          <label id="labelCity">City</label>
-          <select id="modalCity"><option value="">Select City</option></select>
-        </div>
-        <div class="modal-field">
-          <label id="labelMethod">Calculation Method</label>
-          <select id="modalMethod">
-            <option value="MWL">Muslim World League</option>
-            <option value="ISNA">ISNA (North America)</option>
-            <option value="EGY">Egyptian General</option>
-            <option value="UmmAlQura">Umm Al-Qura, Makkah</option>
-            <option value="Dubai">Dubai (UAE)</option>
-            <option value="Turkey">Turkey (Diyanet)</option>
-          </select>
-        </div>
-        <div class="modal-field">
-          <label id="labelDate">Date</label>
-          <div class="modal-date-small" id="modalDateDisplay">--</div>
-        </div>
-        <div class="modal-prayer-list" id="modalPrayerList">
-          <div class="modal-loading"><i class="fas fa-circle-notch" style="animation:spin 1s linear infinite"></i> Loading...</div>
-        </div>
-        <button onclick="savePrayerSettings()" style="background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border:none;border-radius:14px;padding:10px;font-weight:800;cursor:pointer;font-family:inherit;margin-top:6px;font-size:calc(.9rem * var(--font-scale))" id="saveBtn">Save</button>
-      </div>
-    </div>
-  </div>
-
   <div class="controls">
     <div class="control-group">
       <label><i class="fas fa-palette"></i> <span id="themeLabel">Theme</span></label>
@@ -536,7 +583,7 @@ input[type=range]{accent-color:var(--accent2);width:90px}
     <div class="control-group">
       <label><i class="fas fa-text-height"></i> <span id="sizeLabel">Size</span></label>
       <input type="range" id="fontSize" min="12" max="32" value="16">
-      <span id="sizeValue" style="font-size:calc(.8rem * var(--font-scale));background:linear-gradient(135deg,var(--accent2),var(--accent4));padding:3px 10px;border-radius:15px;font-weight:800;color:#fff">16px</span>
+      <input type="number" id="fontSizeInput" min="12" max="32" value="16" step="1" title="Type size manually">
     </div>
   </div>
 
@@ -556,8 +603,9 @@ input[type=range]{accent-color:var(--accent2);width:90px}
 
 <script>
 const WORKER_URL = 'https://withered-moon-2845.raed31818.workers.dev';
-const SETTINGS_KEY = 'news_hub_settings_v7';
-const ARCHIVE_KEY = 'news_archive_v7';
+const SETTINGS_KEY = 'news_hub_settings_v9';
+const ARCHIVE_KEY = 'news_archive_v9';
+const SELECTED_SOURCES_KEY = 'news_selected_sources_v9';
 const ARCHIVE_DAYS = 15;
 const FETCH_INTERVAL = 5 * 60 * 1000;
 
@@ -570,6 +618,8 @@ let currentPrayerTimes = null;
 let currentRadioUrl = '';
 let radioPlaying = false;
 let currentHlsInstance = null;
+let selectedSources = new Set();
+let allSourcesList = [];
 
 const $ = id => document.getElementById(id);
 
@@ -606,17 +656,84 @@ const COUNTRIES = {
 
 const METHOD_MAP = { MWL: 3, ISNA: 2, EGY: 5, UmmAlQura: 4, Dubai: 15, Turkey: 13 };
 
-// ============================================================
-// RADIO CATEGORY TOGGLE
-// ============================================================
-function toggleCategory(id) {
-  const cat = document.getElementById(id);
-  if (cat) cat.classList.toggle('open');
+function toggleSourceSelector() {
+  $('sourceSelector').classList.toggle('open');
+  saveSettings();
 }
 
-// ============================================================
-// SETTINGS
-// ============================================================
+function renderSourceCheckboxes() {
+  const container = $('sourceCheckboxes');
+  if (!allSourcesList.length) {
+    container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:1rem;color:var(--text-muted);font-size:calc(.8rem * var(--font-scale));font-weight:700">${currentLang==='ar'?'لا توجد مصادر متاحة بعد':'No sources available yet'}</div>`;
+    return;
+  }
+  container.innerHTML = allSourcesList.map(src => {
+    const checked = selectedSources.size === 0 || !selectedSources.has(src) ? 'checked' : '';
+    return `<label class="source-checkbox ${checked}" data-source="${src.replace(/"/g,'&quot;')}">
+      <span class="source-checkbox-mark"><i class="fas fa-check"></i></span>
+      <input type="checkbox" ${checked}>
+      <span class="source-checkbox-name">${src}</span>
+    </label>`;
+  }).join('');
+  container.querySelectorAll('.source-checkbox').forEach(cb => {
+    cb.addEventListener('click', (e) => {
+      e.preventDefault();
+      const src = cb.dataset.source;
+      if (selectedSources.size === 0) {
+        allSourcesList.forEach(s => { if (s !== src) selectedSources.add(s); });
+      } else {
+        if (selectedSources.has(src)) selectedSources.delete(src);
+        else selectedSources.add(src);
+        if (selectedSources.size === allSourcesList.length) selectedSources.clear();
+      }
+      updateSourceUI();
+      applyFilters();
+      saveSelectedSources();
+    });
+  });
+}
+
+function updateSourceUI() {
+  const container = $('sourceCheckboxes');
+  container.querySelectorAll('.source-checkbox').forEach(cb => {
+    const src = cb.dataset.source;
+    const isChecked = selectedSources.size === 0 || !selectedSources.has(src);
+    cb.classList.toggle('checked', isChecked);
+    cb.querySelector('input').checked = isChecked;
+  });
+  const count = selectedSources.size === 0 ? allSourcesList.length : (allSourcesList.length - selectedSources.size);
+  const total = allSourcesList.length;
+  const isAr = currentLang === 'ar';
+  $('sourceSelectorCount').textContent = selectedSources.size === 0
+    ? (isAr ? `عرض كل المصادر (${total})` : `Showing all (${total})`)
+    : (isAr ? `عرض ${count} من ${total}` : `Showing ${count} of ${total}`);
+}
+
+function selectAllSources() {
+  selectedSources.clear();
+  updateSourceUI();
+  applyFilters();
+  saveSelectedSources();
+}
+function clearAllSources() {
+  selectedSources = new Set(allSourcesList);
+  updateSourceUI();
+  applyFilters();
+  saveSelectedSources();
+}
+function saveSelectedSources() {
+  try { localStorage.setItem(SELECTED_SOURCES_KEY, JSON.stringify([...selectedSources])); } catch(e) {}
+}
+function loadSelectedSources() {
+  try {
+    const raw = localStorage.getItem(SELECTED_SOURCES_KEY);
+    if (raw) {
+      const arr = JSON.parse(raw);
+      if (Array.isArray(arr)) selectedSources = new Set(arr);
+    }
+  } catch(e) {}
+}
+
 function saveSettings() {
   try {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify({
@@ -629,7 +746,8 @@ function saveSettings() {
       city: $('modalCity').value,
       calcMethod: $('modalMethod').value,
       catQuranOpen: $('catQuran').classList.contains('open'),
-      catNewsOpen: $('catNews').classList.contains('open')
+      catNewsOpen: $('catNews').classList.contains('open'),
+      sourceSelectorOpen: $('sourceSelector').classList.contains('open')
     }));
   } catch (e) {}
 }
@@ -641,30 +759,29 @@ function restoreSettings() {
     if (s.theme) { document.body.setAttribute('data-theme', s.theme); document.querySelectorAll('.dot[data-theme]').forEach(d => d.classList.toggle('active', d.dataset.theme === s.theme)); }
     if (s.bg) { document.body.setAttribute('data-bg', s.bg); document.querySelectorAll('.dot[data-bg]').forEach(d => d.classList.toggle('active', d.dataset.bg === s.bg)); }
     if (s.font) { $('fontFamily').value = s.font; document.body.style.fontFamily = s.font; }
-    if (s.fontSize) { $('fontSize').value = s.fontSize; updateFontSize(s.fontSize); }
+    if (s.fontSize) { $('fontSize').value = s.fontSize; $('fontSizeInput').value = s.fontSize; updateFontSize(s.fontSize); }
     if (s.calcMethod) $('modalMethod').value = s.calcMethod;
     if (s.country) { $('modalCountry').value = s.country; populateModalCities(s.country); if (s.city) { $('modalCity').value = s.city; $('prayerBtnSub').textContent = `${s.city}, ${s.country}`; } }
     if (s.lang) currentLang = s.lang;
     if (s.catQuranOpen === false) $('catQuran').classList.remove('open');
     if (s.catNewsOpen === true) $('catNews').classList.add('open');
+    if (s.sourceSelectorOpen === true) $('sourceSelector').classList.add('open');
     return s;
   } catch (e) { return null; }
 }
 
-// === FONT SIZE ===
 function updateFontSize(size) {
+  size = Math.max(12, Math.min(32, parseInt(size) || 16));
   const scale = size / 16;
   document.documentElement.style.setProperty('--font-scale', scale);
-  $('sizeValue').textContent = size + 'px';
+  $('fontSize').value = size;
+  $('fontSizeInput').value = size;
 }
 
-// ============================================================
-// UI LABELS
-// ============================================================
 function updateUILabels() {
   const isAr = currentLang === 'ar';
   document.body.className = isAr ? 'lang-ar' : 'lang-en';
-  $('logoText').textContent = isAr ? 'عاجل | أخبار مباشرة' : 'Breaking AI';
+  $('logoText').textContent = isAr ? 'مجمع الأخبار العاجلة العالمية' : 'World Breaking News Aggregator';
   $('fontLabel').textContent = isAr ? 'الخط' : 'Font';
   $('sizeLabel').textContent = isAr ? 'الحجم' : 'Size';
   $('themeLabel').textContent = isAr ? 'الثيم' : 'Theme';
@@ -674,8 +791,8 @@ function updateUILabels() {
   $('clearLabel').textContent = isAr ? 'مسح' : 'Clear';
   $('searchInput').placeholder = isAr ? 'ابحث في الأخبار...' : 'Search news...';
   $('radioTitle').textContent = isAr ? 'البث المباشر' : 'Live Radio';
-  $('catQuranTitle').textContent = isAr ? 'إذاعات القرآن الكريم' : 'Quran Radio Stations';
-  $('catNewsTitle').textContent = isAr ? 'إذاعات الأخبار' : 'News Radio Stations';
+  $('catQuranTitle').textContent = isAr ? 'إذاعات القرآن الكريم' : 'Quran Radio';
+  $('catNewsTitle').textContent = isAr ? 'إذاعات الأخبار' : 'News Radio';
   $('catQuranCount').textContent = isAr ? '6 إذاعات' : '6 stations';
   $('catNewsCount').textContent = isAr ? '5 إذاعات' : '5 stations';
   $('prayerBtnTitle').textContent = isAr ? 'مواقيت الصلاة' : 'Prayer Times';
@@ -685,24 +802,27 @@ function updateUILabels() {
   $('labelMethod').textContent = isAr ? 'طريقة الحساب' : 'Calculation Method';
   $('labelDate').textContent = isAr ? 'التاريخ' : 'Date';
   $('saveBtn').textContent = isAr ? 'حفظ' : 'Save';
+  $('sourceSelectorTitle').textContent = isAr ? 'تصفية مصادر الأخبار' : 'News Sources Filter';
+  $('selectAllLabel').textContent = isAr ? 'اختيار الكل' : 'Select All';
+  $('clearAllLabel').textContent = isAr ? 'إلغاء الكل' : 'Clear All';
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
+  updateSourceUI();
 }
 
-// ============================================================
-// CLOCK
-// ============================================================
 function updateClock() {
   const now = new Date();
   $('gregorianDate').textContent = now.toLocaleDateString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
   try { $('hijriDate').textContent = now.toLocaleDateString(currentLang==='ar'?'ar-SA-u-ca-islamic-umalqura':'en-US-u-ca-islamic-umalqura',{calendar:'islamic-umalqura',year:'numeric',month:'short',day:'numeric'}); } catch(e){}
   try { $('hijriDateEn').textContent = now.toLocaleDateString('en-US-u-ca-islamic-umalqura',{calendar:'islamic-umalqura',year:'numeric',month:'short',day:'numeric'}); } catch(e){}
-  $('currentTime').textContent = now.toLocaleTimeString('en-US',{hour12:false, hour:'2-digit', minute:'2-digit'});
+  const h24 = now.getHours();
+  const h12 = h24 % 12 || 12;
+  const mm = String(now.getMinutes()).padStart(2,'0');
+  const ampm = h24 >= 12 ? 'PM' : 'AM';
+  $('currentTime').textContent = `${h12}:${mm}`;
+  $('currentAmPm').textContent = ampm;
 }
 setInterval(updateClock,1000); updateClock();
 
-// ============================================================
-// PRAYER MODAL
-// ============================================================
 function populateModalCountries() {
   const sel = $('modalCountry');
   sel.innerHTML = '<option value="">' + (currentLang==='ar'?'اختر الدولة':'Select Country') + '</option>' +
@@ -723,6 +843,13 @@ function openPrayerModal() {
 }
 function closePrayerModal() { $('prayerModal').classList.remove('open'); }
 
+function to12h(time24) {
+  const [h, m] = time24.split(':').map(Number);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const h12 = h % 12 || 12;
+  return `${h12}:${String(m).padStart(2,'0')} ${ampm}`;
+}
+
 async function fetchModalPrayerTimes() {
   const country = $('modalCountry').value;
   const city = $('modalCity').value;
@@ -742,7 +869,7 @@ async function fetchModalPrayerTimes() {
       ? { Fajr:'الفجر', Dhuhr:'الظهر', Asr:'العصر', Maghrib:'المغرب', Isha:'العشاء' }
       : { Fajr:'Fajr', Dhuhr:'Dhuhr', Asr:'Asr', Maghrib:'Maghrib', Isha:'Isha' };
     $('modalPrayerList').innerHTML = ['Fajr','Dhuhr','Asr','Maghrib','Isha'].map(p =>
-      `<div class="modal-prayer-item"><span class="name">${labels[p]}</span><span class="time">${t[p]}</span></div>`
+      `<div class="modal-prayer-item"><span class="name">${labels[p]}</span><span class="time">${to12h(t[p])}</span></div>`
     ).join('');
   } catch(e) {
     $('modalPrayerList').innerHTML = '<div class="modal-loading">Failed to load</div>';
@@ -763,9 +890,6 @@ $('modalCountry').addEventListener('change', e => { populateModalCities(e.target
 $('modalCity').addEventListener('change', fetchModalPrayerTimes);
 $('modalMethod').addEventListener('change', fetchModalPrayerTimes);
 
-// ============================================================
-// LANGUAGE
-// ============================================================
 function setLang(lang) {
   currentLang = lang;
   updateUILabels();
@@ -779,9 +903,15 @@ function setLang(lang) {
 $('langEn').onclick = () => setLang('en');
 $('langAr').onclick = () => setLang('ar');
 
-// ============================================================
-// EVENT LISTENERS
-// ============================================================
+function toggleCategory(id) {
+  const cat = document.getElementById(id);
+  if (cat) cat.classList.toggle('open');
+  saveSettings();
+}
+document.querySelectorAll('.radio-category-header').forEach(h => {
+  h.addEventListener('click', () => setTimeout(saveSettings, 100));
+});
+
 document.querySelectorAll('.dot[data-theme]').forEach(dot => {
   dot.addEventListener('click', () => {
     document.body.setAttribute('data-theme', dot.dataset.theme);
@@ -806,15 +936,18 @@ $('fontSize').addEventListener('input', e => {
   updateFontSize(e.target.value);
   saveSettings();
 });
-
-// Save category states when toggled
-document.querySelectorAll('.radio-category-header').forEach(h => {
-  h.addEventListener('click', () => setTimeout(saveSettings, 100));
+$('fontSizeInput').addEventListener('input', e => {
+  updateFontSize(e.target.value);
+  saveSettings();
+});
+$('fontSizeInput').addEventListener('blur', e => {
+  let v = parseInt(e.target.value) || 16;
+  v = Math.max(12, Math.min(32, v));
+  e.target.value = v;
+  updateFontSize(v);
+  saveSettings();
 });
 
-// ============================================================
-// RADIO PLAYER (with HLS support)
-// ============================================================
 function loadHlsScript(callback) {
   if (window.Hls) { callback(); return; }
   const script = document.createElement('script');
@@ -829,11 +962,9 @@ document.querySelectorAll('.radio-card').forEach(card => {
     const url = card.dataset.radio;
     const name = card.dataset.name;
     if (currentRadioUrl === url && radioPlaying) { stopRadio(); return; }
-    
     const player = $('radioPlayer');
     if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
     player.src = '';
-    
     if (url.includes('.m3u8')) {
       loadHlsScript(() => {
         if (window.Hls && window.Hls.isSupported()) {
@@ -846,7 +977,6 @@ document.querySelectorAll('.radio-card').forEach(card => {
           });
           hls.on(window.Hls.Events.ERROR, (evt, data) => {
             if (data.fatal) {
-              console.warn('HLS error', data);
               alert(currentLang === 'ar' ? 'تعذر تشغيل هذه الإذاعة في متصفحك' : 'Cannot play this radio in your browser');
             }
           });
@@ -861,7 +991,6 @@ document.querySelectorAll('.radio-card').forEach(card => {
       player.src = url;
       player.load();
       player.play().then(() => setRadioPlaying(name, url, card)).catch(e => {
-        console.warn('Radio failed:', e);
         alert(currentLang === 'ar' ? 'تعذر تشغيل الراديو. حاول مرة أخرى.' : 'Radio failed. Try again.');
       });
     }
@@ -891,9 +1020,6 @@ function stopRadio() {
   document.querySelectorAll('.radio-card').forEach(c => c.classList.remove('active'));
 }
 
-// ============================================================
-// PARTICLES
-// ============================================================
 function spawnParticles() {
   for (let i = 0; i < 12; i++) {
     const p = document.createElement('div');
@@ -908,9 +1034,6 @@ function spawnParticles() {
 }
 spawnParticles();
 
-// ============================================================
-// TABS
-// ============================================================
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -927,9 +1050,6 @@ document.querySelectorAll('.tab').forEach(tab => {
   });
 });
 
-// ============================================================
-// ARCHIVE
-// ============================================================
 function getArchive() { try { return JSON.parse(localStorage.getItem(ARCHIVE_KEY) || '{}'); } catch(e) { return {}; } }
 function saveArchive(a) {
   const cutoff = Date.now() - (ARCHIVE_DAYS * 24 * 60 * 60 * 1000);
@@ -972,9 +1092,6 @@ function renderArchive() {
   }).join('');
 }
 
-// ============================================================
-// SEARCH
-// ============================================================
 let searchQuery = '';
 let sourceQuery = '';
 $('searchInput').addEventListener('input', e => { searchQuery = e.target.value.toLowerCase().trim(); applyFilters(); });
@@ -986,6 +1103,9 @@ $('clearSearch').addEventListener('click', () => {
 });
 function applyFilters() {
   let result = [...allArticles];
+  if (selectedSources.size > 0) {
+    result = result.filter(a => !selectedSources.has(a.source));
+  }
   if (searchQuery) result = result.filter(a =>
     (a.title || '').toLowerCase().includes(searchQuery) ||
     (a.description || '').toLowerCase().includes(searchQuery)
@@ -993,22 +1113,23 @@ function applyFilters() {
   if (sourceQuery) result = result.filter(a => a.source === sourceQuery);
   filteredArticles = result;
   const info = $('searchInfo');
-  if (searchQuery || sourceQuery) {
-    info.textContent = `${result.length} ${currentLang==='ar'?'نتيجة':'results'}`;
+  if (searchQuery || sourceQuery || selectedSources.size > 0) {
+    const isAr = currentLang === 'ar';
+    info.textContent = `${result.length} ${isAr?'نتيجة':'results'}`;
     info.classList.add('show');
   } else info.classList.remove('show');
   if (currentTab === 'live') renderArticles(result);
 }
 function populateSourceFilter(articles) {
   const sources = [...new Set(articles.map(a => a.source).filter(Boolean))].sort();
+  allSourcesList = sources;
   const sel = $('sourceFilter');
   sel.innerHTML = `<option value="">${currentLang==='ar'?'كل المصادر':'All Sources'}</option>` +
     sources.map(s => `<option value="${s}">${s}</option>`).join('');
+  renderSourceCheckboxes();
+  updateSourceUI();
 }
 
-// ============================================================
-// FETCH NEWS
-// ============================================================
 async function fetchNews(force) {
   if (!force && Date.now() - lastFetch < FETCH_INTERVAL) return;
   $('newsGrid').innerHTML = `<div class="loading"><i class="fas fa-circle-notch"></i><p>${currentLang==='ar'?'جاري جلب الأخبار...':'Fetching live news...'}</p></div>`;
@@ -1024,7 +1145,7 @@ async function fetchNews(force) {
     filteredArticles = [...allArticles];
     populateSourceFilter(allArticles);
     addToArchive(allArticles);
-    renderArticles(allArticles);
+    applyFilters();
     updateTicker(allArticles);
     lastFetch = Date.now();
     $('apiStatus').textContent = `✅ ${currentLang==='ar'?'مباشر':'Live'} · ${new Date().toLocaleTimeString()}`;
@@ -1037,9 +1158,6 @@ async function fetchNews(force) {
   }
 }
 
-// ============================================================
-// RENDER ARTICLES
-// ============================================================
 function renderArticles(articles) {
   $('newsGrid').innerHTML = '';
   if (articles.length === 0) {
@@ -1092,9 +1210,6 @@ function updateTicker(articles) {
   $('ticker').innerHTML = items + items;
 }
 
-// ============================================================
-// REFRESH & INIT
-// ============================================================
 $('refreshBtn').onclick = () => {
   $('refreshBtn').classList.add('spinning');
   lastFetch = 0;
@@ -1102,6 +1217,7 @@ $('refreshBtn').onclick = () => {
 };
 
 (function init() {
+  loadSelectedSources();
   const restored = restoreSettings();
   updateUILabels();
   populateModalCountries();
