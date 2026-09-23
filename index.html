@@ -49,76 +49,92 @@ body[data-bg="mesh"] .bg-animated{background:radial-gradient(at 40% 20%,#2a1a4a 
 .ticker{display:flex;white-space:nowrap;animation:tickerScroll 25s linear infinite;font-weight:900;font-size:calc(1rem * var(--font-scale));color:#fff}
 .ticker span{padding:0 2.5rem;display:flex;align-items:center;gap:8px}
 @keyframes tickerScroll{to{transform:translateX(-50%)}}
-/* === RADIO SECTION === */
-.radio-section{background:var(--card-bg);backdrop-filter:blur(15px);border:2px solid var(--card-border);border-radius:24px;padding:1.2rem 1.5rem;margin-bottom:1.5rem}
-.radio-title{font-size:calc(1.05rem * var(--font-scale));font-weight:900;color:var(--accent3);margin-bottom:1rem;display:flex;align-items:center;gap:8px}
-.radio-title i{color:var(--accent2)}
-.radio-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
-.radio-card{display:flex;align-items:center;gap:12px;background:rgba(0,0,0,.3);border:2px solid var(--card-border);border-radius:18px;padding:12px 14px;cursor:pointer;transition:all .25s;text-align:start;color:var(--text-primary);font-family:inherit;width:100%}
-.radio-card:hover{border-color:var(--accent2);transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.4)}
+/* === RADIO SECTION (Collapsible) === */
+.radio-section{background:var(--card-bg);backdrop-filter:blur(15px);border:2px solid var(--card-border);border-radius:24px;padding:1rem 1.2rem;margin-bottom:1.5rem}
+.radio-main-title{font-size:calc(1rem * var(--font-scale));font-weight:900;color:var(--accent3);margin-bottom:.8rem;display:flex;align-items:center;gap:8px}
+.radio-main-title i{color:var(--accent2)}
+.radio-category{margin-bottom:8px;border-radius:18px;overflow:hidden;background:rgba(0,0,0,.25);border:2px solid var(--card-border)}
+.radio-category:last-child{margin-bottom:0}
+.radio-category-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(0,212,255,.05));transition:all .25s;user-select:none}
+.radio-category-header:hover{background:linear-gradient(135deg,rgba(168,85,247,.3),rgba(0,212,255,.1))}
+.radio-category-header-left{display:flex;align-items:center;gap:12px}
+.radio-cat-icon{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.1rem;flex-shrink:0}
+.radio-cat-info{display:flex;flex-direction:column}
+.radio-cat-title{font-size:calc(.95rem * var(--font-scale));font-weight:900;color:var(--text-primary)}
+.radio-cat-count{font-size:calc(.72rem * var(--font-scale));color:var(--text-muted);font-weight:600;margin-top:2px}
+.radio-category-header .chevron{color:var(--accent2);font-size:1rem;transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.radio-category.open .chevron{transform:rotate(180deg)}
+.radio-category-body{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1)}
+.radio-category.open .radio-category-body{max-height:2000px}
+.radio-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;padding:10px}
+.radio-card{display:flex;align-items:center;gap:10px;background:rgba(0,0,0,.3);border:2px solid var(--card-border);border-radius:14px;padding:10px 12px;cursor:pointer;transition:all .25s;text-align:start;color:var(--text-primary);font-family:inherit;width:100%}
+.radio-card:hover{border-color:var(--accent2);transform:translateY(-2px);box-shadow:0 6px 15px rgba(0,0,0,.4)}
 .radio-card.active{border-color:var(--accent1);background:rgba(168,85,247,.15);box-shadow:0 0 15px var(--glow)}
-.radio-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.2rem;flex-shrink:0}
+.radio-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;flex-shrink:0}
 .radio-info{flex:1;min-width:0}
-.radio-name{font-size:calc(.88rem * var(--font-scale));font-weight:800;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.radio-desc{font-size:calc(.72rem * var(--font-scale));color:var(--text-muted);font-weight:600;margin-top:2px}
-.radio-play{color:var(--accent2);font-size:1rem;flex-shrink:0}
-.radio-controls{display:none;justify-content:space-between;align-items:center;margin-top:1rem;padding:10px 15px;background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(0,212,255,.1));border-radius:16px;border:1px solid var(--accent2)}
+.radio-name{font-size:calc(.82rem * var(--font-scale));font-weight:800;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.radio-desc{font-size:calc(.68rem * var(--font-scale));color:var(--text-muted);font-weight:600;margin-top:2px}
+.radio-play{color:var(--accent2);font-size:.9rem;flex-shrink:0}
+.radio-controls{display:none;justify-content:space-between;align-items:center;margin-top:.8rem;padding:8px 14px;background:linear-gradient(135deg,rgba(168,85,247,.2),rgba(0,212,255,.1));border-radius:14px;border:1px solid var(--accent2)}
 .radio-controls.show{display:flex}
-.radio-now-playing{display:flex;align-items:center;gap:10px;font-weight:800;font-size:calc(.9rem * var(--font-scale));color:var(--text-primary)}
-.radio-buttons{display:flex;gap:8px}
-.radio-ctrl-btn{width:40px;height:40px;border-radius:50%;background:var(--accent2);color:#fff;border:none;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.radio-ctrl-btn:hover{transform:scale(1.1);box-shadow:0 0 15px var(--glow)}
+.radio-now-playing{display:flex;align-items:center;gap:10px;font-weight:800;font-size:calc(.85rem * var(--font-scale));color:var(--text-primary);min-width:0}
+.radio-now-playing span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.radio-buttons{display:flex;gap:6px}
+.radio-ctrl-btn{width:36px;height:36px;border-radius:50%;background:var(--accent2);color:#fff;border:none;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.radio-ctrl-btn:hover{transform:scale(1.1);box-shadow:0 0 12px var(--glow)}
 /* === SEARCH BAR === */
-.search-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:1rem;background:var(--card-bg);backdrop-filter:blur(15px);border:2px solid var(--card-border);border-radius:24px;padding:1rem 1.5rem;align-items:center}
-.search-bar input,.search-bar select{background:rgba(0,0,0,.4);border:2px solid var(--card-border);border-radius:20px;padding:10px 16px;color:#fff;font-weight:700;font-family:inherit;outline:none;font-size:calc(.95rem * var(--font-scale))}
-.search-bar input{flex:1;min-width:200px}
+.search-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:1rem;background:var(--card-bg);backdrop-filter:blur(15px);border:2px solid var(--card-border);border-radius:24px;padding:.8rem 1.2rem;align-items:center}
+.search-bar input,.search-bar select{background:rgba(0,0,0,.4);border:2px solid var(--card-border);border-radius:20px;padding:8px 14px;color:#fff;font-weight:700;font-family:inherit;outline:none;font-size:calc(.9rem * var(--font-scale))}
+.search-bar input{flex:1;min-width:180px}
 .search-bar input:focus,.search-bar select:focus{border-color:var(--accent2);box-shadow:0 0 15px var(--glow)}
 .search-bar input::placeholder{color:var(--text-muted);opacity:.7}
-.search-bar button{background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border:none;border-radius:20px;padding:10px 20px;font-weight:800;cursor:pointer;font-family:inherit;font-size:calc(.9rem * var(--font-scale));display:flex;align-items:center;gap:6px}
+.search-bar button{background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border:none;border-radius:20px;padding:8px 16px;font-weight:800;cursor:pointer;font-family:inherit;font-size:calc(.85rem * var(--font-scale));display:flex;align-items:center;gap:6px}
 .search-bar button:hover{transform:scale(1.05);box-shadow:0 5px 20px var(--glow)}
-.search-results-info{width:100%;font-size:calc(.85rem * var(--font-scale));color:var(--text-muted);font-weight:700;margin-top:5px;display:none}
+.search-results-info{width:100%;font-size:calc(.8rem * var(--font-scale));color:var(--text-muted);font-weight:700;margin-top:5px;display:none}
 .search-results-info.show{display:block}
-/* === INFO BAR === */
-.info-bar{display:flex;flex-wrap:wrap;gap:1.2rem;margin-bottom:1.5rem}
-.card{background:var(--card-bg);backdrop-filter:blur(15px);border:2px solid var(--card-border);border-radius:24px;padding:1.4rem 1.8rem;flex:1 1 300px}
-.date-g{font-size:calc(1.4rem * var(--font-scale));font-weight:900}
-.date-h{font-size:calc(1.1rem * var(--font-scale));color:var(--accent3);margin-top:4px;font-weight:700}
-.date-he{font-size:calc(.95rem * var(--font-scale));color:var(--accent2);margin-top:2px;font-weight:700}
-.time{font-size:calc(2.5rem * var(--font-scale));font-weight:900;font-family:'Inter',monospace;background:linear-gradient(135deg,#fff,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:2px}
-/* === PRAYER BUTTON === */
-.prayer-btn{background:var(--card-bg);border:2px solid var(--card-border);border-radius:24px;padding:1.4rem 1.8rem;flex:1 1 300px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:all .25s;text-align:start;color:var(--text-primary);font-family:inherit}
-.prayer-btn:hover{border-color:var(--accent2);box-shadow:0 8px 25px var(--glow);transform:translateY(-3px)}
-.prayer-btn-content{display:flex;flex-direction:column;gap:4px}
-.prayer-btn-title{font-size:calc(1.1rem * var(--font-scale));font-weight:900;color:var(--accent3);display:flex;align-items:center;gap:8px}
-.prayer-btn-sub{font-size:calc(.85rem * var(--font-scale));color:var(--text-muted);font-weight:700}
-.prayer-btn-icon{font-size:1.8rem;color:var(--accent2)}
-/* === MODAL === */
+/* === INFO BAR — Compact & Responsive === */
+.info-bar{display:flex;flex-wrap:wrap;gap:.8rem;margin-bottom:1.2rem}
+.info-card{background:var(--card-bg);backdrop-filter:blur(15px);border:2px solid var(--card-border);border-radius:20px;padding:.8rem 1.2rem;flex:1 1 260px;display:flex;align-items:center;gap:1rem}
+.date-time-wrap{flex:1;display:flex;flex-direction:column;gap:3px;min-width:0}
+.date-g{font-size:calc(.9rem * var(--font-scale));font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.date-h{font-size:calc(.78rem * var(--font-scale));color:var(--accent3);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.date-he{font-size:calc(.72rem * var(--font-scale));color:var(--accent2);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.time-compact{font-size:calc(1.5rem * var(--font-scale));font-weight:900;font-family:'Inter',monospace;background:linear-gradient(135deg,#fff,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:1px;flex-shrink:0}
+/* === PRAYER BUTTON (Compact) === */
+.prayer-btn{background:var(--card-bg);border:2px solid var(--card-border);border-radius:20px;padding:.8rem 1.2rem;flex:1 1 220px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:all .25s;text-align:start;color:var(--text-primary);font-family:inherit;gap:10px}
+.prayer-btn:hover{border-color:var(--accent2);box-shadow:0 6px 20px var(--glow);transform:translateY(-2px)}
+.prayer-btn-content{display:flex;flex-direction:column;gap:2px;min-width:0}
+.prayer-btn-title{font-size:calc(.9rem * var(--font-scale));font-weight:900;color:var(--accent3);display:flex;align-items:center;gap:6px}
+.prayer-btn-sub{font-size:calc(.72rem * var(--font-scale));color:var(--text-muted);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prayer-btn-icon{font-size:1.3rem;color:var(--accent2);flex-shrink:0}
+/* === MODAL (Compact) === */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);z-index:1000;align-items:center;justify-content:center;padding:1rem}
 .modal-overlay.open{display:flex}
-.modal-content{background:var(--card-bg);border:2px solid var(--accent2);border-radius:24px;padding:1.5rem;max-width:500px;width:100%;box-shadow:0 25px 60px rgba(0,0,0,.9);animation:modalIn .3s ease;max-height:90vh;overflow-y:auto}
+.modal-content{background:var(--card-bg);border:2px solid var(--accent2);border-radius:20px;padding:1.1rem;max-width:420px;width:100%;box-shadow:0 25px 60px rgba(0,0,0,.9);animation:modalIn .3s ease;max-height:85vh;overflow-y:auto}
 @keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
-.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--card-border)}
-.modal-title{font-size:calc(1.2rem * var(--font-scale));font-weight:900;color:var(--accent3);display:flex;align-items:center;gap:8px}
-.modal-close{background:transparent;border:none;color:var(--text-muted);font-size:1.4rem;cursor:pointer;padding:5px}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem;padding-bottom:.8rem;border-bottom:1px solid var(--card-border)}
+.modal-title{font-size:calc(1rem * var(--font-scale));font-weight:900;color:var(--accent3);display:flex;align-items:center;gap:8px}
+.modal-close{background:transparent;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;padding:4px}
 .modal-close:hover{color:#ff4d6d}
-.modal-body{display:flex;flex-direction:column;gap:1rem}
-.modal-field{display:flex;flex-direction:column;gap:6px}
-.modal-field label{font-size:calc(.85rem * var(--font-scale));font-weight:800;color:var(--text-muted)}
-.modal-field select{background:#121a2a;border:2px solid var(--card-border);border-radius:16px;padding:10px 14px;color:#fff;font-weight:700;font-family:inherit;font-size:calc(.9rem * var(--font-scale));outline:none}
+.modal-body{display:flex;flex-direction:column;gap:.7rem}
+.modal-field{display:flex;flex-direction:column;gap:4px}
+.modal-field label{font-size:calc(.78rem * var(--font-scale));font-weight:800;color:var(--text-muted)}
+.modal-field select{background:#121a2a;border:2px solid var(--card-border);border-radius:14px;padding:8px 12px;color:#fff;font-weight:700;font-family:inherit;font-size:calc(.85rem * var(--font-scale));outline:none}
 .modal-field select:focus{border-color:var(--accent2)}
-.modal-prayer-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-.modal-prayer-item{background:rgba(0,0,0,.3);border-radius:12px;padding:10px;display:flex;justify-content:space-between;align-items:center;font-size:calc(.9rem * var(--font-scale));font-weight:800}
+.modal-prayer-list{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
+.modal-prayer-item{background:rgba(0,0,0,.3);border-radius:10px;padding:8px 10px;display:flex;justify-content:space-between;align-items:center;font-size:calc(.82rem * var(--font-scale));font-weight:800}
 .modal-prayer-item .name{color:var(--accent3)}
 .modal-prayer-item .time{color:#fff;font-family:'Inter',monospace}
-.modal-loading{text-align:center;padding:1rem;color:var(--text-muted);font-weight:700}
+.modal-loading{text-align:center;padding:1rem;color:var(--text-muted);font-weight:700;grid-column:1/-1}
+.modal-date-small{background:rgba(0,0,0,.3);border-radius:10px;padding:8px 10px;font-weight:700;color:var(--accent3);font-size:calc(.8rem * var(--font-scale))}
 /* === CONTROLS === */
-.controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:1.5rem;background:rgba(0,0,0,.3);padding:.8rem 1.5rem;border-radius:50px;border:2px solid var(--card-border);gap:15px}
-.controls label{font-weight:800;color:var(--text-muted);font-size:calc(.85rem * var(--font-scale));display:flex;align-items:center;gap:6px}
-select,input[type=range]{background:#121a2a;border:2px solid var(--card-border);border-radius:20px;padding:6px 12px;color:#fff;font-weight:700;font-family:inherit;cursor:pointer;font-size:calc(.9rem * var(--font-scale))}
-input[type=range]{accent-color:var(--accent2);width:100px}
-.control-group{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.dots{display:flex;gap:6px;flex-wrap:wrap}
-.dot{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,.3);transition:all .25s}
+.controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:1.2rem;background:rgba(0,0,0,.3);padding:.7rem 1.2rem;border-radius:50px;border:2px solid var(--card-border);gap:12px}
+.controls label{font-weight:800;color:var(--text-muted);font-size:calc(.8rem * var(--font-scale));display:flex;align-items:center;gap:6px}
+select,input[type=range]{background:#121a2a;border:2px solid var(--card-border);border-radius:20px;padding:6px 12px;color:#fff;font-weight:700;font-family:inherit;cursor:pointer;font-size:calc(.85rem * var(--font-scale))}
+input[type=range]{accent-color:var(--accent2);width:90px}
+.control-group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dots{display:flex;gap:5px;flex-wrap:wrap}
+.dot{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid rgba(255,255,255,.3);transition:all .25s}
 .dot:hover{transform:scale(1.2);border-color:#fff}
 .dot.active{border-color:#fff;box-shadow:0 0 12px currentColor;transform:scale(1.15)}
 .dot[data-theme="default"]{background:linear-gradient(135deg,#a855f7,#c084fc);color:#a855f7}
@@ -135,8 +151,8 @@ input[type=range]{accent-color:var(--accent2);width:100px}
 .dot[data-bg="geometric"]{background:conic-gradient(#1a0f2e,#2a1a4a,#1a0f2e)}
 .dot[data-bg="mesh"]{background:linear-gradient(135deg,#2a1a4a,#3a1a5a,#1a0f2e)}
 /* === TABS === */
-.tabs{display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap}
-.tab{background:var(--card-bg);border:2px solid var(--card-border);color:var(--text-muted);padding:10px 20px;border-radius:50px;cursor:pointer;font-weight:800;font-family:inherit;font-size:calc(.9rem * var(--font-scale));display:flex;align-items:center;gap:8px}
+.tabs{display:flex;gap:8px;margin-bottom:1.2rem;flex-wrap:wrap}
+.tab{background:var(--card-bg);border:2px solid var(--card-border);color:var(--text-muted);padding:8px 18px;border-radius:50px;cursor:pointer;font-weight:800;font-family:inherit;font-size:calc(.85rem * var(--font-scale));display:flex;align-items:center;gap:8px}
 .tab.active{background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border-color:transparent;box-shadow:0 5px 20px var(--glow)}
 /* === NEWS GRID === */
 .news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1.5rem}
@@ -221,11 +237,67 @@ input[type=range]{accent-color:var(--accent2);width:100px}
 .archive-article a{color:var(--accent2);text-decoration:none;font-weight:800}
 .archive-article a:hover{text-decoration:underline}
 .archive-article .arc-meta{font-size:calc(.75rem * var(--font-scale));color:var(--text-muted);margin-top:3px}
-.status{position:fixed;bottom:1.5rem;left:1.5rem;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);padding:8px 14px;border-radius:30px;font-size:calc(.75rem * var(--font-scale));font-weight:700;color:var(--text-muted);border:1px solid var(--card-border);z-index:100;max-width:60vw}
-.refresh-btn{position:fixed;bottom:1.5rem;right:1.5rem;width:55px;height:55px;border-radius:50%;background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border:none;font-size:1.3rem;cursor:pointer;box-shadow:0 8px 25px var(--glow);z-index:100}
+.status{position:fixed;bottom:1.2rem;left:1.2rem;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);padding:6px 12px;border-radius:30px;font-size:calc(.72rem * var(--font-scale));font-weight:700;color:var(--text-muted);border:1px solid var(--card-border);z-index:100;max-width:60vw}
+.refresh-btn{position:fixed;bottom:1.2rem;right:1.2rem;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border:none;font-size:1.2rem;cursor:pointer;box-shadow:0 8px 25px var(--glow);z-index:100}
 .refresh-btn:hover{transform:scale(1.1) rotate(180deg)}
 .refresh-btn.spinning i{animation:spin 1s linear infinite}
-@media(max-width:700px){.app{padding:.8rem 1rem}.header{flex-direction:column;align-items:flex-start}.info-bar{flex-direction:column}.news-grid{grid-template-columns:1fr}.controls{border-radius:24px}.dot{width:22px;height:22px}.radio-grid{grid-template-columns:1fr}.modal-prayer-list{grid-template-columns:1fr}}
+/* === MOBILE — Slim Layout === */
+@media(max-width:700px){
+  .app{padding:.7rem .8rem}
+  .header{padding:.6rem 0 .9rem;margin-bottom:.8rem;gap:.6rem}
+  .logo{font-size:calc(1.5rem * var(--font-scale))}
+  .logo i{font-size:1.4rem}
+  .lang-btn{padding:.4rem 1rem;font-size:calc(.85rem * var(--font-scale))}
+  .ticker{padding:8px 0;font-size:calc(.85rem * var(--font-scale))}
+  .ticker-wrap{margin-bottom:.8rem;padding:6px 0}
+  .radio-section{padding:.7rem .8rem;margin-bottom:.8rem}
+  .radio-main-title{font-size:calc(.9rem * var(--font-scale));margin-bottom:.5rem}
+  .radio-category-header{padding:10px 12px}
+  .radio-cat-icon{width:32px;height:32px;font-size:.95rem}
+  .radio-cat-title{font-size:calc(.85rem * var(--font-scale))}
+  .radio-cat-count{font-size:calc(.65rem * var(--font-scale))}
+  .radio-grid{grid-template-columns:1fr;padding:8px;gap:6px}
+  .radio-card{padding:8px 10px}
+  .radio-icon{width:30px;height:30px;font-size:.85rem}
+  .radio-name{font-size:calc(.75rem * var(--font-scale))}
+  .radio-desc{font-size:calc(.62rem * var(--font-scale))}
+  .search-bar{padding:.6rem .9rem;margin-bottom:.8rem;gap:6px}
+  .search-bar input,.search-bar select{padding:7px 12px;font-size:calc(.8rem * var(--font-scale))}
+  .search-bar button{padding:7px 12px;font-size:calc(.78rem * var(--font-scale))}
+  .info-bar{flex-direction:column;gap:.5rem;margin-bottom:.8rem}
+  .info-card{padding:.6rem .9rem;border-radius:16px;flex:1 1 auto}
+  .date-g{font-size:calc(.82rem * var(--font-scale))}
+  .date-h{font-size:calc(.7rem * var(--font-scale))}
+  .date-he{font-size:calc(.65rem * var(--font-scale))}
+  .time-compact{font-size:calc(1.3rem * var(--font-scale))}
+  .prayer-btn{padding:.6rem .9rem;border-radius:16px;flex:1 1 auto}
+  .prayer-btn-title{font-size:calc(.82rem * var(--font-scale))}
+  .prayer-btn-sub{font-size:calc(.65rem * var(--font-scale))}
+  .prayer-btn-icon{font-size:1.1rem}
+  .controls{border-radius:24px;padding:.6rem .9rem;gap:8px;margin-bottom:.8rem}
+  .controls label{font-size:calc(.72rem * var(--font-scale))}
+  select,input[type=range]{padding:5px 10px;font-size:calc(.78rem * var(--font-scale))}
+  input[type=range]{width:70px}
+  .dot{width:20px;height:20px}
+  .tab{padding:7px 14px;font-size:calc(.78rem * var(--font-scale))}
+  .tabs{margin-bottom:.8rem;gap:6px}
+  .news-grid{grid-template-columns:1fr;gap:.9rem}
+  .news-card{padding:1.1rem;border-radius:18px;gap:.6rem}
+  .news-title{font-size:calc(1.05rem * var(--font-scale))}
+  .news-desc{font-size:calc(.85rem * var(--font-scale))}
+  .news-source{font-size:calc(.75rem * var(--font-scale))}
+  .source-logo{width:30px;height:30px;font-size:.85rem}
+  .news-time,.news-link,.expand-hint{font-size:calc(.68rem * var(--font-scale))}
+  .news-link{padding:5px 10px}
+  .modal-content{padding:.9rem;border-radius:16px;max-width:95vw}
+  .modal-title{font-size:calc(.9rem * var(--font-scale))}
+  .modal-field label{font-size:calc(.7rem * var(--font-scale))}
+  .modal-field select{padding:7px 10px;font-size:calc(.8rem * var(--font-scale))}
+  .modal-prayer-item{padding:6px 8px;font-size:calc(.75rem * var(--font-scale))}
+  .modal-prayer-list{gap:5px}
+  .status{bottom:.8rem;left:.8rem;padding:5px 10px;font-size:calc(.65rem * var(--font-scale))}
+  .refresh-btn{width:44px;height:44px;font-size:1rem;bottom:.8rem;right:.8rem}
+}
 </style>
 </head>
 <body class="lang-en" data-theme="default" data-bg="aurora">
@@ -253,71 +325,101 @@ input[type=range]{accent-color:var(--accent2);width:100px}
     </div>
   </div>
 
-  <!-- === LIVE RADIO === -->
+  <!-- === LIVE RADIO (Collapsible Categories) === -->
   <div class="radio-section">
-    <h3 class="radio-title"><i class="fas fa-broadcast-tower"></i> <span id="radioTitle">البث المباشر — القرآن والأخبار</span></h3>
-    <div class="radio-grid">
-      <button class="radio-card" data-radio="https://stream.radiojar.com/0tpy1h0kxtzuv" data-name="إذاعة القرآن الكريم - السعودية">
-        <div class="radio-icon" style="background:linear-gradient(135deg,#1a5c2a,#2e7d32)"><i class="fas fa-quran"></i></div>
-        <div class="radio-info"><div class="radio-name">إذاعة القرآن الكريم - السعودية</div><div class="radio-desc">مكة المكرمة</div></div>
-        <i class="fas fa-play radio-play"></i>
-      </button>
-      <button class="radio-card" data-radio="https://stream.radiojar.com/8s5u5tpdtwzuv" data-name="إذاعة القرآن الكريم - الأردن">
-        <div class="radio-icon" style="background:linear-gradient(135deg,#1a3a5c,#2e5d7d)"><i class="fas fa-quran"></i></div>
-        <div class="radio-info"><div class="radio-name">إذاعة القرآن الكريم - الأردن</div><div class="radio-desc">عمان</div></div>
-        <i class="fas fa-play radio-play"></i>
-      </button>
-      <button class="radio-card" data-radio="https://qurango.net/radio/mohammed_siddiq_alminshawi" data-name="الشيخ محمد صديق المنشاوي">
-        <div class="radio-icon" style="background:linear-gradient(135deg,#5c1a3a,#7d2e5d)"><i class="fas fa-microphone"></i></div>
-        <div class="radio-info"><div class="radio-name">الشيخ محمد صديق المنشاوي</div><div class="radio-desc">ترتيل</div></div>
-        <i class="fas fa-play radio-play"></i>
-      </button>
-      <button class="radio-card" data-radio="https://qurango.net/radio/abdulbasit_abdulsamad" data-name="الشيخ عبد الباسط عبد الصمد">
-        <div class="radio-icon" style="background:linear-gradient(135deg,#5c2a1a,#7d4a2e)"><i class="fas fa-microphone"></i></div>
-        <div class="radio-info"><div class="radio-name">الشيخ عبد الباسط عبد الصمد</div><div class="radio-desc">المرتل</div></div>
-        <i class="fas fa-play radio-play"></i>
-      </button>
-      <button class="radio-card" data-radio="https://qurango.net/radio/maher_almuaiqly" data-name="الشيخ ماهر المعيقلي">
-        <div class="radio-icon" style="background:linear-gradient(135deg,#5c4a1a,#7d6b2e)"><i class="fas fa-microphone"></i></div>
-        <div class="radio-info"><div class="radio-name">الشيخ ماهر المعيقلي</div><div class="radio-desc">إمام الحرم المكي</div></div>
-        <i class="fas fa-play radio-play"></i>
-      </button>
-      <button class="radio-card" data-radio="https://qurango.net/radio/abdulrahman_alsudaes" data-name="الشيخ عبد الرحمن السديس">
-        <div class="radio-icon" style="background:linear-gradient(135deg,#1a1a5c,#2e2e7d)"><i class="fas fa-microphone"></i></div>
-        <div class="radio-info"><div class="radio-name">الشيخ عبد الرحمن السديس</div><div class="radio-desc">إمام الحرم المكي</div></div>
-        <i class="fas fa-play radio-play"></i>
-      </button>
-      <button class="radio-card" data-radio="https://live-hls-audio-web-aja.getaj.net/VOICE-AJA/index.m3u8" data-name="الجزيرة - عربي">
-        <div class="radio-icon" style="background:linear-gradient(135deg,#d4a017,#f4c430)"><i class="fas fa-globe"></i></div>
-        <div class="radio-info"><div class="radio-name">الجزيرة - عربي</div><div class="radio-desc">إذاعة إخبارية</div></div>
-        <i class="fas fa-play radio-play"></i>
-      </button>
-      <button class="radio-card" data-radio="https://live-hls-audio-web-aje.getaj.net/VOICE-AJE/index.m3u8" data-name="Al Jazeera English">
-        <div class="radio-icon" style="background:linear-gradient(135deg,#c8102e,#e31e24)"><i class="fas fa-globe"></i></div>
-        <div class="radio-info"><div class="radio-name">Al Jazeera English</div><div class="radio-desc">News Radio</div></div>
-        <i class="fas fa-play radio-play"></i>
-      </button>
-      <button class="radio-card" data-radio="https://av.almanhal.net/alarabiya/alarabiya.m3u8" data-name="العربية - إذاعة">
-        <div class="radio-icon" style="background:linear-gradient(135deg,#0066b3,#0088e0)"><i class="fas fa-globe"></i></div>
-        <div class="radio-info"><div class="radio-name">العربية - إذاعة</div><div class="radio-desc">إذاعة إخبارية</div></div>
-        <i class="fas fa-play radio-play"></i>
-      </button>
-      <button class="radio-card" data-radio="https://rt-arb.rttv.com/live/rtarab/playlist.m3u8" data-name="RT عربي">
-        <div class="radio-icon" style="background:linear-gradient(135deg,#00a651,#00c060)"><i class="fas fa-globe"></i></div>
-        <div class="radio-info"><div class="radio-name">RT عربي</div><div class="radio-desc">إذاعة إخبارية</div></div>
-        <i class="fas fa-play radio-play"></i>
-      </button>
-      <button class="radio-card" data-radio="https://montecarlodoualiya.ice.infomaniak.ch/mc-doualiya.aac" data-name="مونت كارلو الدولية">
-        <div class="radio-icon" style="background:linear-gradient(135deg,#0d47a1,#1976d2)"><i class="fas fa-globe"></i></div>
-        <div class="radio-info"><div class="radio-name">مونت كارلو الدولية</div><div class="radio-desc">إذاعة إخبارية</div></div>
-        <i class="fas fa-play radio-play"></i>
-      </button>
-      <button class="radio-card" data-radio="https://stream.live.vc.bbcmedia.co.uk/bbc_world_service" data-name="BBC World Service">
-        <div class="radio-icon" style="background:linear-gradient(135deg,#bb1919,#e31e24)"><i class="fas fa-globe"></i></div>
-        <div class="radio-info"><div class="radio-name">BBC World Service</div><div class="radio-desc">إخبارية عالمية</div></div>
-        <i class="fas fa-play radio-play"></i>
-      </button>
+    <h3 class="radio-main-title"><i class="fas fa-broadcast-tower"></i> <span id="radioTitle">البث المباشر</span></h3>
+
+    <!-- Quran Category -->
+    <div class="radio-category open" id="catQuran">
+      <div class="radio-category-header" onclick="toggleCategory('catQuran')">
+        <div class="radio-category-header-left">
+          <div class="radio-cat-icon" style="background:linear-gradient(135deg,#1a5c2a,#2e7d32)"><i class="fas fa-quran"></i></div>
+          <div class="radio-cat-info">
+            <div class="radio-cat-title" id="catQuranTitle">إذاعات القرآن الكريم</div>
+            <div class="radio-cat-count"><span id="catQuranCount">6 stations</span></div>
+          </div>
+        </div>
+        <i class="fas fa-chevron-down chevron"></i>
+      </div>
+      <div class="radio-category-body">
+        <div class="radio-grid">
+          <button class="radio-card" data-radio="https://stream.radiojar.com/0tpy1h0kxtzuv" data-name="إذاعة القرآن الكريم - السعودية">
+            <div class="radio-icon" style="background:linear-gradient(135deg,#1a5c2a,#2e7d32)"><i class="fas fa-quran"></i></div>
+            <div class="radio-info"><div class="radio-name">القرآن الكريم - السعودية</div><div class="radio-desc">مكة المكرمة</div></div>
+            <i class="fas fa-play radio-play"></i>
+          </button>
+          <button class="radio-card" data-radio="https://stream.radiojar.com/8s5u5tpdtwzuv" data-name="إذاعة القرآن الكريم - الأردن">
+            <div class="radio-icon" style="background:linear-gradient(135deg,#1a3a5c,#2e5d7d)"><i class="fas fa-quran"></i></div>
+            <div class="radio-info"><div class="radio-name">القرآن الكريم - الأردن</div><div class="radio-desc">عمان</div></div>
+            <i class="fas fa-play radio-play"></i>
+          </button>
+          <button class="radio-card" data-radio="https://qurango.net/radio/mohammed_siddiq_alminshawi" data-name="الشيخ محمد صديق المنشاوي">
+            <div class="radio-icon" style="background:linear-gradient(135deg,#5c1a3a,#7d2e5d)"><i class="fas fa-microphone"></i></div>
+            <div class="radio-info"><div class="radio-name">الشيخ محمد صديق المنشاوي</div><div class="radio-desc">ترتيل</div></div>
+            <i class="fas fa-play radio-play"></i>
+          </button>
+          <button class="radio-card" data-radio="https://qurango.net/radio/abdulbasit_abdulsamad" data-name="الشيخ عبد الباسط عبد الصمد">
+            <div class="radio-icon" style="background:linear-gradient(135deg,#5c2a1a,#7d4a2e)"><i class="fas fa-microphone"></i></div>
+            <div class="radio-info"><div class="radio-name">الشيخ عبد الباسط عبد الصمد</div><div class="radio-desc">المرتل</div></div>
+            <i class="fas fa-play radio-play"></i>
+          </button>
+          <button class="radio-card" data-radio="https://qurango.net/radio/maher_almuaiqly" data-name="الشيخ ماهر المعيقلي">
+            <div class="radio-icon" style="background:linear-gradient(135deg,#5c4a1a,#7d6b2e)"><i class="fas fa-microphone"></i></div>
+            <div class="radio-info"><div class="radio-name">الشيخ ماهر المعيقلي</div><div class="radio-desc">إمام الحرم المكي</div></div>
+            <i class="fas fa-play radio-play"></i>
+          </button>
+          <button class="radio-card" data-radio="https://qurango.net/radio/abdulrahman_alsudaes" data-name="الشيخ عبد الرحمن السديس">
+            <div class="radio-icon" style="background:linear-gradient(135deg,#1a1a5c,#2e2e7d)"><i class="fas fa-microphone"></i></div>
+            <div class="radio-info"><div class="radio-name">الشيخ عبد الرحمن السديس</div><div class="radio-desc">إمام الحرم المكي</div></div>
+            <i class="fas fa-play radio-play"></i>
+          </button>
+        </div>
+      </div>
     </div>
+
+    <!-- News Category -->
+    <div class="radio-category" id="catNews">
+      <div class="radio-category-header" onclick="toggleCategory('catNews')">
+        <div class="radio-category-header-left">
+          <div class="radio-cat-icon" style="background:linear-gradient(135deg,#0066b3,#0088e0)"><i class="fas fa-globe"></i></div>
+          <div class="radio-cat-info">
+            <div class="radio-cat-title" id="catNewsTitle">إذاعات الأخبار</div>
+            <div class="radio-cat-count"><span id="catNewsCount">5 stations</span></div>
+          </div>
+        </div>
+        <i class="fas fa-chevron-down chevron"></i>
+      </div>
+      <div class="radio-category-body">
+        <div class="radio-grid">
+          <button class="radio-card" data-radio="https://live-hls-audio-web-aja.getaj.net/VOICE-AJA/index.m3u8" data-name="الجزيرة - عربي">
+            <div class="radio-icon" style="background:linear-gradient(135deg,#d4a017,#f4c430)"><i class="fas fa-globe"></i></div>
+            <div class="radio-info"><div class="radio-name">الجزيرة - عربي</div><div class="radio-desc">إذاعة إخبارية</div></div>
+            <i class="fas fa-play radio-play"></i>
+          </button>
+          <button class="radio-card" data-radio="https://live-hls-audio-web-aje.getaj.net/VOICE-AJE/index.m3u8" data-name="Al Jazeera English">
+            <div class="radio-icon" style="background:linear-gradient(135deg,#c8102e,#e31e24)"><i class="fas fa-globe"></i></div>
+            <div class="radio-info"><div class="radio-name">Al Jazeera English</div><div class="radio-desc">News Radio</div></div>
+            <i class="fas fa-play radio-play"></i>
+          </button>
+          <button class="radio-card" data-radio="https://av.almanhal.net/alarabiya/alarabiya.m3u8" data-name="العربية - إذاعة">
+            <div class="radio-icon" style="background:linear-gradient(135deg,#0066b3,#0088e0)"><i class="fas fa-globe"></i></div>
+            <div class="radio-info"><div class="radio-name">العربية - إذاعة</div><div class="radio-desc">إذاعة إخبارية</div></div>
+            <i class="fas fa-play radio-play"></i>
+          </button>
+          <button class="radio-card" data-radio="https://rt-arb.rttv.com/live/rtarab/playlist.m3u8" data-name="RT عربي">
+            <div class="radio-icon" style="background:linear-gradient(135deg,#00a651,#00c060)"><i class="fas fa-globe"></i></div>
+            <div class="radio-info"><div class="radio-name">RT عربي</div><div class="radio-desc">إذاعة إخبارية</div></div>
+            <i class="fas fa-play radio-play"></i>
+          </button>
+          <button class="radio-card" data-radio="https://stream.live.vc.bbcmedia.co.uk/bbc_world_service" data-name="BBC World Service">
+            <div class="radio-icon" style="background:linear-gradient(135deg,#bb1919,#e31e24)"><i class="fas fa-globe"></i></div>
+            <div class="radio-info"><div class="radio-name">BBC World Service</div><div class="radio-desc">إخبارية عالمية</div></div>
+            <i class="fas fa-play radio-play"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <audio id="radioPlayer" style="display:none"></audio>
     <div class="radio-controls" id="radioControls">
       <div class="radio-now-playing"><i class="fas fa-volume-up" style="color:var(--accent2)"></i><span id="nowPlaying">--</span></div>
@@ -329,19 +431,22 @@ input[type=range]{accent-color:var(--accent2);width:100px}
   </div>
 
   <div class="search-bar">
-    <i class="fas fa-search" style="color:var(--accent2);font-size:1.2rem"></i>
+    <i class="fas fa-search" style="color:var(--accent2);font-size:1.1rem"></i>
     <input type="text" id="searchInput" placeholder="Search news... / ابحث في الأخبار...">
     <select id="sourceFilter"><option value="">All Sources / كل المصادر</option></select>
     <button id="clearSearch"><i class="fas fa-times"></i> <span id="clearLabel">Clear</span></button>
     <div class="search-results-info" id="searchInfo"></div>
   </div>
 
+  <!-- === COMPACT INFO BAR === -->
   <div class="info-bar">
-    <div class="card">
-      <div class="date-g" id="gregorianDate">Loading...</div>
-      <div class="date-h" id="hijriDate">...</div>
-      <div class="date-he" id="hijriDateEn">...</div>
-      <div class="time" id="currentTime">--:--:--</div>
+    <div class="info-card">
+      <div class="date-time-wrap">
+        <div class="date-g" id="gregorianDate">Loading...</div>
+        <div class="date-h" id="hijriDate">...</div>
+        <div class="date-he" id="hijriDateEn">...</div>
+      </div>
+      <div class="time-compact" id="currentTime">--:--</div>
     </div>
     <button class="prayer-btn" onclick="openPrayerModal()">
       <div class="prayer-btn-content">
@@ -352,7 +457,7 @@ input[type=range]{accent-color:var(--accent2);width:100px}
     </button>
   </div>
 
-  <!-- === PRAYER MODAL === -->
+  <!-- === PRAYER MODAL (Compact) === -->
   <div class="modal-overlay" id="prayerModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -381,12 +486,12 @@ input[type=range]{accent-color:var(--accent2);width:100px}
         </div>
         <div class="modal-field">
           <label id="labelDate">Date</label>
-          <div style="background:rgba(0,0,0,.3);border-radius:12px;padding:10px;font-weight:700;color:var(--accent3)" id="modalDateDisplay">--</div>
+          <div class="modal-date-small" id="modalDateDisplay">--</div>
         </div>
         <div class="modal-prayer-list" id="modalPrayerList">
           <div class="modal-loading"><i class="fas fa-circle-notch" style="animation:spin 1s linear infinite"></i> Loading...</div>
         </div>
-        <button onclick="savePrayerSettings()" style="background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border:none;border-radius:16px;padding:12px;font-weight:800;cursor:pointer;font-family:inherit;margin-top:8px;font-size:calc(1rem * var(--font-scale))" id="saveBtn">Save</button>
+        <button onclick="savePrayerSettings()" style="background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border:none;border-radius:14px;padding:10px;font-weight:800;cursor:pointer;font-family:inherit;margin-top:6px;font-size:calc(.9rem * var(--font-scale))" id="saveBtn">Save</button>
       </div>
     </div>
   </div>
@@ -431,7 +536,7 @@ input[type=range]{accent-color:var(--accent2);width:100px}
     <div class="control-group">
       <label><i class="fas fa-text-height"></i> <span id="sizeLabel">Size</span></label>
       <input type="range" id="fontSize" min="12" max="32" value="16">
-      <span id="sizeValue" style="font-size:calc(.85rem * var(--font-scale));background:linear-gradient(135deg,var(--accent2),var(--accent4));padding:3px 10px;border-radius:15px;font-weight:800;color:#fff">16px</span>
+      <span id="sizeValue" style="font-size:calc(.8rem * var(--font-scale));background:linear-gradient(135deg,var(--accent2),var(--accent4));padding:3px 10px;border-radius:15px;font-weight:800;color:#fff">16px</span>
     </div>
   </div>
 
@@ -451,8 +556,8 @@ input[type=range]{accent-color:var(--accent2);width:100px}
 
 <script>
 const WORKER_URL = 'https://withered-moon-2845.raed31818.workers.dev';
-const SETTINGS_KEY = 'news_hub_settings_v6';
-const ARCHIVE_KEY = 'news_archive_v6';
+const SETTINGS_KEY = 'news_hub_settings_v7';
+const ARCHIVE_KEY = 'news_archive_v7';
 const ARCHIVE_DAYS = 15;
 const FETCH_INTERVAL = 5 * 60 * 1000;
 
@@ -501,13 +606,13 @@ const COUNTRIES = {
 
 const METHOD_MAP = { MWL: 3, ISNA: 2, EGY: 5, UmmAlQura: 4, Dubai: 15, Turkey: 13 };
 
-const DUAAS = [
-  'اللهم أنت السلام ومنك السلام تباركت يا ذا الجلال والإكرام',
-  'أستغفر الله، أستغفر الله، أستغفر الله',
-  'لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير',
-  'سبحان الله، والحمد لله، والله أكبر (33 مرة)',
-  'اللهم أجرني من النار (7 مرات بعد الفجر والمغرب)'
-];
+// ============================================================
+// RADIO CATEGORY TOGGLE
+// ============================================================
+function toggleCategory(id) {
+  const cat = document.getElementById(id);
+  if (cat) cat.classList.toggle('open');
+}
 
 // ============================================================
 // SETTINGS
@@ -522,7 +627,9 @@ function saveSettings() {
       fontSize: $('fontSize').value,
       country: $('modalCountry').value,
       city: $('modalCity').value,
-      calcMethod: $('modalMethod').value
+      calcMethod: $('modalMethod').value,
+      catQuranOpen: $('catQuran').classList.contains('open'),
+      catNewsOpen: $('catNews').classList.contains('open')
     }));
   } catch (e) {}
 }
@@ -538,11 +645,13 @@ function restoreSettings() {
     if (s.calcMethod) $('modalMethod').value = s.calcMethod;
     if (s.country) { $('modalCountry').value = s.country; populateModalCities(s.country); if (s.city) { $('modalCity').value = s.city; $('prayerBtnSub').textContent = `${s.city}, ${s.country}`; } }
     if (s.lang) currentLang = s.lang;
+    if (s.catQuranOpen === false) $('catQuran').classList.remove('open');
+    if (s.catNewsOpen === true) $('catNews').classList.add('open');
     return s;
   } catch (e) { return null; }
 }
 
-// === FONT SIZE (FIXED) ===
+// === FONT SIZE ===
 function updateFontSize(size) {
   const scale = size / 16;
   document.documentElement.style.setProperty('--font-scale', scale);
@@ -564,7 +673,11 @@ function updateUILabels() {
   $('tabArchive').textContent = isAr ? 'الأرشيف (15 يوم)' : 'Archive (15 days)';
   $('clearLabel').textContent = isAr ? 'مسح' : 'Clear';
   $('searchInput').placeholder = isAr ? 'ابحث في الأخبار...' : 'Search news...';
-  $('radioTitle').textContent = isAr ? 'البث المباشر — القرآن والأخبار' : 'Live Radio — Quran & News';
+  $('radioTitle').textContent = isAr ? 'البث المباشر' : 'Live Radio';
+  $('catQuranTitle').textContent = isAr ? 'إذاعات القرآن الكريم' : 'Quran Radio Stations';
+  $('catNewsTitle').textContent = isAr ? 'إذاعات الأخبار' : 'News Radio Stations';
+  $('catQuranCount').textContent = isAr ? '6 إذاعات' : '6 stations';
+  $('catNewsCount').textContent = isAr ? '5 إذاعات' : '5 stations';
   $('prayerBtnTitle').textContent = isAr ? 'مواقيت الصلاة' : 'Prayer Times';
   $('modalTitle').textContent = isAr ? 'مواقيت الصلاة' : 'Prayer Times';
   $('labelCountry').textContent = isAr ? 'الدولة' : 'Country';
@@ -580,10 +693,10 @@ function updateUILabels() {
 // ============================================================
 function updateClock() {
   const now = new Date();
-  $('gregorianDate').textContent = now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  try { $('hijriDate').textContent = now.toLocaleDateString(currentLang==='ar'?'ar-SA-u-ca-islamic-umalqura':'en-US-u-ca-islamic-umalqura',{calendar:'islamic-umalqura',year:'numeric',month:'long',day:'numeric'}); } catch(e){}
-  try { $('hijriDateEn').textContent = now.toLocaleDateString('en-US-u-ca-islamic-umalqura',{calendar:'islamic-umalqura',year:'numeric',month:'long',day:'numeric'}); } catch(e){}
-  $('currentTime').textContent = now.toLocaleTimeString('en-US',{hour12:false, hour:'2-digit', minute:'2-digit', second:'2-digit'});
+  $('gregorianDate').textContent = now.toLocaleDateString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
+  try { $('hijriDate').textContent = now.toLocaleDateString(currentLang==='ar'?'ar-SA-u-ca-islamic-umalqura':'en-US-u-ca-islamic-umalqura',{calendar:'islamic-umalqura',year:'numeric',month:'short',day:'numeric'}); } catch(e){}
+  try { $('hijriDateEn').textContent = now.toLocaleDateString('en-US-u-ca-islamic-umalqura',{calendar:'islamic-umalqura',year:'numeric',month:'short',day:'numeric'}); } catch(e){}
+  $('currentTime').textContent = now.toLocaleTimeString('en-US',{hour12:false, hour:'2-digit', minute:'2-digit'});
 }
 setInterval(updateClock,1000); updateClock();
 
@@ -624,7 +737,7 @@ async function fetchModalPrayerTimes() {
     currentPrayerTimes = data.data.timings;
     const t = data.data.timings;
     const date = new Date();
-    $('modalDateDisplay').textContent = date.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    $('modalDateDisplay').textContent = date.toLocaleDateString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric'});
     const labels = currentLang === 'ar'
       ? { Fajr:'الفجر', Dhuhr:'الظهر', Asr:'العصر', Maghrib:'المغرب', Isha:'العشاء' }
       : { Fajr:'Fajr', Dhuhr:'Dhuhr', Asr:'Asr', Maghrib:'Maghrib', Isha:'Isha' };
@@ -632,7 +745,7 @@ async function fetchModalPrayerTimes() {
       `<div class="modal-prayer-item"><span class="name">${labels[p]}</span><span class="time">${t[p]}</span></div>`
     ).join('');
   } catch(e) {
-    $('modalPrayerList').innerHTML = '<div class="modal-loading">Failed to load prayer times</div>';
+    $('modalPrayerList').innerHTML = '<div class="modal-loading">Failed to load</div>';
   }
 }
 function savePrayerSettings() {
@@ -694,6 +807,11 @@ $('fontSize').addEventListener('input', e => {
   saveSettings();
 });
 
+// Save category states when toggled
+document.querySelectorAll('.radio-category-header').forEach(h => {
+  h.addEventListener('click', () => setTimeout(saveSettings, 100));
+});
+
 // ============================================================
 // RADIO PLAYER (with HLS support)
 // ============================================================
@@ -706,18 +824,16 @@ function loadHlsScript(callback) {
 }
 
 document.querySelectorAll('.radio-card').forEach(card => {
-  card.addEventListener('click', () => {
+  card.addEventListener('click', (e) => {
+    e.stopPropagation();
     const url = card.dataset.radio;
     const name = card.dataset.name;
     if (currentRadioUrl === url && radioPlaying) { stopRadio(); return; }
     
     const player = $('radioPlayer');
-    
-    // Cleanup previous HLS instance
     if (currentHlsInstance) { currentHlsInstance.destroy(); currentHlsInstance = null; }
     player.src = '';
     
-    // Check if it's HLS (.m3u8)
     if (url.includes('.m3u8')) {
       loadHlsScript(() => {
         if (window.Hls && window.Hls.isSupported()) {
@@ -726,9 +842,7 @@ document.querySelectorAll('.radio-card').forEach(card => {
           hls.loadSource(url);
           hls.attachMedia(player);
           hls.on(window.Hls.Events.MANIFEST_PARSED, () => {
-            player.play().then(() => {
-              setRadioPlaying(name, url, card);
-            }).catch(e => console.warn('HLS play failed', e));
+            player.play().then(() => setRadioPlaying(name, url, card)).catch(e => console.warn('HLS play failed', e));
           });
           hls.on(window.Hls.Events.ERROR, (evt, data) => {
             if (data.fatal) {
@@ -737,7 +851,6 @@ document.querySelectorAll('.radio-card').forEach(card => {
             }
           });
         } else if (player.canPlayType('application/vnd.apple.mpegurl')) {
-          // Safari native HLS
           player.src = url;
           player.play().then(() => setRadioPlaying(name, url, card)).catch(e => console.warn(e));
         } else {
@@ -745,12 +858,9 @@ document.querySelectorAll('.radio-card').forEach(card => {
         }
       });
     } else {
-      // Regular stream
       player.src = url;
       player.load();
-      player.play().then(() => {
-        setRadioPlaying(name, url, card);
-      }).catch(e => {
+      player.play().then(() => setRadioPlaying(name, url, card)).catch(e => {
         console.warn('Radio failed:', e);
         alert(currentLang === 'ar' ? 'تعذر تشغيل الراديو. حاول مرة أخرى.' : 'Radio failed. Try again.');
       });
@@ -767,7 +877,6 @@ function setRadioPlaying(name, url, card) {
   document.querySelectorAll('.radio-card').forEach(c => c.classList.remove('active'));
   card.classList.add('active');
 }
-
 function toggleRadio() {
   const player = $('radioPlayer');
   if (radioPlaying) { player.pause(); radioPlaying = false; $('radioToggleIcon').className = 'fas fa-play'; }
@@ -786,7 +895,7 @@ function stopRadio() {
 // PARTICLES
 // ============================================================
 function spawnParticles() {
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < 12; i++) {
     const p = document.createElement('div');
     p.className = 'particle';
     p.style.left = Math.random() * 100 + '%';
