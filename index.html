@@ -181,7 +181,7 @@ input[type=number]:focus{border-color:var(--accent2);outline:none;box-shadow:0 0
 .tab{background:var(--card-bg);border:2px solid var(--card-border);color:var(--text-muted);padding:8px 18px;border-radius:50px;cursor:pointer;font-weight:800;font-family:inherit;font-size:calc(.85rem * var(--font-scale));display:flex;align-items:center;gap:8px}
 .tab.active{background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border-color:transparent;box-shadow:0 5px 20px var(--glow)}
 .news-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1.5rem}
-.news-card{background:var(--card-bg);backdrop-filter:blur(12px);border-radius:24px;padding:1.5rem;border:2px solid var(--card-border);display:flex;flex-direction:column;gap:.8rem;position:relative;overflow:hidden;animation:fadeInUp .5s ease backwards;cursor:pointer;transition:transform .35s cubic-bezier(.4,0,.2,1),border-color .35s,box-shadow .35s}
+.news-card{background:var(--card-bg);backdrop-filter:blur(12px);border-radius:24px;padding:1.2rem;border:2px solid var(--card-border);display:flex;flex-direction:column;gap:.7rem;position:relative;overflow:hidden;animation:fadeInUp .5s ease backwards;cursor:pointer;transition:transform .35s cubic-bezier(.4,0,.2,1),border-color .35s,box-shadow .35s}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}}
 .news-card:hover{transform:translateY(-5px);border-color:var(--accent2);box-shadow:0 20px 40px -12px rgba(0,0,0,.9),0 0 25px var(--glow)}
 .news-card.expanded{grid-column:1/-1;background:linear-gradient(135deg,rgba(168,85,247,.25),rgba(0,212,255,.15)),var(--card-bg);border-color:var(--accent2);box-shadow:0 25px 60px -15px rgba(0,0,0,.95),0 0 50px var(--glow);animation:expandPulse 0.6s ease}
@@ -189,6 +189,11 @@ input[type=number]:focus{border-color:var(--accent2);outline:none;box-shadow:0 0
 .news-card::before{content:'\f0e7';font-family:'Font Awesome 6 Free';font-weight:900;position:absolute;bottom:-30px;right:-20px;font-size:9rem;opacity:.045;color:var(--accent2);pointer-events:none;z-index:0;transition:opacity .4s,transform .4s}
 .news-card:hover::before{opacity:.09;transform:rotate(-10deg) scale(1.1)}
 .news-card.expanded::before{opacity:.06;font-size:12rem;bottom:-50px;right:-40px}
+/* === NEWS CARD IMAGE === */
+.news-image-wrap{width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(0,212,255,.08));display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
+.news-image-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.news-card:hover .news-image-wrap img{transform:scale(1.05)}
+.news-card.expanded .news-image-wrap{aspect-ratio:16/9;max-height:420px}
 .news-source{display:flex;align-items:center;gap:8px;font-size:calc(.85rem * var(--font-scale));font-weight:800;text-transform:uppercase;color:var(--accent3);position:relative;z-index:1}
 .source-logo{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;flex-shrink:0;box-shadow:0 0 12px var(--glow);background:linear-gradient(135deg,var(--accent1),var(--accent4))}
 .news-card[data-source*="الجزيرة"] .source-logo{background:linear-gradient(135deg,#d4a017,#f4c430)}
@@ -227,11 +232,11 @@ input[type=number]:focus{border-color:var(--accent2);outline:none;box-shadow:0 0
 .news-card[data-source*="Al-Monitor"] .source-logo{background:linear-gradient(135deg,#0277bd,#0288d1)}
 .news-card[data-source*="Media Line"] .source-logo{background:linear-gradient(135deg,#37474f,#546e7a)}
 .news-card[data-source*="Jordan"] .source-logo{background:linear-gradient(135deg,#00695c,#00897b)}
-.news-title{font-size:calc(1.25rem * var(--font-scale));font-weight:900;line-height:1.45;color:var(--text-primary);position:relative;z-index:1}
-.news-desc{font-size:calc(.95rem * var(--font-scale));color:var(--text-secondary);line-height:1.7;position:relative;z-index:1}
+.news-title{font-size:calc(1.2rem * var(--font-scale));font-weight:900;line-height:1.45;color:var(--text-primary);position:relative;z-index:1}
+.news-desc{font-size:calc(.92rem * var(--font-scale));color:var(--text-secondary);line-height:1.65;position:relative;z-index:1}
 .news-details{max-height:0;overflow:hidden;transition:max-height .6s cubic-bezier(.4,0,.2,1),opacity .4s,margin .4s;opacity:0;position:relative;z-index:1}
 .news-card.expanded .news-details{max-height:800px;opacity:1;margin-top:.8rem}
-.news-details-inner{background:linear-gradient(135deg,rgba(0,0,0,.5),rgba(168,85,247,.15));border-radius:16px;padding:1.2rem;border-left:4px solid var(--accent2);font-size:calc(.95rem * var(--font-scale));line-height:1.8;color:var(--text-secondary)}
+.news-details-inner{background:linear-gradient(135deg,rgba(0,0,0,.5),rgba(168,85,247,.15));border-radius:16px;padding:1.2rem;border-left:4px solid var(--accent2);font-size:calc(.92rem * var(--font-scale));line-height:1.75;color:var(--text-secondary)}
 .close-btn{display:none;background:linear-gradient(135deg,var(--accent1),var(--accent4));color:#fff;border:none;border-radius:20px;padding:8px 18px;font-weight:800;cursor:pointer;font-family:inherit;font-size:calc(.85rem * var(--font-scale));align-items:center;gap:6px;margin-top:10px;align-self:flex-start;position:relative;z-index:2}
 .news-card.expanded .close-btn{display:inline-flex}
 .close-btn:hover{transform:scale(1.05);box-shadow:0 5px 20px var(--glow)}
@@ -314,11 +319,12 @@ input[type=number]:focus{border-color:var(--accent2);outline:none;box-shadow:0 0
   .tab{padding:7px 14px;font-size:calc(.78rem * var(--font-scale))}
   .tabs{margin-bottom:.8rem;gap:6px}
   .news-grid{grid-template-columns:1fr;gap:.9rem}
-  .news-card{padding:1.1rem;border-radius:18px;gap:.6rem}
-  .news-title{font-size:calc(1.05rem * var(--font-scale))}
-  .news-desc{font-size:calc(.85rem * var(--font-scale))}
-  .news-source{font-size:calc(.75rem * var(--font-scale))}
+  .news-card{padding:1rem;border-radius:18px;gap:.6rem}
+  .news-title{font-size:calc(1rem * var(--font-scale))}
+  .news-desc{font-size:calc(.82rem * var(--font-scale))}
+  .news-source{font-size:calc(.72rem * var(--font-scale))}
   .source-logo{width:30px;height:30px;font-size:.85rem}
+  .news-image-wrap{aspect-ratio:16/10;border-radius:12px}
   .modal-content{padding:.9rem;border-radius:16px;max-width:95vw}
   .modal-title{font-size:calc(.9rem * var(--font-scale))}
   .modal-field label{font-size:calc(.7rem * var(--font-scale))}
@@ -603,9 +609,9 @@ input[type=number]:focus{border-color:var(--accent2);outline:none;box-shadow:0 0
 
 <script>
 const WORKER_URL = 'https://withered-moon-2845.raed31818.workers.dev';
-const SETTINGS_KEY = 'news_hub_settings_v9';
-const ARCHIVE_KEY = 'news_archive_v9';
-const SELECTED_SOURCES_KEY = 'news_selected_sources_v9';
+const SETTINGS_KEY = 'news_hub_settings_v11';
+const ARCHIVE_KEY = 'news_archive_v11';
+const SELECTED_SOURCES_KEY = 'news_selected_sources_v11';
 const ARCHIVE_DAYS = 15;
 const FETCH_INTERVAL = 5 * 60 * 1000;
 
@@ -1063,7 +1069,7 @@ function addToArchive(articles) {
   const seen = new Set(archive[today].map(a => a.title));
   articles.forEach(a => {
     if (!seen.has(a.title)) {
-      archive[today].push({ title:a.title, link:a.link, source:a.source, description:a.description, pubDate:a.pubDate });
+      archive[today].push({ title:a.title, link:a.link, source:a.source, description:a.description, pubDate:a.pubDate, image:a.image || null });
       seen.add(a.title);
     }
   });
@@ -1184,7 +1190,15 @@ function renderArticles(articles) {
     const expandHint = currentLang==='ar'?'اضغط للتفاصيل':'Click for details';
     const closeLabel = currentLang==='ar'?'إغلاق':'Close';
     card.setAttribute('data-source', src);
+
+    // === IMAGE: only render if image exists ===
+    // If image fails to load, hide the whole wrapper
+    const imageHTML = a.image
+      ? `<div class="news-image-wrap"><img src="${a.image}" alt="${title.replace(/"/g,'&quot;').replace(/</g,'&lt;')}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.style.display='none'"></div>`
+      : '';
+
     card.innerHTML = `
+      ${imageHTML}
       <div class="news-source"><div class="source-logo"><i class="fas fa-newspaper"></i></div><span>${src}</span></div>
       <div class="news-title">${title}</div>
       <div class="news-desc">${desc.substring(0,150)}${desc.length>150?'...':''}</div>
