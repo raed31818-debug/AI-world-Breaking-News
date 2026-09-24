@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;transition:background-color .4s,color .3s}
-:root{--accent1:#a855f7;--accent2:#c084fc;--accent3:#e9d5ff;--accent4:#7c3aed;--card-bg:rgba(30,15,50,.85);--card-border:rgba(168,85,247,.35);--text-primary:#fff;--text-secondary:#e9d5ff;--text-muted:#c4b5fd;--glow:rgba(168,85,247,.6);--bg-dark:#0f0518;--font-scale:1}
+:root{--accent1:#a855f7;--accent2:#c084fc;--accent3:#e9d5ff;--accent4:#7c3aed;--card-bg:rgba(30,15,50,.85);--card-border:rgba(168,85,247,.35);--text-primary:#fff;--text-secondary:#e9d5ff;--text-muted:#c4b5fd;--glow:rgba(168,85,247,.6);--bg-dark:#0f0518;--font-scale:1.375}
 [data-theme="emerald"]{--accent1:#00e5a0;--accent2:#00d4ff;--accent3:#d4ff00;--accent4:#00b894;--card-border:rgba(0,230,160,.3);--text-muted:#7dffcc;--glow:rgba(0,230,160,.5);--bg-dark:#021410}
 [data-theme="royal"]{--accent1:#ff6b9d;--accent2:#c44dff;--accent3:#ffd93d;--accent4:#7b61ff;--card-border:rgba(196,77,255,.3);--text-muted:#d4a6ff;--glow:rgba(196,77,255,.5);--bg-dark:#12041a}
 [data-theme="sunset"]{--accent1:#ff6b35;--accent2:#ffb800;--accent3:#ff3d6e;--accent4:#ff8c42;--card-border:rgba(255,107,53,.35);--text-muted:#ffc9a3;--glow:rgba(255,140,66,.5);--bg-dark:#1a0804}
@@ -189,7 +189,6 @@ input[type=number]:focus{border-color:var(--accent2);outline:none;box-shadow:0 0
 .news-card::before{content:'\f0e7';font-family:'Font Awesome 6 Free';font-weight:900;position:absolute;bottom:-30px;right:-20px;font-size:9rem;opacity:.045;color:var(--accent2);pointer-events:none;z-index:0;transition:opacity .4s,transform .4s}
 .news-card:hover::before{opacity:.09;transform:rotate(-10deg) scale(1.1)}
 .news-card.expanded::before{opacity:.06;font-size:12rem;bottom:-50px;right:-40px}
-/* === NEWS CARD IMAGE === */
 .news-image-wrap{width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:linear-gradient(135deg,rgba(168,85,247,.15),rgba(0,212,255,.08));display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
 .news-image-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
 .news-card:hover .news-image-wrap img{transform:scale(1.05)}
@@ -588,8 +587,8 @@ input[type=number]:focus{border-color:var(--accent2);outline:none;box-shadow:0 0
     </div>
     <div class="control-group">
       <label><i class="fas fa-text-height"></i> <span id="sizeLabel">Size</span></label>
-      <input type="range" id="fontSize" min="12" max="32" value="16">
-      <input type="number" id="fontSizeInput" min="12" max="32" value="16" step="1" title="Type size manually">
+      <input type="range" id="fontSize" min="12" max="32" value="22">
+      <input type="number" id="fontSizeInput" min="12" max="32" value="22" step="1" title="Type size manually">
     </div>
   </div>
 
@@ -609,9 +608,9 @@ input[type=number]:focus{border-color:var(--accent2);outline:none;box-shadow:0 0
 
 <script>
 const WORKER_URL = 'https://withered-moon-2845.raed31818.workers.dev';
-const SETTINGS_KEY = 'news_hub_settings_v11';
-const ARCHIVE_KEY = 'news_archive_v11';
-const SELECTED_SOURCES_KEY = 'news_selected_sources_v11';
+const SETTINGS_KEY = 'news_hub_settings_v12';
+const ARCHIVE_KEY = 'news_archive_v12';
+const SELECTED_SOURCES_KEY = 'news_selected_sources_v12';
 const ARCHIVE_DAYS = 15;
 const FETCH_INTERVAL = 5 * 60 * 1000;
 
@@ -777,7 +776,7 @@ function restoreSettings() {
 }
 
 function updateFontSize(size) {
-  size = Math.max(12, Math.min(32, parseInt(size) || 16));
+  size = Math.max(12, Math.min(32, parseInt(size) || 22));
   const scale = size / 16;
   document.documentElement.style.setProperty('--font-scale', scale);
   $('fontSize').value = size;
@@ -947,7 +946,7 @@ $('fontSizeInput').addEventListener('input', e => {
   saveSettings();
 });
 $('fontSizeInput').addEventListener('blur', e => {
-  let v = parseInt(e.target.value) || 16;
+  let v = parseInt(e.target.value) || 22;
   v = Math.max(12, Math.min(32, v));
   e.target.value = v;
   updateFontSize(v);
@@ -1191,8 +1190,6 @@ function renderArticles(articles) {
     const closeLabel = currentLang==='ar'?'إغلاق':'Close';
     card.setAttribute('data-source', src);
 
-    // === IMAGE: only render if image exists ===
-    // If image fails to load, hide the whole wrapper
     const imageHTML = a.image
       ? `<div class="news-image-wrap"><img src="${a.image}" alt="${title.replace(/"/g,'&quot;').replace(/</g,'&lt;')}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.style.display='none'"></div>`
       : '';
@@ -1241,6 +1238,10 @@ $('refreshBtn').onclick = () => {
       $('modalCity').value = restored.city;
       $('prayerBtnSub').textContent = `${restored.city}, ${restored.country}`;
     }
+  }
+  if (!restored) {
+    // First-time visitors: apply the new default of 22px
+    updateFontSize(22);
   }
   fetchNews(true);
   setInterval(() => fetchNews(false), 60000);
